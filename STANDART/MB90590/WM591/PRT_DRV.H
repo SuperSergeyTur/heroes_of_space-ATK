@@ -1,0 +1,163 @@
+#ifndef _prt_wm591_h
+#define _prt_wm591_h
+
+struct  PPG_Prt
+{
+   word num;
+   word max;
+   word *val;
+   word low;
+   word high;
+};
+
+struct  PPG_Prt_in
+{
+   word max;
+   word dT;
+   byte mask;
+   __io unsigned char *ICS_reg;
+   word *val;
+  volatile IO_WORD* time_reg;
+};
+extern void  PPG_Out_Set (struct PPG_Prt *out);
+extern void  Port_input ( word code ) ;
+extern void  Port_output ( void ) ;
+extern void  Port_output_clr ( void ) ;
+
+
+/*    Макросы для работы с ...  */
+
+#define   mSET_Q1()
+#define   mCLR_Q1()
+#define   mTST_Q1()
+#define   mSET_Q2()
+#define   mCLR_Q2()
+#define   mTST_Q2()
+
+#define   mUSEL_set()  PDR1  |=  0x40
+#define   mUSEL_clr()  PDR1  &= ~0x40
+#define   mUSEL_not()  PDR1  ^=  0x40
+#define    USEL        PDR1_P16
+
+#define   mTst_autostart()   (( PDR1  &  0x80 ) != 0 )
+
+#define   mSet_autostart()
+#define   mClr_autostart()
+#define   mNot_autostart()
+
+#define  _Prt_in  (( PDR9 & 0x3c)>>2)
+
+/*  ФАЙЛ ОПРЕДЕЛЕНИЙ ДЛЯ ОБРАБОТКИ ВНЕШНИХ ДИСКРЕТНЫХ СИГНАЛОВ. */
+
+   /*   Константные макросы для перевода заданной постояной времени */
+   /* фильтрации/антидребезга, из милисекунд в дискреты таймера, */
+   /*     допустимый диапазон "0.5 мсек"..."12.0 сек" ; */
+#define  _Drb_msec( ax )  _MkSec( (d)ax * 1000. / 256. )
+
+
+/*--------------------------- */
+
+/*-----  Создание шаблона порта сигналов. -- */
+/* Создание объединения для возможности обращения сразу ко всем разрядам. */
+
+  union Prt   {
+        byte all ;
+        struct {  byte  n0  : 1 ;
+                  byte  n1  : 1 ;
+                  byte  n2  : 1 ;
+                  byte  n3  : 1 ;
+                  byte  n4  : 1 ;
+                  byte  n5  : 1 ;
+                  byte  n6  : 1 ;
+                  byte  n7  : 1 ; }  _ ;
+              } ;
+
+/*-----  Создание шаблона порта логическиех сигналов. -- */
+/* Создание объединения для возможности обращения сразу ко всем разрядам. */
+
+  union Prt16   {
+        word all ;
+        struct {  word  n0  : 1 ;
+                  word  n1  : 1 ;
+                  word  n2  : 1 ;
+                  word  n3  : 1 ;
+                  word  n4  : 1 ;
+                  word  n5  : 1 ;
+                  word  n6  : 1 ;
+                  word  n7  : 1 ;
+                  word  n8  : 1 ;
+                  word  n9  : 1 ;
+                  word  n10 : 1 ;
+                  word  n11 : 1 ;
+                  word  n12 : 1 ;
+                  word  n13 : 1 ;
+                  word  n14 : 1 ;
+                  word  n15 : 1 ; }  _ ;
+              } ;
+
+
+/*------------------------------------------------*/
+#ifdef   _MAIN_INCLUDE
+/*------------------------------------------------*/
+
+/*-----  Ячейки соответствующие портам выходных внешних сигналов. -- */
+
+_register union Prt  Po0_c ;  /* копия выводимого в выходной порт. */
+//#pragma locate    ( Po0_c = 0x0E1 )
+
+/*--- Ячейки соответствующие портам внешних входных сигналов. */
+
+//   PORT '0'
+
+         union Prt  Pi0_c ;  /*  необработанное состояние порта. */
+         union Prt  Pi0_nm ;/* отнормированное состояние порта. */
+_register union Prt  Pi0_f ;  /* отфильтрованное состояние порта. */
+         union Prt  Pi0_cf ; /* ненормированое отфильтрованное состояние порта. */
+
+word  P0_t [ 8 ] ; /*  Матрица ячеек для счета времени при фильтрации */
+                   /* сигналов порта P0. */
+
+//   PORT '1'
+
+         union Prt  Pi1_c ;  /*  необработанное состояние порта. */
+         union Prt  Pi1_nm ;/* отнормированное состояние порта. */
+_register union Prt  Pi1_f ;  /* отфильтрованное состояние порта. */
+         union Prt  Pi1_cf ; /* ненормированое отфильтрованное состояние порта. */
+
+word  P1_t [ 8 ] ; /*  Матрица ячеек для счета времени при фильтрации */
+                   /* сигналов порта P0. */
+
+struct  PPG_Prt   PPG_Prt_out0;
+struct  PPG_Prt   PPG_Prt_out1;
+struct  PPG_Prt   PPG_Prt_out2;
+
+struct  PPG_Prt_in   PPG_Prt_in0;
+struct  PPG_Prt_in   PPG_Prt_in1;
+
+/*------------------------------------------------*/
+#else
+/*------------------------------------------------*/
+
+extern _register     union Prt    Po0_c ;
+
+/*------------------------------------------------*/
+
+extern              union Prt     Pi0_c ,  Pi0_nm ;
+extern _register    union Prt     Pi0_f ;
+extern   union Prt  Pi0_cf ; /* ненормированое отфильтрованное состояние порта. */
+extern     word  P0_t [ 8 ] ;
+
+extern              union Prt     Pi1_c ,  Pi1_nm ;
+extern _register    union Prt     Pi1_f ;
+extern   union Prt  Pi1_cf ; /* ненормированое отфильтрованное состояние порта. */
+extern     word  P1_t [ 8 ] ;
+
+extern  struct  PPG_Prt   PPG_Prt_out0;
+extern  struct  PPG_Prt   PPG_Prt_out1;
+extern  struct  PPG_Prt   PPG_Prt_out2;
+
+extern  struct  PPG_Prt_in   PPG_Prt_in0;
+extern  struct  PPG_Prt_in   PPG_Prt_in1;
+/*------------------------------------------------*/
+#endif
+#endif

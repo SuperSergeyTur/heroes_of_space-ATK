@@ -1,0 +1,10 @@
+/*
+ FR family I/O register definition file V30L02
+ ALL RIGHTS RESERVED, COPYRIGHT (C) FUJITSU LIMITED 1998-1999
+ LICENSED MATERIAL - PROGRAM PROPERTY OF FUJITSU LIMITED
+*/
+
+#define __IO_DEFINE
+
+#include "_fr.h"
+
