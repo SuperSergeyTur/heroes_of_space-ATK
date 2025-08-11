@@ -227,6 +227,7 @@
 #define   _Avar_imp             ( 0x2000u )
 #define   _Ostanov_imp          ( 0x1000u )
 #define   _Rev_imp              ( 0x0800u )
+#define   _Sifu_Err_imp         ( 0x0400u )
             // чтобы можно было сбросить сразу все запреты на импульсы
 #define   _All_imp              ( 0xFFFFu )
 

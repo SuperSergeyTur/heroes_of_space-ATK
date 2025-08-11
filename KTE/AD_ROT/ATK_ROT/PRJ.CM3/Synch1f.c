@@ -111,7 +111,7 @@ void Sync_start ( struct Synchr *syn )
     syn->NS     = syn->NS_EPA ; // timer1 ;18.02.07 22:07
     syn->tsyn   = _MkSec( 20000 ) ;
 
-    syn->Fsyn   = 50*256 ;
+    syn->Fsyn   = 50.0 ;
     Hw( syn->lTsyn ) = _MkSec( 20000 ) ; // äëÿ ðàáîòû ÑÈÔÓ.
     syn->KSDT   = 3 ;// 1 ;
     syn->NS2    = timer1 ; // chtoby zapustilos SIFU.

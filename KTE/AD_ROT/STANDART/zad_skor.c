@@ -367,23 +367,31 @@ word Shtat_ConfigReg ( word code )
                   if ( KTE2_OuRS == 0 ) S.Alfa = _or.S_Alfa_Dvig ; // Угол для разгона .
                   else                  S.Alfa = _or.S_Alfa_Gen ;  // Угол для торможения .
     #else
-                  if (_or.CfgO._.RT)
+                  if (!_or.CfgO._.N_to_L)
                   {
-                    if (Prg._.RegTok)
-                    {
-                      UniReg ( &RT_Str );
-                      S.Alfa = Linear (RT_Str.out);    
-                    }
+                    if ( KTE2_OuRS == 0 ) S.Alfa = _or.S_Alfa_Dvig ; // Угол для разгона .
+                    else                  S.Alfa = _or.S_Alfa_Gen ;  // Угол для торможения .
                   }
                   else
                   {
-                  // Вызов ФП для Угла Управления в зависимости от Скорости :
-                  if ( KTE2_OuRS == 0 ) fp_L = &_or.razgFP_N_to_L [ 0 ] ; // Табличка для разгона .
-                  else                  fp_L = &_or.tormFP_N_to_L [ 0 ] ; // Табличка для торможения .
-                  FP_L ( ) ;
-                  S.Alfa = L_after_FP ;    // Угол из табличек .
+                    if (_or.CfgO._.RT)
+                    {
+                      if (Prg._.RegTok)
+                      {
+                        UniReg ( &RT_Str );
+                        S.Alfa = Linear (RT_Str.out);    
+                      }
+                    }
+                    else
+                    {
+                      // Вызов ФП для Угла Управления в зависимости от Скорости :
+                      if ( KTE2_OuRS == 0 ) fp_L = &_or.razgFP_N_to_L [ 0 ] ; // Табличка для разгона .
+                      else                  fp_L = &_or.tormFP_N_to_L [ 0 ] ; // Табличка для торможения .
+                      FP_L ( ) ;
+                      S.Alfa = L_after_FP ;    // Угол из табличек .
+                    }
                   }
-    #endif
+#endif
                  }
                }
                else S.Alfa = _or.S_Alfa_F2_Isp ; // Угол для исп.режимов АР1 - "СИФУ-рез" или "Циклы РТ" .

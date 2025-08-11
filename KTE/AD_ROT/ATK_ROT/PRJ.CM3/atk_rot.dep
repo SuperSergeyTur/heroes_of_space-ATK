@@ -5,239 +5,284 @@
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_IN.C</file>
-            <file>$TOOLKIT_DIR$\inc\cpp\cstdlib</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\TEPLO_E.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\epa_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rtc.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-            <file>$PROJ_DIR$\SIFU_DP.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\sld_stop.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\gercon.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\startup_LPC407x_8x_177x_8x.o.rsp</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_DAC.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_pinsel.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\mco_can.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\test_i2c.c</file>
-            <file>$PROJ_DIR$\..\..\STANDART\epa_drv.h</file>
-            <file>$PROJ_DIR$\..\..\STANDART\UPRAVL.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\iocon.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CRC16.c</file>
-            <file>$PROJ_DIR$\SIFU2.H</file>
-            <file>$PROJ_DIR$\kalman_filter.h</file>
-            <file>$TOOLKIT_DIR$\inc\cpp\xtr1common</file>
-            <file>$PROJ_DIR$\..\STANDART\Sld_cnst.h</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\Config.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MASTDRV.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\gercon.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\PULT.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\INSULAT.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb_rtu.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\led_control.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_wwdt.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_pdo.h</file>
-            <file>$PROJ_DIR$\..\STANDART\SimulatorDP.c</file>
-            <file>$PROJ_DIR$\Synch1f.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\can_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\dac_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_nmt.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\net.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_emcy.h</file>
-            <file>$PROJ_DIR$\..\..\STANDART\Fazir.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SQR.C</file>
-            <file>$PROJ_DIR$\..\..\STANDART\UST.H</file>
-            <file>$PROJ_DIR$\VAR_MTAB.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_mcpwm.c</file>
-            <file>$PROJ_DIR$\..\STANDART\Msg_tabl.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\LINK.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\rs.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\USRED.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\password.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\emc.h</file>
-            <file>$PROJ_DIR$\..\STANDART\timer.c</file>
-            <file>$PROJ_DIR$\..\..\STANDART\EXTRN.H</file>
-            <file>$PROJ_DIR$\ust_cnst.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DMA_CM_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\IZM.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\can_drv.c</file>
-            <file>$PROJ_DIR$\..\..\STANDART\ustavki.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\tcpip.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SETAB1.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rtc.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\NETSETAB.C</file>
-            <file>$PROJ_DIR$\Debug\Obj\startup_LPC407x_8x_177x_8x.o</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MASTDRV.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_ADC.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rs485.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\timer.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MONITOR.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\cse.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MACRO.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\system_LPC177x.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MSG.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_mcpwm.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cm4_simd.h</file>
-            <file>$PROJ_DIR$\..\..\STANDART\AVAR.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\Journal.h</file>
-            <file>$PROJ_DIR$\CAN_MAST.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\watchdog.c</file>
-            <file>$PROJ_DIR$\CAN_MAST.H</file>
-            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-            <file>$PROJ_DIR$\JRN_CNST.H</file>
-            <file>$PROJ_DIR$\..\..\STANDART\F2_DRV.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ad_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\net.h</file>
-            <file>$PROJ_DIR$\..\..\STANDART\avar.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SYSTEM.H</file>
-            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\flash.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\cse.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\uart_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\dac_drv.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\mco_dict.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\USRED.C</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\RT.H</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DateConvert.cpp</file>
-            <file>$PROJ_DIR$\..\..\STANDART\zad_skor.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CRC16.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_sync.h</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\OBJ_REG.C</file>
-            <file>$PROJ_DIR$\OBJ.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\IZM.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\S400.C</file>
-            <file>$PROJ_DIR$\..\..\STANDART\Sifu.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\DP.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\DAC_TABL.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\ZI1.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ppg_drv.c</file>
-            <file>$PROJ_DIR$\kalman_filter.cpp</file>
-            <file>$PROJ_DIR$\..\STANDART\SimulatorDP.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CAN_CODE.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\NORTON.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\UPTF\F_ZAPOLN.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_cpu.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_task.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\UPTF\TST_OUT.C</file>
-            <file>$PROJ_DIR$\var_tab.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\FILTR.H</file>
-            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\LPC407x_8x_177x_8x.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\tcpip.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\ZI1.H</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_pinsel.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rs485.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_clkpwr.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\obj_mux.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cmFunc.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SYSTEM.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\NetPult.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLAVEDRV.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLED.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb_rtu.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\flash.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SQR.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_cpu.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\data_i2c.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\uart_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\CLOCK.C</file>
-            <file>$PROJ_DIR$\..\STANDART\CAN_OBJ.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ssio.h</file>
-            <file>$PROJ_DIR$\datetime.h</file>
+            <file>$PROJ_DIR$\Debug\Exe\atk_rot.hex</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_qei.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SAVE_AV.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_exti.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\SIFU.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc_types.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CAN_SLV.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_gpdma.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\dp.h</file>
-            <file>$PROJ_DIR$\..\..\STANDART\include.h</file>
-            <file>$TOOLKIT_DIR$\inc\cpp\cmath</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ppg_drv.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\data_i2c.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\INSULAT.H</file>
-            <file>$PROJ_DIR$\..\..\STANDART\_main1.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLED.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\rw_i2c.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\Journal.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\led_control.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\aarch32\cmsis_iar.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\FILTR.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\PDF.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\NetIndicatr.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\CIKL.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\LANG.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\asm_NXP.h</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\CIKL.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_drv.c</file>
-            <file>$PROJ_DIR$\SIFU2.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\LPC407x_8x_177x_8x.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ssio.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\INSULAT.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DateConvert.cpp</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ppg_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_exti.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\DP.C</file>
+            <file>$PROJ_DIR$\obj_def.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\include.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\CLOCK.C</file>
+            <file>$PROJ_DIR$\..\..\STANDART\zad_skor.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLED.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc_types.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\tcpip.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\dp.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\#UST_I2C.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CAN_SLV.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SAVE_AV.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ppg_drv.h</file>
+            <file>$PROJ_DIR$\datetime.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\Journal.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLAVEDRV.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\data_i2c.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_drv.c</file>
+            <file>$PROJ_DIR$\..\STANDART\CAN_OBJ.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\uart_drv.h</file>
+            <file>$TOOLKIT_DIR$\inc\cpp\cmath</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\flash.c</file>
+            <file>$PROJ_DIR$\Debug\Exe\c.out</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_gpdma.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CAN_CODE.H</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\SIFU.H</file>
+            <file>$PROJ_DIR$\..\..\STANDART\_main1.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_cpu.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\asm_NXP.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\CIKL.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\NetPult.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CRC16.h</file>
+            <file>$PROJ_DIR$\..\STANDART\SimulatorDP.h</file>
+            <file>$TOOLKIT_DIR$\lib\dlpprt7M_tl_nc.a</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\Teplo_er.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DMA_CM_drv.h</file>
-            <file>$PROJ_DIR$\obj_def.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\#UST_REZ.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\Indicatr.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_gpdma.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\sld_stop.C</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\common_include.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_sdo.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cm4.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\MONITOR.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_qei.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ssio.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\FILTR.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\rw_i2c.c</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\TEPLO_E.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_clkpwr.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\LINK.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\emc.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\SELSIN.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\S400.H</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\rs.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DateConvert.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\watchdog.h</file>
-            <file>$PROJ_DIR$\msg.h</file>
             <file>$PROJ_DIR$\..\..\..\Standart\ZAD_SKOR.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\UNIREG.C</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_wwdt.c</file>
-            <file>$PROJ_DIR$\..\..\..\Standart\reg_eds.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\PDF.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\data_i2c.h</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\LINK.H</file>
             <file>$PROJ_DIR$\..\..\STANDART\skor_ad.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\array.h</file>
-            <file>$PROJ_DIR$\INC.c</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\startup_LPC407x_8x_177x_8x.s</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\system_LPC177x.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLAVEDRV.C</file>
-            <file>$PROJ_DIR$\obj.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\READ_UST.C</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\reg_eds.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\UNIREG.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DateConvert.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\common_include.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\UNIREG.H</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cmInstr.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_qei.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\cmsis_iar.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\led_control.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_sdo.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\CIKL.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\Indicatr.c</file>
+            <file>$PROJ_DIR$\SIFU2.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\LANG.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SQR.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cm4.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\emc.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\watchdog.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\SELSIN.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb.c</file>
             <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
-            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\types.h</file>
+            <file>$PROJ_DIR$\..\STANDART\Can_obj.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cmInstr.h</file>
+            <file>$PROJ_DIR$\..\STANDART\Synch1f.h</file>
+            <file>$PROJ_DIR$\msg.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ad_drv.h</file>
             <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_exti.h</file>
-            <file>$PROJ_DIR$\..\STANDART\Can_obj.c</file>
-            <file>$PROJ_DIR$\..\STANDART\Synch1f.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLAVEDRV.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\system_LPC177x.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_gpdma.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\#UST_REZ.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\NetIndicatr.c</file>
+            <file>$PROJ_DIR$\Synch1f.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MONITOR.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_nmt.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\S400.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_emcy.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\Config.h</file>
+            <file>$PROJ_DIR$\obj.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\UPRAVL.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\iocon.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\types.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_mcpwm.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\sld_stop.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\array.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\emc.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\EXTRN.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\can_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\gercon.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_clkpwr.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\tcpip.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MASTDRV.C</file>
+            <file>$PROJ_DIR$\VAR_MTAB.H</file>
+            <file>$PROJ_DIR$\ust_cnst.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_pdo.h</file>
+            <file>$PROJ_DIR$\SIFU2.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\can_drv.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\led_control.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SQR.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\USRED.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_wwdt.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\UST.H</file>
+            <file>$PROJ_DIR$\Debug\List\c.map</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SETAB1.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\INSULAT.C</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\PULT.C</file>
+            <file>$PROJ_DIR$\..\STANDART\Sld_cnst.h</file>
+            <file>$PROJ_DIR$\kalman_filter.h</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+            <file>$TOOLKIT_DIR$\inc\cpp\xtr1common</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\net.c</file>
+            <file>$PROJ_DIR$\..\STANDART\timer.c</file>
+            <file>$PROJ_DIR$\..\..\STANDART\Fazir.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CRC16.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\DMA_CM_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\IZM.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb_rtu.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\dac_drv.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf_drv.h</file>
+            <file>$PROJ_DIR$\..\STANDART\Msg_tabl.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\gercon.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_IN.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\rs.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\LINK.C</file>
+            <file>$PROJ_DIR$\SIFU_DP.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rtc.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_pinsel.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\mco_can.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ldscript_irom_iar.icf</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_DAC.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\startup_LPC407x_8x_177x_8x.o.rsp</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\ustavki.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\TEPLO_E.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\epa_drv.c</file>
+            <file>$PROJ_DIR$\..\STANDART\SimulatorDP.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\password.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\sld_stop.H</file>
+            <file>$TOOLKIT_DIR$\inc\cpp\cstdlib</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MONITOR.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\UPTF\TST_OUT.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_task.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\UPTF\F_ZAPOLN.H</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\OBJ_REG.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\ZI1.H</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\Sifu.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_pinsel.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\NORTON.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\ZI1.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mb_rtu.h</file>
+            <file>$PROJ_DIR$\kalman_filter.cpp</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\DAC_TABL.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cmFunc.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MSG.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
+            <file>$PROJ_DIR$\..\..\STANDART\avar.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\flash.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\cse.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\Journal.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rs485.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SYSTEM.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\S400.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\watchdog.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\mco_sync.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MACRO.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rs485.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\FILTR.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\USRED.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_clkpwr.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_cpu.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\INC.o</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$PROJ_DIR$\OBJ.C</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\obj_mux.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SLED.C</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\RT.H</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\IZM.C</file>
+            <file>$PROJ_DIR$\var_tab.h</file>
+            <file>$PROJ_DIR$\INC.c</file>
+            <file>$PROJ_DIR$\..\..\STANDART\epa_drv.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\SYSTEM.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\timer.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\prt_drv.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\TST_ADC.C</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\ad_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\startup_LPC407x_8x_177x_8x.s</file>
+            <file>$PROJ_DIR$\..\..\STANDART\AVAR.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\pdf_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\rtc.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\test_i2c.c</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tls.a</file>
+            <file>$PROJ_DIR$\..\..\STANDART\F2_DRV.c</file>
+            <file>$TOOLKIT_DIR$\lib\dlpp7M_tl_nc.a</file>
+            <file>$PROJ_DIR$\CAN_MAST.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\uart_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\net.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\MASTDRV.H</file>
+            <file>$PROJ_DIR$\Debug\Obj\startup_LPC407x_8x_177x_8x.o</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\cse.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\dac_drv.c</file>
+            <file>$PROJ_DIR$\..\..\..\Standart\mco_dict.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\lpc177x_8x_mcpwm.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\NETSETAB.C</file>
+            <file>$PROJ_DIR$\CAN_MAST.C</file>
+            <file>$PROJ_DIR$\JRN_CNST.H</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\core_cm4_simd.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\STANDART\CM\system_LPC177x.c</file>
         </outputs>
         <file>
+            <name>$PROJ_DIR$\Debug\Exe\atk_rot.hex</name>
+            <inputs>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 32</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Debug\Exe\c.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 122</file>
+                </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 0</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 148 195 226 56 196 221 44 219 128</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
             <name>$PROJ_DIR$\INC.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 195</file>
+                </tool>
+            </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 184 160 221 175 22 92 83 93 100 202 5 134 90 7 127 192 219 170 103 137 77 214 190 75 156 19 68 61 203 51 176 126 220 131 23 1 10 130 13 116 163 183 188 147 56 222 150 193 89 31 72 17 37 49 87 225 199 209 206 177 155 21 9 162 119 151 25 144 129 145 70 125 149 164 82 117 36 140 64 122 211 14 191 38 97 40 105 33 66 120 142 53 172 15 152 8 43 218 136 216 71 78 200 99 166 197 44 79 91 54 195 182 46 205 24 124 84 59 159 201 139 138 169 50 81 208 32 196 204 73 52 101 4 198 135 154 223 45 132 41 27 60 187 3 118 74 121 86 55 158 95 180 94 42 65 0 123 69 28 58 178 185 148 35 110 114 96 112 12 88 141 109 47 171 18 85 115 161 179 98 113 143 181 146 76 67 194 153 107 106 108 29 6 210 174 165 189 168 2 207 102 16 157 224 57 215 167 217 80 26 34 133 20 104 186 30 173 62 39 128 111 48</file>
+                    <file> 9 10 101 72 127 198 199 203 172 76 150 35 231 155 2 74 82 66 19 177 235 88 63 230 14 100 209 217 62 105 39 173 80 179 129 160 152 167 146 43 55 46 89 29 135 85 47 93 208 117 189 207 137 119 224 83 78 60 52 69 36 115 140 22 164 23 97 73 166 38 210 191 28 4 222 34 116 25 225 163 104 147 68 94 229 96 188 114 190 15 174 106 54 138 1 159 121 64 200 98 182 215 95 202 13 57 112 183 181 113 50 45 139 84 126 205 234 110 17 51 41 185 67 158 187 53 120 109 77 236 131 5 145 75 193 7 86 102 169 132 108 123 70 156 170 178 194 213 134 33 223 3 227 118 212 141 162 161 125 153 27 90 11 92 168 6 228 176 149 180 201 186 143 48 99 220 175 30 71 192 171 31 18 26 211 216 65 21 197 165 204 124 144 58 40 37 103 24 154 61 12 218 20 81 107 87 49 59 233 111 157 184 133 42 79 136 91 232 130 16 8 142</file>
                 </tool>
             </inputs>
         </file>
@@ -246,15 +291,24 @@
             <outputs>
                 <tool>
                     <name>AARM</name>
-                    <file> 63</file>
+                    <file> 226</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>AARM</name>
-                    <file> 11</file>
+                    <file> 151</file>
                 </tool>
             </inputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 32 122</file>
+                </tool>
+            </outputs>
         </file>
     </configuration>
     <configuration>

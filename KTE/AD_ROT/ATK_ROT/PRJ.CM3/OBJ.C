@@ -79,6 +79,8 @@ word  ObjPrg ( word num )
         Encf = 0;
         //EncDP_old_r =0;
         EncoderDPr = 0;
+        bo_Err_Sifu = 0;
+        Err_counter = 0;
         //QueryTimeOvrOk_old = QueryTimeOvrOk  = 0;
         
         //trig_Privyazk_TZ= 1;
@@ -96,12 +98,25 @@ word  ObjPrg ( word num )
         //-------
          // Объектная программа перед всеми защитами , например , для зарядки измерений .
       case _Obj_c_Common_avar :
-     /*  if ((DP_TZ < *Timer3) && (*Timer3 - DP_TZ) > _Secl(3))
+       if ((DP_TZ < *Timer3) && (*Timer3 - DP_TZ) > _Secl(3))
        {
+         ++Err_counter;
+         mOtkl_Imp ( _Sifu_Err_imp) ;
          DP_TZ = *Timer3+_MkSecl(2000);
          _sifu_epa_time ( DP_TZ );
          S.NumInt = 1 ;
-       }*/
+         Time_ErrSifu = timer1;
+         bo_Err_Sifu = 1;
+       }
+       
+       if (bo_Err_Sifu )
+       {
+         if((u)((w)(timer1- Time_ErrSifu)) > _MkSec(20000))
+         {
+           mVkl_Imp(_Sifu_Err_imp);
+           bo_Err_Sifu = 0;
+         }
+       }
         if ( canr.Data._.Connect == 0 )
         {
           mSet_ServiceMsg2( _Srv2_NoLinkCAN ) ;
@@ -176,7 +191,7 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
 {
   word ax , bx ;
   lword lax ;
-  float fax;
+  float fax;//, fbx;
 
     // Энкодер 13-разрядный, максимальное число - 8191 дискр.
    // EncoderBinar = GraytoBinarycode( EncoderGray );
@@ -526,21 +541,22 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
 
             //----------  Фильтрация: вычисление отклонения текущего измеренного задания
 
-            ax = Frot ;
+            fax = (float)Frot/360 ;
 
             if ( _or.K_f_syn3f != 0 )   // включаем фильтр только при наличии уставки    // DAN: так в Каборге...
               {                                                                          // DAN: так в Каборге...
-                lax = ((lw)Frotf << 16) + (lw)Frotdrob ;
+                //lax = ((lw)Frotf << 16) + (lw)Frotdrob ;
 
-                ax  -= Frotf ;
+                fax -= Frotf ;
+                fax = Frotf+ fax/((float)_or.K_f_syn3f*2);
 
-                lax += (slw)(sw)ax << ( 16 - _or.K_f_syn3f ) ;
-
-                ax = (sw)( lax >> 16 ) ;
-
-                Frotdrob = (w)lax ;
+//                lax += (slw)(sw)ax << ( 16 - _or.K_f_syn3f ) ;
+//
+//                ax = (sw)( lax >> 16 ) ;
+//
+//                Frotdrob = (w)lax ;
               }                                                                          // DAN: так в Каборге...
-            Frotf = ax ;
+            Frotf = fax ;
 
             //---------------------------------------
             if (Frotf < Syn.Fsyn)
@@ -549,7 +565,7 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
               Fsrot = Syn.Fsyn - Frotf ;
               
               
-              Tpp_f =(360.0/(2*(float)Fsrot))*1e6;
+              Tpp_f =(1/(2*Fsrot))*1e6;
               //частоту сети ротора переводим в период
              // lax = 1000000UL * 360UL ;
              // lax =  lax / (lw)(w)Fsrot >> 5 ;

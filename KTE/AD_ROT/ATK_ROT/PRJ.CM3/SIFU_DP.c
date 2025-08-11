@@ -292,7 +292,7 @@ void S_Interrupt ( void )
         //   mUSEL_clr();
         //S.flg._.Syn_Ok = 1 ;
           S_Ax = DP_TZ ;               // для следа
-        
+           S_Ex = *Timer3;
           lbx = DP_TZ ;
         
           S_Dx = NS2_rot ;           // для следа
@@ -355,17 +355,28 @@ void S_Interrupt ( void )
       asm_ei();      
 
    S.flg._.TZ_Ok = 0 ;
-  //    _sifu_epa_time ( T_gen );
+      _sifu_epa_time ( T_gen );
        S.NumInt = i3 ;    
-     // break;
+       break;
     case i3 :
      // mUSEL_clr();
         //mPort_Imp(FOR0[0]) ;
         //mFzapoln1_stop() ;// снимаем оба частотных заполнения.
         //mFzapoln2_stop() ;
-        S.flg._.ImpSet1 = 0 ; // для разрешения контроля ДЗВ в реверсе.            
-      _sifu_epa_time ( DP_TZ );
-      S.NumInt = i1 ;    
+        S.flg._.ImpSet1 = 0 ; // для разрешения контроля ДЗВ в реверсе.
+        //Разница больше 2 периодов будет считаться переполнением. 
+        if ((DP_TZ < *Timer3) && ((*Timer3 - DP_TZ) < Tpp_3syn*6 ))
+        {
+          _sifu_epa_time ( *Timer3 + _MkSec(20) );
+          
+        }
+        else
+        {
+          
+          _sifu_epa_time ( DP_TZ );
+        }
+        
+        S.NumInt = i1 ;    
       
       break;
     }

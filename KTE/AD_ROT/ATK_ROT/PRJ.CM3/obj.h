@@ -187,7 +187,7 @@ void        Obj_Interrupt (void );
 #define    bo_Zatyan_Pusk        Prt_NULL._.n7
 
 // Порт 2 для выходов , которые никуда не выводятся :
-//#define  bo_                   Prt_NULL2._.n0
+#define  bo_Err_Sifu             Prt_NULL2._.n0
 //#define  bo_                   Prt_NULL2._.n1
 //#define  bo_                   Prt_NULL2._.n2
 //#define  bo_                   Prt_NULL2._.n3
@@ -303,7 +303,7 @@ void        Obj_Interrupt (void );
       word En_Fil_DP        : 1 ;
       word Priv_Filt        : 1 ;
       word RT               : 1 ;
-      word rezerv7          : 1 ;
+      word N_to_L           : 1 ;
      //----
       word rezerv8          : 1 ;
       word rezerv9          : 1 ;
@@ -319,13 +319,13 @@ void        Obj_Interrupt (void );
 
 #define   _cfgO_sld_PWM          ((w) 0x0001 )
 #define   _cfgO_Vkl_KZ           ((w) 0x0002 )
-#define   _cfgO_Vedushiy          ((w) 0x0004 )
+#define   _cfgO_Vedushiy         ((w) 0x0004 )
 #define   _cfgO_EnSimulat        ((w) 0x0008 )
 
 
 #define _cfgO_En_Fil_DP          ((w) 0x0010 )
-//#define _cfgO_rezerv5          ((w) 0x0020 )
-//#define _cfgO_rezerv6          ((w) 0x0040 )
+#define _cfgO_RT                  ((w) 0x0020 )
+#define _cfgO_N_to_L              ((w) 0x0040 )
 //#define _cfgO_rezerv7          ((w) 0x0080 )
 
 union flagO {
@@ -481,7 +481,7 @@ union flagO {
 //-------------- А7 - Объектные уставки ------------------
 
     #define _A7_Obj_Ust \
- { "dL сімул. ДП  ", &_or.DeltDPSimulat               , 0     ,_wgL( 5.6 )      ,_wgL( 1 )    ,(w*)&_ind_Nom, _wgL( 0.1 )    , 0xff, "грд", _form(1,3,1,2) },\
+ { "dL сімул. ДП  ", &_or.DeltDPSimulat               , 0     ,_wgL( 12.0 )      ,_wgL( 1 )    ,(w*)&_ind_Nom, _wgL( 0.1 )    , 0xff, "грд", _form(1,3,1,2) },\
  { "ДП-зміщ-нуля  ", &_r.Selsin[0].null    , 0               , _wgL360          , 23           ,(w*)&_ind_Nom,  2             , 0xff, "грд", _form(1,3,1,2) },\
  { "Глибина усерДП", &_or.Fil_buf_Len      , 1               , _Fil_buf_max_Len , 1            ,(w*)&_ind_Nom,  1             , 0xff, "oд", _form(1,2,0,2) }
 
@@ -771,12 +771,14 @@ _x_far const word  PS_tu [_SInp_max][ 8 ] = {
 union Prt Prt_NULL;
 union Prt Prt_NULL2;
 word  Izm_T_full , T_izm ;
+word Time_ErrSifu;
 word Time_TestFaz;
 word TEK_Grads;
 Reg_Str RT_Str;
 word Time_Min_RT, trg_MinRT;
 lword* Timer3;
 lword DP_TZ;
+word Err_counter;
 float NS2_f, NS2_f1;
 #pragma section =  "RAM_region"
 KalmanFilter kalman(0.0f, 0.0f, 0.01f, 0.1f); // Настройки шумов
@@ -827,10 +829,11 @@ word  Syn_NS2_old  ;
 byte priznak_CAN2_no;// признак потери связи по CAN2
 byte count_CAN2_no;//счетчик "неответов" CAN-платы
 word Bbx , TEK_Grad , TEK_Grs , GradTek;
-lword S_Ax, S_Bx,S_Cx, S_Dx ;
-word Frotdrob , Frotf ;
+lword S_Ax, S_Bx,S_Cx, S_Dx, S_Ex ;
+//word Frotdrob  
+float Frotf, Fsrot  ;
 word DPFiltr_drob , Encf ;
-word  Tsrot , Fsrot ;
+word  Tsrot ;
 lword Tpp_3syn;
 lword T_60gr ;
 word time_e , T_syn;
