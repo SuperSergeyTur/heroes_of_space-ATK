@@ -374,7 +374,7 @@
                     <item>flgO</item>
                     <item>time_QK</item>
                     <item>Opros_time</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

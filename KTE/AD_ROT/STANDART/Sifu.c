@@ -78,9 +78,9 @@
     Ud_off = 0, Id_off = 0 ;
           /* Зарядка ЕПА на угол измерения тока */
 
-    init_sifu_epa( _sifu_epa_con ) ;
+   // init_sifu_epa( _sifu_epa_con ) ;
 
-    _sifu_epa_time ( DP_TZ );
+   // _sifu_epa_time ( DP_TZ );
     
 
     return 0 ;

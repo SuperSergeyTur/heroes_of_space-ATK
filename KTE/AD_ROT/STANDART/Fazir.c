@@ -104,46 +104,24 @@ void Fazirovka ( void )
           /*   Контроль того, что импульсы действительно сдвинулись в нуль,
            * а не заблокированы авариями, например "Id_max".
            */
-#ifdef _Vozb_KTE
- if ( V.flg._.fazir == 1 ) // 07.05.08 - признак для того , чтобы при фазировке возбудителя
-  {                        // ошибочно не срабатывала блокировка якорных импульсов .
-    if ( LabelFazir != 250 )
-    {
-      if ( LabelFazir >= 100 && V.Alfa_Old != 0 )
-        {
-          if ( Isp._.SIFUV_Res == 0 && Ckl._.SIFUV == 0 )
-           {
-             output_s ( _Fazir_sdvig_txt ) ;     // Сдвиг ИУ заблокирован защитами .
-             goto  end3 ;
-           }
-          else
-           {
-             output_s ( _Fazir_sdvig_isp_txt ) ; // Сдвиг ИУ заблокирован испытат.режимом СИФУВ .
-             goto  end3 ;
-           }
-        }
-    }
-  }
- else
-#endif
   {
-#ifndef _AD_ROT
+//#ifndef _AD_ROT
     if ( LabelFazir != 25 )
-#else
-    if ( LabelFazir < 25 )  // При фазировке ступеней УПТФ или КЗ в Роторном АТК не нужно конролировать сдвиг ИУ в нуль .
-#endif
+//#else
+//    if ( LabelFazir < 25 )  // При фазировке ступеней УПТФ или КЗ в Роторном АТК не нужно конролировать сдвиг ИУ в нуль .
+//#endif
     {
       if ( LabelFazir >= 10 && S.Alfa_Old != 0 )
         {
-#ifdef _AD_ROT
-          if ((u)((w)(Timer1_Ovr - Time_TestFaz))> _Sec(1.5))
-          {
-#endif          
+//#ifdef _AD_ROT
+//          if ((u)((w)(Timer1_Ovr - Time_TestFaz))> _Sec(1.5))
+//          {
+//#endif          
           output_s ( _Fazir_sdvig_txt ) ;
           goto  end1 ;
-#ifdef _AD_ROT
-          }
-#endif          
+//#ifdef _AD_ROT
+//          }
+//#endif          
         }
        // 21.05.2009 DAN - При герконе импульсы снимаются .
       if ( LabelFazir > 17 && Otkl_Imp != 0 )
@@ -155,7 +133,6 @@ void Fazirovka ( void )
   }
     switch ( LabelFazir )
      {
-#if defined ( _Vozb_KTE ) || defined ( _AD_ROT )
       default:
       case 0: output_s ( "\n" ) ;
               LabelFazir = 1 ;
@@ -189,62 +166,18 @@ void Fazirovka ( void )
                       else
                        {
                          LabelFazir = 30 ;
- #ifndef _AD_ROT
-                         V.flg._.fazir = 1 ; // признак фазировки возбудителя для отключения РТВ .
- #endif
                        }
                     }
                   else    Klav_Buff = bh;
             }
           break ;
-#else
-      default:
-      case 0: output_s ( "\n" ) ;
-              LabelFazir = 1 ;
-      case 1:
-          if ( TestCompleted_Output() )
-            {
-              if ( m_index == 0 ) output_s ( _Fazir_No_txt  ) ;
-              else                output_s ( _Fazir_Yes_txt ) ;
-              LabelFazir = 2 ;
-              break ;
-            }
-
-      case 2:
-          if ( TestData_for_Input() )
-            {
-              mInput_c ( bh ) ;
-                  if ( bh == Return )  /* Выход из этого режима */
-                    {
-                    end2: Label = 0, M_FirstCallFazir = 1 ; //end2: Pult_Prog_Addr = _MainPultProg , M_FirstCall = 1 ; // 20.05.2020
-                      Isp._.Predupr = 0  ;
-                      m_index = F2regim;//0; // 27.05.2020 при выходе из программы отображение текста "Фазировка"
-                      return ;   // добавить еще какую-то иниц.
-                    }
-                  else if ( bh == Up || bh == Down ) /* Изменить выбор. */
-                    {
-                      m_index = ~m_index,  LabelFazir = 1 ;
-                    }
-                  else if ( bh == Enter )
-                    {
-                      if ( m_index == 0 ) goto end2 ;
-                      LabelFazir = 3 ;
-                    }
-                  else    Klav_Buff = bh;
-            }
-          break ;
-#endif
       case 3:
-#ifndef _AD_ROT
-          output_s ( _Fazir_txt ) ;
-#else
           output_s ( _Fazir_rot_txt ) ; // Вывод "Фазир.ротора:"
                       Time_TestFaz = Timer1_Ovr;
                       
-#endif
        //   mVkl_Imp( _All_imp ) ; // Разблокировка запрета на импульсы.
           S.NumMost = 0 ;        // входим в режим со снятыми импульсами.
-          m_index = 1 ;
+          //m_index = 1 ;
           m_ext = _r.S_Alfa_Min  ;   // сохранение уставки.
           _r.S_Alfa_Min = 0 ;           // сдвиг импульсов в нуль.
           S.Alfa = 0 ;
@@ -347,33 +280,6 @@ void Fazirovka ( void )
             {
               if ( m_index <= 2 )
               {
-//------------
-#ifdef _AD_ROT
-//------------
-                output_s (_Power_On)  ;
-                ax = bx = 0 ;
-              }
-              LabelFazir = 20 ;
-              break ;
-            }
-
-      case 20: /* Обработка символов из буфера ввода, без 'while
-                * до опустошения' (т.к. при ручном вводе этого не надо) */
-      if ( TestData_for_Input() )
-        {
-          mInput_c ( m_ch ) ;
-              if ( m_ch == Return )  /* Выход из этого режима */
-                {
-                  output_c ( '\n' ) ;
-                  mOtkl_Imp( _VR1_imp ) ;
-                  goto end ;
-                  //m_index = 0; // 27.05.2020 при выходе из программы отображение текста "Фазировка"
-                }
-        }
-            break ;
-//------------
-#else
-//------------
                 output_s ("\r N = ")  ;
                 m_ch = _r.S_FazirovVS + 0x30 ;
                 output_c ( m_ch ) ;
@@ -520,9 +426,6 @@ void Fazirovka ( void )
 #endif
         }
             break ;
-//------------
-#endif //#ifdef _AD_ROT
-//------------
           //----------
         end1:
                mOtkl_Imp( _VR1_imp ) ;

@@ -291,24 +291,25 @@ void S_Interrupt ( void )
         flgO._.NewSyn = 0 ;
         //   mUSEL_clr();
         //S.flg._.Syn_Ok = 1 ;
-          S_Ax = DP_TZ ;               // для следа
-           S_Ex = *Timer3;
-          lbx = DP_TZ ;
-        
-          S_Dx = NS2_rot ;           // для следа
-        
-          lax = NS2_rot - T_60gr*TEK_Grs;      // вычисленное NS2 по ДП ротора
-          TEK_Grads = TEK_Grs ;          // для следа
+         
           
-          S_Cx = N_inv;
+          lbx = DP_TZ ;
+          S_Dx = lbx;
+         
+        
+          lax = NS2_rot - T_60gr*TEK_Grs;      // вычисляем 0 градусов
+          TEK_Grads = TEK_Grs ;          // для следа
+          S_Cx = lax;
+          //S_Cx = N_inv;
           
           // }
           // else           // если однократная синхронизация за период напряжения статора Uab  по ТЕКам
           // {
+          //Сдвигаем в соответствии с фазировкой
           if ( N_inv >= _r.S_FazirovVS ) lax += T_60gr * (lw)(N_inv - _r.S_FazirovVS ) ;
           else                           lax += T_60gr * (lw)(6u + N_inv - _r.S_FazirovVS)  ;
           // }
-          S_Bx = lax;
+          //S_Bx = lax;
           //S_Dx = bx ;
           lax +=  (lw)( _r.S_FazirovUgol + S.Alfa_Old ) * (lw)Tpp_3syn >> 14   ;  // добавляем  фазировочный угол и угол управлени
           
@@ -355,26 +356,30 @@ void S_Interrupt ( void )
       asm_ei();      
 
    S.flg._.TZ_Ok = 0 ;
-      _sifu_epa_time ( T_gen );
-       S.NumInt = i3 ;    
-       break;
-    case i3 :
+//      _sifu_epa_time ( T_gen );
+//       S.NumInt = i3 ;    
+//       break;
+//    case i3 :
      // mUSEL_clr();
         //mPort_Imp(FOR0[0]) ;
         //mFzapoln1_stop() ;// снимаем оба частотных заполнения.
         //mFzapoln2_stop() ;
         S.flg._.ImpSet1 = 0 ; // для разрешения контроля ДЗВ в реверсе.
         //Разница больше 2 периодов будет считаться переполнением. 
-        if ((DP_TZ < *Timer3) && ((*Timer3 - DP_TZ) < Tpp_3syn*6 ))
+         
+         lax = *Timer3;
+         
+        if (((lw)(DP_TZ - lax) > Tpp_3syn*2) ||((lw)(DP_TZ - lax) < _MkSec(50)))
         {
-          _sifu_epa_time ( *Timer3 + _MkSec(20) );
-          
+         
+           S_Ax = S_Dx ;           // для следа
+          DP_TZ = lax + _MkSec(50); 
+          S_Bx = S_Cx ;               // для следа
+          S_Ex = *Timer3;
+          ++Err_counter[0];          
         }
-        else
-        {
-          
-          _sifu_epa_time ( DP_TZ );
-        }
+ 
+    _sifu_epa_time ( DP_TZ );
         
         S.NumInt = i1 ;    
       

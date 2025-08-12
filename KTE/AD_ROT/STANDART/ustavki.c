@@ -926,12 +926,12 @@ void  Mashtab_Dat ( void )
         bx = timer1 ;  dt = bx - time ;   time = bx ;  // запись момента текущей отработки фильтра.
         if ( dt >= _MkSec(10*1000) )  dt = _MkSec(10*1000) ;  // для первого входа, когда time еще не проинициализирован.
         
-        dax  = (d)(sw)Frot + drob ;
+        dax  = (d)Frot + drob ;
         //  приводим dt от "мксек" к "мсек" _or.Frot_Tfiltr: 1дискр.=1мсек
-        dax += (d)(sw)( nFrot - Frot ) * (d)(w)dt / (d)_MkSec(1000) / (d)(w)/*_r.Frot_Tfiltr*/50 ;
+        dax += (d)( nFrot - Frot ) * (d)(w)dt / (d)_MkSec(1000) / (d)(w)/*_r.Frot_Tfiltr*/50 ;
         
-        Frot = (sw)dax ;
-        drob =  dax  - (d)(sw)Frot ;
+        Frot = (float)dax ;
+        drob =  dax  - (d)Frot ;
       }
       
       //----------------------------------------------- Скрипт Грыгорыча ------------------------------------------------------

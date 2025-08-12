@@ -502,10 +502,11 @@ union flagO {
     {"Lsety    ", &Lsety          , _sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld, "g " },  \
     {"Lwg      ", &wgL_rn         , _sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld, "g " },  \
     {"GradTek  ", &GradTek       , _sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld, "g " },\
-    {"nFr      ", (w*)&nFrot     , _sl_form(2,1,2,3,1), 360      ,(w*)&_ind1_sld, "Hz "},   \
-    {"Fr       ", (w*)&Frot      , _sl_form(2,1,2,3,1), 360      ,(w*)&_ind1_sld, "Hz "},   \
-    {"Fsr      ", (w*)&Fsrot     , _sl_form(2,1,2,3,1), 360      ,(w*)&_ind1_sld, "Hz "},   \
-    {"Frf      ", (w*)&Frotf     , _sl_form(2,1,2,3,1), 360      ,(w*)&_ind1_sld, "Hz "},   \
+    {"nFr      ", &nFrot          , _sl_form(2,1,2,3,1), 360      ,(w*)&_ind1_sld, "Hz "},   \
+    {"Fr       ", &Frot          , _sl_form(0,1,2,3,1), 1      ,(w*)&_ind1_sld, "Hz "},   \
+    {"Fsr      ", &Fsrot         , _sl_form(0,1,2,3,1),  1      ,(w*)&_ind1_sld, "Hz "},   \
+    {"Fsyn     ", &Syn.Fsyn      , _sl_form(0,1,2,3,1),  1      ,(w*)&_ind1_sld, "Hz "},   \
+    {"Frotf    ", &Frotf          , _sl_form(0,1,2,3,1), 1      ,(w*)&_ind1_sld, "Hz "},   \
     {"EncGDP   ", (w*)&EncoderGray, _sl_form(2,1,2,3,1), _wgL(1) ,(w*)&_ind1_sld, "гр "},    \
     {"EncDP    ", (w*)&EncoderDP  , _sl_form(2,1,2,3,1), _wgL(1) ,(w*)&_ind1_sld, "гр "},    \
     {"EncDPr   ", (w*)&EncoderDPr, _sl_form(2,1,2,3,1), _wgL(1) ,(w*)&_ind1_sld, "гр "},    \
@@ -517,13 +518,13 @@ union flagO {
     {"TEK_Grads", (w*)&TEK_Grads   ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld, "h "},\
     {"N_inv    ", (w*)&N_inv       ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld, "h "},\
     {"T_Per    ", &T_per           ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
-    {"NS2_rot  ", &NS2_rot         ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
-    {"Tpp_3syn ", &Tpp_3syn        ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
+    {"NS2_rot  ", &NS2_rot         ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
+    {"Tpp_3syn ", &Tpp_3syn        ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
     {"S_TZ     ", &DP_TZ           ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
-    {"S_Ax     ", &S_Ax            ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
-    {"S_BX     ", &S_Bx            ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
-    {"S_Cx     ", &S_Cx            ,_sl_form(2,0,2,5,0), 1       ,(w*)&_ind1_sld,"  " },\
-    {"S_Dx     ", &S_Dx            ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
+    {"S_Ax     ", &S_Ax            ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
+    {"S_BX     ", &S_Bx            ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
+    {"S_Cx     ", &S_Cx            ,_sl_form(4,0,2,5,0), 1       ,(w*)&_ind1_sld,"  " },\
+    {"S_Dx     ", &S_Dx            ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
     {"dT_f0    ", &dT_f0          ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },\
     {"Tpp_dp   ", &Tpp_f           ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },
 
@@ -778,7 +779,7 @@ Reg_Str RT_Str;
 word Time_Min_RT, trg_MinRT;
 lword* Timer3;
 lword DP_TZ;
-word Err_counter;
+word Err_counter[2];
 float NS2_f, NS2_f1;
 #pragma section =  "RAM_region"
 KalmanFilter kalman(0.0f, 0.0f, 0.01f, 0.1f); // Настройки шумов
@@ -811,7 +812,8 @@ word  SkorPDF ;
 float F_Lrot;
 word TimeFrot;
 word SifuRotCount;
-word  wgL_rot , wgL_dp , wgL_rn_old , deltwgL ;
+word  wgL_rot , wgL_dp , wgL_rn_old ;
+float deltwgL ;
 word  wgL_rn , DProt ;
 lword  TimeDP_old;
 word deltTimDP;
@@ -824,6 +826,7 @@ word  deltDPr ;//, dDp ;
 byte  excess_delt ;
 word  Lsety , Lrot_old, Ndpr , Lsety_old, Time_DLRot; 
 float dLrot, dLdT, delta_L ;
+float Velos_f;
 lword  NS2_rot , NS2_rot_old , T_NS2_rot;
 word  Syn_NS2_old  ;
 byte priznak_CAN2_no;// признак потери связи по CAN2
@@ -836,7 +839,7 @@ word DPFiltr_drob , Encf ;
 word  Tsrot ;
 lword Tpp_3syn;
 lword T_60gr ;
-word time_e , T_syn;
+lword T_syn;
 byte L_L[2];
 lword Timer_long;
 //рабочие переменные :
