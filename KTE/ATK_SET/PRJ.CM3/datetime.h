@@ -2,6 +2,6 @@
 #ifndef _datetime_
 #define _datetime_
 
-#define __DATETIME__ "23 липня 2025\r\n - 9:05 -"
+#define __DATETIME__ "12 серпня 2025\r\n - 11:26 -"
 
 #endif
