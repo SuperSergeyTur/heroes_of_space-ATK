@@ -104,6 +104,8 @@ const struct Sled_var  FullSledTab[] =
     {"Slip_F   ", &Slip_f[1]     , _sl_form(0,0,2,4,1), 1       ,(w*)&_ind1_sld, "rad" },
     {"w_rot    ", &OmegaRot      , _sl_form(0,0,2,4,1), 1       ,(w*)&_ind1_sld, "rad" },
     {"N_rot    ", &SkorRot       , _sl_form(2,0,2,3,1),_Skor_Nom,(w*)&_ind100_sld,"% " },
+    {"N_pusk`  ", &Skor_Pusk      , _sl_form(2,0,2,3,1),_Skor_Nom,(w*)&_ind100_sld,"% " },
+    {"N     `  ", &Skor       , _sl_form(2,0,2,3,1),_Skor_Nom,(w*)&_ind100_sld,"% " },
     {"N_pdf    ", &SkorPDF       , _sl_form(2,0,2,3,1),_Skor_Nom,(w*)&_ind100_sld,"% " },
     {"Phi_e    ", &Phi_e         , _sl_form(0,0,2,4,1), 1       ,(w*)&_ind1_sld, "rad" },
 //--------------------------------------- —»‘” ‚ ÿ»Ã ------------------------------------------

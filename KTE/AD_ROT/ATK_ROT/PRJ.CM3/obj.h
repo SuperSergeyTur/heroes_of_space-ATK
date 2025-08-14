@@ -21,6 +21,9 @@ extern   word  read_rezerv( void ) ;
 #define _wgL90   (0x07ffu)
 
 #define _wgL( grd )   ((const w)( (d)_wgL180 / 180.0 * (d)(grd)+0.5 ))
+
+#define _wgLd( grd )   ((const float)( (float)_wgL180 / 180.0 * (float)(grd)))
+
 #define  _msSec( time ) _MkSec( (d)(time) * 1000. / 16. )
 
   #define  _MkSecl( time )  ((const lw)( (d)(time)  / (d)_TimerDiscreta + (d)0.5 ))
@@ -186,9 +189,9 @@ void        Obj_Interrupt (void );
 #define    bo_Vkl_QK1            Prt_NULL._.n6
 #define    bo_Zatyan_Pusk        Prt_NULL._.n7
 
-// Порт 2 для выходов , которые никуда не выводятся :
+// Порт 2 16 разрядов для выходов , которые никуда не выводятся :
 #define  bo_Err_Sifu             Prt_NULL2._.n0
-//#define  bo_                   Prt_NULL2._.n1
+#define  bo_dLDL_set             Prt_NULL2._.n1
 //#define  bo_                   Prt_NULL2._.n2
 //#define  bo_                   Prt_NULL2._.n3
 //#define  bo_                   Prt_NULL2._.n4
@@ -526,7 +529,9 @@ union flagO {
     {"S_Cx     ", &S_Cx            ,_sl_form(4,0,2,5,0), 1       ,(w*)&_ind1_sld,"  " },\
     {"S_Dx     ", &S_Dx            ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
     {"dT_f0    ", &dT_f0          ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },\
-    {"Tpp_dp   ", &Tpp_f           ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },
+    {"Tpp_dp   ", &Tpp_f           ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },\
+    {"dL_rot   ", &dLrot           ,_sl_form(0,0,2,3,3), _Grad(1),(w*)&_ind1_sld,"Грд" },\
+    {"deltTDP  ", &deltTDP_old     , _sl_form(2,1,2,3,1),1      ,(w*)&_ind1_sld, "ms" },
 
 
 
@@ -770,7 +775,7 @@ _x_far const word  PS_tu [_SInp_max][ 8 ] = {
                                       };
 
 union Prt Prt_NULL;
-union Prt Prt_NULL2;
+union Prt16 Prt_NULL2;
 word  Izm_T_full , T_izm ;
 word Time_ErrSifu;
 word Time_TestFaz;

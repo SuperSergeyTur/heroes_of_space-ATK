@@ -32,7 +32,7 @@ const struct namevar c_t_abDev1[] =
   { "MsgA2" , &Ap2_Msg.avar2                  },  //4
   { "MsgP2" , &Ap2_Msg.predupr2               },  //5
   { "MsgS2" , &Ap2_Msg.service2               },  //6
-  { "N_Rot",  &N_rot                          },  //7
+  { "N_Rot",  &Nrot_CAN                       },  //7
   { "cStsRI", &canr.StatReg1.all              },  //8
   { "cCfgR",  &canr.CfgRegAp2.all             },  //9
   { "cId#"  , &OuRegS_dop_kod                 },  //a 

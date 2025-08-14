@@ -301,9 +301,19 @@ void SkorAD( void )
   else
   {
     asm_di();
+    //Пропускаем момент смены параметров во избежание ошибок
+    if (!bo_dLDL_set)
+    {
      delta_L = (float)(w)((u)(timer1 - Time_DLRot));
      delta_L *= dLdT;
      Lrot = Lrot_dp + (w)delta_L;
+    }
+    else
+    {
+      bo_dLDL_set = 0;
+      Lrot = Lrot_dp;
+    }
+     
      asm_ei();
      if (Lrot > _Grad(360))
      {

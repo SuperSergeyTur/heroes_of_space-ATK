@@ -68,7 +68,7 @@
 void Fazirovka ( void )
 {
   register byte bh ;
-  word  ax ;
+ // word  ax ;
   word  bx ;
 
 
@@ -280,25 +280,30 @@ void Fazirovka ( void )
             {
               if ( m_index <= 2 )
               {
-                output_s ("\r N = ")  ;
-                m_ch = _r.S_FazirovVS + 0x30 ;
-                output_c ( m_ch ) ;
-                output_s (", F = ")  ;
-
-                ax = _r.S_FazirovUgol / (w)_Grad( 1.0 ) ;
-                bx = ax / 10 ;
+                output_s ("\rЗсув =")  ;
+                 float fax = (float)(sw) _r.Selsin[0].null/_wgLd(1) ;
+                 if (!isnormal(fax))
+                 {
+                   fax = 0;
+                 }
+                if (fax < 0)
+                {
+                   output_c ( '-' ) ;
+                }
+                else
+                {
+                  output_c ( '+' ) ;
+                }
+                fax = fabsf(fax);
+                bx = (b)(fax / 100) ;
+                fax = fmodf(fax, 100.0);
+                output_c ( (b)bx + 0x30 ) ;                
+                bx = (b)(fax / 10) ;
                 output_c ( (b)bx + 0x30 ) ;
-                ax = ax % 10 ;
-                output_c ( (b)ax + 0x30 ) ;
+                bx = (b)((w)fax % 10) ;
+                output_c ( (b)bx + 0x30 ) ;
+                output_s (" Грд");
               }
-          #ifdef _SIFU2_
-              else
-              {
-                output_s ("\r N_сдвиг = ")  ;
-                m_ch = _r.S2.FazirovVS + 0x30 ;
-                output_c ( m_ch ) ;
-              }
-          #endif
               LabelFazir = 20 ;
               break ;
             }
@@ -308,122 +313,31 @@ void Fazirovka ( void )
       if ( TestData_for_Input() )
         {
           mInput_c ( m_ch ) ;
-              if ( m_ch == Return )  /* Выход из этого режима */
+              if ( m_ch == Return || m_ch == Enter)  /* Выход из этого режима */
                 {
                   output_c ( '\n' ) ;
                   mOtkl_Imp( _VR1_imp ) ;
                   LabelFazir = 10 ;
                   //m_index = 0; // 27.05.2020 при выходе из программы отображение текста "Фазировка"
                 }
-/*#ifdef _SIFU_Syn2    // ЕСТЬ ЛИ ОТДЕЛЬНАЯ СИНХРОНИЗАЦИЯ ОТ МОСТА ДЛЯ СИФУ.
-              else if ( m_ch == Up || m_ch == Down || m_ch == Enter )
-                {
-                  output_s ( _Fazir_auto_txt ) ; // фазировка рассчетная .
-                  m_time = Timer1_Ovr ; // взведение выдержки .
-                  LabelFazir = 21 ;
-                  break ;
-                }
-#else*/
               else if ( m_ch == Up ) //Увеличить УФ плавно с дискретой "1" грд.
                 {
                     LabelFazir = 17 ;
                   if ( m_index <= 2 )
                   {
-#ifdef _SIFU_Syn2
-                   if ( _r.Cfg2._.SIFU_Syn2 == 1 )
-                   {
-                    output_s ( _Fazir_auto_txt ) ; // фазировка рассчетная .
-                    m_time = Timer1_Ovr ; // взведение выдержки .
-                    LabelFazir = 21 ;
-                   }
-                   else
-                   {
-                    _r.S_FazirovUgol += _Grad( 1.0 );
-                    if ( _r.S_FazirovUgol > _Grad( 60.0 ) )  _r.S_FazirovUgol = _Grad( 60.0 );
-                   }
-#else
-                    _r.S_FazirovUgol += _Grad( 1.0 );
-                    if ( _r.S_FazirovUgol > _Grad( 60.0 ) )  _r.S_FazirovUgol = _Grad( 60.0 );
-#endif
+                    _r.Selsin[0].null += _wgL(1);
+                    if (  (sw)_r.Selsin[0].null > (sw)_wgL180 )  _r.Selsin[0].null = (sw)_wgL180;
                   }
-              #ifdef _SIFU2_
-                  else
-                  {
-                    _r.S2.FazirovVS++;    // изменяется циклически в сторону уменьшения.
-                    if ( _r.S2.FazirovVS == 7 )  _r.S2.FazirovVS = 1;
-                  }
-              #endif
                 }
               else if ( m_ch == Down ) /* Уменьшить УФ плавно с дискретой "1" грд.*/
                 {
                   LabelFazir = 17 ;
                   if ( m_index <= 2 )
                   {
-#ifdef _SIFU_Syn2
-                   if ( _r.Cfg2._.SIFU_Syn2 == 1 )
-                   {
-                    output_s ( _Fazir_auto_txt ) ; // фазировка рассчетная .
-                    m_time = Timer1_Ovr ; // взведение выдержки .
-                    LabelFazir = 21 ;
-                   }
-                   else
-                   {
-                    _r.S_FazirovUgol -= _Grad( 1.0 );
-                    if ( (sw)_r.S_FazirovUgol < 0 )  _r.S_FazirovUgol = 0 ;
-                   }
-#else
-                    _r.S_FazirovUgol -= _Grad( 1.0 );
-                    if ( (sw)_r.S_FazirovUgol < 0 )  _r.S_FazirovUgol = 0 ;
-#endif
-                  }
-              #ifdef _SIFU2_
-                  else
-                  {
-                    _r.S2.FazirovVS--;             // изменяется циклически в сторону уменьшения.
-                    if ( _r.S2.FazirovVS == 0 )  _r.S2.FazirovVS = 6;
-                  }
-              #endif
-                }
-              else if ( m_ch == Enter ) /* Изменить номер ФТ.*/
-                {
-                  LabelFazir = 17 ;
-                  if ( m_index <= 2 )
-                  {
-#ifdef _SIFU_Syn2
-                   if ( _r.Cfg2._.SIFU_Syn2 == 1 )
-                   {
-                    output_s ( _Fazir_auto_txt ) ; // фазировка рассчетная .
-                    m_time = Timer1_Ovr ; // взведение выдержки .
-                    LabelFazir = 21 ;
-                   }
-                   else
-                   {
-                    _r.S_FazirovVS--;             // изменяется циклически в сторону уменьшения.
-                    if ( _r.S_FazirovVS == 0 )  _r.S_FazirovVS = 6;
-                   }
-#else
-                    _r.S_FazirovVS--;             // изменяется циклически в сторону уменьшения.
-                    if ( _r.S_FazirovVS == 0 )  _r.S_FazirovVS = 6;
-#endif
+                    _r.Selsin[0].null-= _wgL(1);
+                    if ( (sw)_r.Selsin[0].null < (sw)(~_wgL180+1))  _r.Selsin[0].null = (sw)(~_wgL180+1) ;
                   }
                 }
-#ifdef _SIFU2_
-              S2.FazirovUgol = _r.S_FazirovUgol + _Grad(30);
-              S2.FazirovVS = _r.S_FazirovVS;
-
-              if ( S2.FazirovUgol > _Grad(60) )
-              {
-                --S2.FazirovVS;
-                if ( S2.FazirovVS == 0 ) S2.FazirovVS = 6;
-                S2.FazirovUgol -= _Grad(60);
-              }
-
-              for ( ax = 1 ; ax < _r.S2.FazirovVS ; ax++ )
-              {
-                S2.FazirovVS-- ;
-                if ( S2.FazirovVS == 0 )  S2.FazirovVS = 6 ;
-              }
-#endif
         }
             break ;
           //----------

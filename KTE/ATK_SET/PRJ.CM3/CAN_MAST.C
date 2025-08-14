@@ -210,19 +210,17 @@ reinit:
 /*********************************
  Первое устройство
 *********************************/
-              Tst_Read_Dev[0] = master_read("\x0\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[1] = master_read("\x1\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[2] = master_read("\x2\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[3] = master_read("\x3\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[4] = master_read("\x4\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[5] = master_read("\x5\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[6] = master_read("\x6\xff",&abDev1 , mark++ );
-              Tst_Read_Dev[7] = master_read("\x7\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[0] = master_read("\x0\x1\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[1] = master_read("\x7\x2\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[2] = master_read("\x3\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[3] = master_read("\x4\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[4] = master_read("\x5\xff",&abDev1 , mark++ );
+              Tst_Read_Dev[5] = master_read("\x6\xff",&abDev1 , mark++ );
               Tst_Write_Dev[0]  = master_write(  "\x8\x9\xff" , &abDev1 , mark++ ) ; 
               Tst_Write_Dev[1]  = master_write(  "\xa\b\xff"  , &abDev1 , mark++ ) ;  
 
         // опрос этой пачки завершен - взводим триггер.
-        if ( Tst_Write_Dev2 != _NoErr_TimeOut && Tst_Write_Dev2 != _NoErr_Continue )
+        if ( Tst_Write_Dev[1] != _NoErr_TimeOut && Tst_Write_Dev[1] != _NoErr_Continue )
          {
           tst_scan = 1;
          }

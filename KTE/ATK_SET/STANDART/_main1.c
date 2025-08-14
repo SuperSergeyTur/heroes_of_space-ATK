@@ -305,7 +305,19 @@ p(49) ;
         else                      Rabota () ;
 
  p(60) ;
+   do { ax = Timer1_Ovr , bx = timer1 ; } while ( ax != Timer1_Ovr ) ;
+      // Склеиваем два средних байта из 4 байт полного времени в
+    // одно слово.
+  ax = ( ax << 8 ) | ( bx >> 8 ) ;
 
+ if (Nrot_CAN != 0xffff)
+ {
+   dTime_tst_sp = ax - Time_tst_sp;
+   Time_tst_sp = ax;
+   N_rot = Nrot_CAN;
+   Nrot_CAN = 0xffff;
+ }
+  
 //----
 #ifdef _CAN_MASTER
 //----

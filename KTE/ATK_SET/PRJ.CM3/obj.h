@@ -1324,9 +1324,11 @@ TemperatureSensorMonitor DTMonitor(_Dat_Temp_All/2, &_or.dt_Av);
 IzmTemp_Data TIzm[_MaxChannel];
 word Time_Pr_Dat_temp[_Dat_Temp_All], Time_Av_Dat_temp[_Dat_Temp_All];
 word IzmTempLabel;
+word Time_tst_sp, dTime_tst_sp;
 word Av_Dat, Avv_Dat, Bit_PrAvar;
 word FanSpeedMax;
 word Time_RMS_On, Time_RMS_Off;
+word Nrot_CAN;
 Av_DT Av_DT_Str, Pr_DT_Str;
 word t_fan;           // максимальная температура за измерение
 word Id_fan ;          // задание на вентилятор

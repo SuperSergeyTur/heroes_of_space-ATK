@@ -43,7 +43,7 @@ word read_rezerv ( void )
 word  ObjPrg ( word num )
   {
     word ax;
-    lword lax;
+    //lword lax;
     if ( num != _Obj_c_Init && num != _Obj_c_Common_avar ) // Инициализация и Общие Аварии в любом случае .
      {
         // Задано ли объектное управление .
@@ -83,7 +83,7 @@ word  ObjPrg ( word num )
         bo_Err_Sifu = 0;
         Err_counter[0] = 0;
         Err_counter[1] = 0;
-          
+        bo_dLDL_set = 0;  
         //QueryTimeOvrOk_old = QueryTimeOvrOk  = 0;
         
         //trig_Privyazk_TZ= 1;
@@ -428,12 +428,15 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
         else
         {
           bx = Lrot_dp - ax;
+          dLrot = (float)(_Grad(360) - Lrot_dp + ax );
         
           if (bx < _Grad(180))
           {
-            ax = Lrot_dp;
+            //ax = Lrot_dp;
+            dLrot = 0;
           }
-          dLrot = (float)(_Grad(360) - Lrot_dp + ax );
+          
+          
         }
         asm_di();
         Time_DLRot = timer1;
@@ -441,6 +444,7 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
 
    Lrot_old = Lrot_dp ;
    Lrot_dp = ax ;   //  разница углов будет составлять угол Uab ротора
+   bo_dLDL_set = 1;
 //   Lrot =  Lrot_dp;
    asm_ei();
 //   if ( _or.CfgO._.Vedushiy )
