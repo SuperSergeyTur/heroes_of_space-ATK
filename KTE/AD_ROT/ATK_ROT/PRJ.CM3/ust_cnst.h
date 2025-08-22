@@ -175,7 +175,7 @@ _x_far const  struct  Blok_Ustavok   _c  =
 
    /* word     OuRSMaxMost1 ;           */  _Id_Nom  ,               // 2
 
-   /* word     OuRSMaxMost2 ;           */ (w)(int)(-1.00 * _Id_Nom)  ,     // 3
+   /* word     OuRSMaxMost2 ;           */ 0  ,     // 3
 
    /* word     OuRSMax2Most1 ;          */  _Id_nom(0.1) ,               // 4
 

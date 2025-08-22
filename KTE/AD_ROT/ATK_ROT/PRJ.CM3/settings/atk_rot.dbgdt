@@ -499,7 +499,7 @@
                     <item>TEK_Grads</item>
                     <item>Err_counter</item>
                     <item>Velos_f</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

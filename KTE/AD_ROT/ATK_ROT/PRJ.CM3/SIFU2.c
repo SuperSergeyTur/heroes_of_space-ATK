@@ -64,8 +64,8 @@ void S2_Interrupt ( void )
   //  asm_ei() ;
   // asm_di() ;  //Чтобы не влезло левое прерывание
   // DAN 04.06.2016 - Только Ведущий Роторный Выпрямитель выдаёт СинхроИмпульс на плату энкодера .
-  if ( _or.CfgO._.Vedushiy == 1 )
-  {
+ // if ( _or.CfgO._.Vedushiy == 1 )
+ // {
     
     switch( S2.NumInt )
     {
@@ -115,7 +115,7 @@ void S2_Interrupt ( void )
         //Ждем получения данных. При скорости 250 это около 600 мкс
         //S2.NumInt = i3 ;
         _sifu2_epa_time (timer1 + _MkSec(20));
-        if (++counter > 85)
+        if ((*Timer3 - QueryTimeOk > _Enc_base_time-_MkSec(200))||(priznak_CAN2_no == 1) )
         {          
           EncoderGray = 0x0;
         }
@@ -223,7 +223,7 @@ void S2_Interrupt ( void )
       //-------------
       
     }
-  }
+ /* }
   else
   {
       if ( _or.CfgO._.sld_PWM == 0 ) 
@@ -234,7 +234,7 @@ void S2_Interrupt ( void )
       S2.TZ += _Enc_base_time;
       _sifu2_epa_time (S2.TZ); // зарядка конца импульса
     
-  }
+  }*/
   pV( 0 ) ;
   
   return;

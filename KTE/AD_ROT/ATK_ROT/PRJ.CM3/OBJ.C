@@ -55,8 +55,8 @@ word  ObjPrg ( word num )
       case _Obj_c_Init :
         TimeFrot = Timer1_fSec;
         SimCounter = 0;
-        RT_Str.zad_max = &_r.RTMAX;
-        RT_Str.zad_min = &_r.RTMIN;
+        RT_Str.zad_max = &_r.OuRSMaxMost1;
+        RT_Str.zad_min = &_r.OuRSMaxMost2;
         RT_Str.kp =  &_r.KRTP;   
         RT_Str.ki =  &_r.KRTNI;   
         RT_Str.zad = &canr.Id_zad;   
@@ -83,6 +83,8 @@ word  ObjPrg ( word num )
         bo_Err_Sifu = 0;
         Err_counter[0] = 0;
         Err_counter[1] = 0;
+        Ndpr_fil = 0;
+        
         bo_dLDL_set = 0;  
         //QueryTimeOvrOk_old = QueryTimeOvrOk  = 0;
         
@@ -515,10 +517,25 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
         lax *= (lw)(w)_Skor_Nom ;
         lax = (lw)lax / (lw)(w)_sr.NOM.N.fe ;
 */
-       //if ( (sw)deltDP < 0  )   ax = ~ax+1 ;
+        
+        if (_or.Tfil != 0)
+        {
+          //Период измерений в секундах
+          fbx =  (float)deltTDP_old/_Secl(60);
+          
+          // Фильтрация скорости:
+          Ndpr_fil = Ndpr_fil * ( 1.0 - fbx/_or.Tfil ) + fax * fbx/_or.Tfil ;
+          if (!isnormal(Ndpr_fil))
+          {
+            Ndpr_fil = 0;
+          }
+          fax = Ndpr_fil;
+        }
+        //if ( (sw)deltDP < 0  )   ax = ~ax+1 ;
         //Само масштабирование сигнала по частоте
         // где F - неотмасштабированная скорость по частоте импульсов
         Ndpr = (w)fax;//( (lw)lax * (lw)(w)ax ) / (lw)( _Enc_base_time ) ;
+        
       //Ndpr = ( (slw)lax * (slw)(sw)ax ) / (slw)( _Enc_base_time ) ;
 
         if ( (sw)deltDPr < 0  )   Ndpr = ~Ndpr+1 ;

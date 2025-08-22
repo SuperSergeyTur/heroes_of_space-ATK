@@ -85,7 +85,7 @@ void        Obj_Interrupt (void );
  #define T2_CR1_Int()
 
  #define T3_MR0_Int()
- #define T3_MR1_Int() S_Interrupt()
+ #define T3_MR1_Int() //S_Interrupt()
  #define T3_MR2_Int()
  #define T3_MR3_Int()
 
@@ -831,6 +831,7 @@ word  deltDPr ;//, dDp ;
 byte  excess_delt ;
 word  Lsety , Lrot_old, Ndpr , Lsety_old, Time_DLRot; 
 float dLrot, dLdT, delta_L ;
+float Ndpr_fil;
 float Velos_f;
 lword  NS2_rot , NS2_rot_old , T_NS2_rot;
 word  Syn_NS2_old  ;
