@@ -39,7 +39,8 @@
 
     void        Contr_Ttrans_4_20 ( word num ) ;
     void        T_Izm_Dat (  word num ) ;
-
+    void        VklVentyilyatciya(int code);
+    
  #define _MT_Init        0
  #define _MT_Upr         1
  #define _MT_Id_Zad_Ogr  2
@@ -264,6 +265,8 @@ union  AvarBits2
         word     OuIchRS  ;
         word     OuIchRS_k  ;
         word     Delta_Sk ;
+        word     ZSkorProizv, ZSkorProizvKp;
+
 
 #ifdef bi_RS_P
         word     _r_KRSP ;
@@ -411,6 +414,7 @@ extern  word     OuRegS_dop_kod ;
 extern  word     OuIchRS  ;
 extern  word     OuIchRS_k  ;
 extern  word     Delta_Sk ;
+extern  word     ZSkorProizv, ZSkorProizvKp;
 
 #ifdef bi_RS_P
   extern  word     _r_KRSP ;

@@ -286,7 +286,7 @@
     void        IdIzm_3faz (void);
     void        TokRaspr_3faz (void);
 
-    void        Linear (void);
+//    void        Linear (void);
 
 #endif
 

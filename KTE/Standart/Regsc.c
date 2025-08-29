@@ -525,7 +525,6 @@ else
             }
 #endif
           else OuRegS_dop_kod = (slw)lax >> 16 ;
-          fr1 = OuRegS_dop_kod;
 
  #ifdef _Rev_Pola
 

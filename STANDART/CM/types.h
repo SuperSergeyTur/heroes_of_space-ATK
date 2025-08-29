@@ -52,6 +52,8 @@ typedef   signed long int     fslw ;
 
 typedef   volatile            word  v ;
 
+typedef   float               float32_t ;
+
 //------------------------------------------------------------
 
 

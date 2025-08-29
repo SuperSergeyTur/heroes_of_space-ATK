@@ -1,4 +1,6 @@
 
+extern lword AddZSkorProizv( word code, sword zadSkor, lword toValue );
+
 //ДДДДДДДДДДДДДДДДДДДДДДДДДДДДД
 
 void  Init_Prog ( void )
@@ -404,34 +406,65 @@ void  Init_Prog ( void )
 
 //--------------- Для Регулятора Скорости -------------
 
+     // notlinear_joystick.init(&_or.Joystick_full_range, &_or.Joystick_notlinear_range, &_or.Joystick_notlinear_koef );
        //  для  ЗИ-РC
-      Set_ZI ( &zi_rs , 0 ) ;
-      zi_rs.time = timer1 ;
+      //NEW_ZI Set_ZI ( &zi_rs , 0 ) ;
+      //NEW_ZI zi_rs.time = timer1 ;
+      zi_rs.set_zi( 0 ); // NEW_ZI
+      AddZSkorProizv(0, 0, 0);
       // Триггера для замены темпов ЗИС .
       Shtat_temp = 1 ;
       Fors_temp  = 0 ;
       Reviz_temp = 0 ;
+
+    word zi_calc_cikle; // NEW ZI
+    #ifdef  _RS_10ms_   // NEW ZI
+        zi_calc_cikle = _MkSec(10000), // NEW ZI
+    #else                              // NEW ZI
+        zi_calc_cikle = _MkSec(3333),  // NEW ZI
+    #endif                             // NEW ZI
+
 #ifndef _WM591
-      zi_rs.temp_p_razg = &_r.T_ZISkorP_Razg ;
-      zi_rs.temp_p_torm = &_r.T_ZISkorP_Torm ;
+      //NEW_ZI zi_rs.temp_p_razg = &_r.T_ZISkorP_Razg ;
+      //NEW_ZI zi_rs.temp_p_torm = &_r.T_ZISkorP_Torm ;
     #ifndef _ZI_4TEMPA
-      zi_rs.temp_m_razg = &_r.T_ZISkorP_Razg ;
-      zi_rs.temp_m_torm = &_r.T_ZISkorP_Torm ;
+      //NEW_ZI zi_rs.temp_m_razg = &_r.T_ZISkorP_Razg ;
+      //NEW_ZI zi_rs.temp_m_torm = &_r.T_ZISkorP_Torm ;
+      zi_rs.init( &_r.T_ZISkorP_Razg,  // NEW ZI
+                  &_r.T_ZISkorP_Torm,
+                  &_r.T_ZISkor_Parab,  // уставку нужно переделать в msg.h из Skor_Nom() в _Sec()
+                  &_r.T_ZISkor_Parab,
+                  zi_calc_cikle);
     #else
-      zi_rs.temp_m_razg = &_r.T_ZISkorM_Razg ;
-      zi_rs.temp_m_torm = &_r.T_ZISkorM_Torm ;
+      //NEW_ZI zi_rs.temp_m_razg = &_r.T_ZISkorM_Razg ;
+      //NEW_ZI zi_rs.temp_m_torm = &_r.T_ZISkorM_Torm ;
+      zi_rs.init( &_r.T_ZISkorP_Razg,  // NEW ZI
+                  &_r.T_ZISkorP_Torm,
+                  &_r.T_ZISkorM_Razg,
+                  &_r.T_ZISkorM_Torm,
+                  &_r.T_ZISkor_Parab,   // уставку нужно переделать в msg.h из Skor_Nom() в _Sec()
+                  &_r.T_ZISkor_Parab,
+                  zi_calc_cikle);
+
     #endif
 #else
-      zi_rs.temp_p_razg = &TempRazg ;
-      zi_rs.temp_p_torm = &TempRazg ;
-      zi_rs.temp_m_razg = &TempRazg ;
-      zi_rs.temp_m_torm = &TempRazg ;
+      // NEW ZI zi_rs.temp_p_razg = &TempRazg ;
+      // NEW ZI zi_rs.temp_p_torm = &TempRazg ;
+      // NEW ZI zi_rs.temp_m_razg = &TempRazg ;
+      // NEW ZI zi_rs.temp_m_torm = &TempRazg ;
+      zi_rs.init( &TempRazg,  // NEW ZI
+                  &_r.T_ZISkor_Parab,   // уставку нужно переделать в msg.h из Skor_Nom() в _Sec()
+                  &_r.T_ZISkor_Parab,
+                  zi_calc_cikle);
+
 #endif
+      
     #ifndef _KTEV
-      zi_rs.temp_parabola = &_r.T_ZISkor_Parab ;
-      zi_rs.temp_parabola_delta = &_r.T_ZISkor_Parab_delta ;
+      //NEW_ZI zi_rs.temp_parabola = &_r.T_ZISkor_Parab ;
+     // zi_rs.temp_parabola_delta = &_r.T_ZISkor_Parab_delta ;
     #else
-      zi_rs.temp_parabola = 0 ; // адрес = 0, сама уставка
+      _r.T_ZISkor_Parab = 0; // NEW_ZI
+      //NEW_ZI zi_rs.temp_parabola = 0 ; // адрес = 0, сама уставка
     #endif                      // в UST_CNST.H игнорируется .
 
         RegFlg.all = 0 , OuIchRS = 0 ;
@@ -478,40 +511,17 @@ void  Init_Prog ( void )
       Id2_sr = 0 ;
 #endif
 
-       //  для  ЗИ-РТ
-      Set_ZIRT ( &zi_rt , 0 ) ;
-      zi_rt.time = timer1 ;
-      zi_rt.temp_p = &_r.Temp_RT_P ;
-      zi_rt.temp_m = &_r.Temp_RT_M ;
-
       OIRT_drob = 0 ;
       Id_dop_kod = 0;
 #ifndef _KTE_GD
-      ZIDN  = ZIDN1 = 0 ;  // выход ЗИ-РТ.
-      OIRT  = _r.RevU0  ;  // интегратор регулятора тока
-      OIRT1 = _r.RevU0  ;  // интегратор регулятора тока
-      ORT   = 0x2000;      // выход регулятора тока
-      IDN = 0 , IDN1 = 0 ;
-   #ifdef _SIFU2_
        //  для  ЗИ-РТ
-       Set_ZIRT ( &zi_rt2 , 0 ) ;
-       zi_rt2.time = timer1 ;
-       zi_rt2.temp_p = &_r.Temp_RT_P ;
-       zi_rt2.temp_m = &_r.Temp_RT_M ;
-       //---
-       OIRT_drob_2_ = 0 ;
-       ZIDN_2_  = ZIDN1_2_ = 0 ;  // выход ЗИ-РТ.
-       OIRT_2_  = _r.RevU0  ;  // интегратор регулятора тока
-       OIRT1_2_ = _r.RevU0  ;  // интегратор регулятора тока
-       ORT_2_   = 0x2000;      // выход регулятора тока
-       IDN_2_ = 0 , IDN1_2_ = 0 ;
-       //---
-       // Для одновременного изменения коэффициентов РТ :
-       ust_rINN0   = _r.INN0 ;
-       ust_rKRTP   = _r.KRTP ;
-       ust_rKRTPRI = _r.KRTPRI ;
-       ust_rKRTNI  = _r.KRTNI  ;
-   #endif
+      zi_rt.time = timer1 ;
+      zi_rt.temp_p = &_r.Temp_RT_P ;
+      zi_rt.temp_m = &_r.Temp_RT_M ;
+      //---
+      ZIDN  = 0 ;  // выход ЗИ-РТ.
+      OIRT  = _r.RevU0  ;  // интегратор регулятора тока
+      ORT   = 0x2000;      // выход регулятора тока
 #else
       Ig_full = _AD_BUSY ;
       AD_Izm (  Ig_ach   , &Ig_full  ) ; // зарядка первого ИЗМЕРЕНИЯ "Ig"
@@ -802,90 +812,26 @@ void  Mashtab_Dat ( void )
       Mashtab.Ug = (slw)(sw)_mc.Mashtab_Ug * (slw)(sw)_sr.Dat.Ug  /  (sw)_sr.NOM.Ug.fe ;
       Mashtab.Ug_max = (slw)(sw)_AD_MAX * (slw)(sw)Mashtab.Ug / (sw)256 ;
 #endif
-
+      Mashtab.N_nom_Barabana =  _sr.NOM.N.fe / 10. / 60. * _or.DiameterBarabana *3.14;// / _Meter_Nom; // 10 - 1 оберт = 10 дискрет; 60 - для переводу з об/хв у об/сек
     //---------------------------------------------------------------------------------------
 
-#ifdef _KTE
-  #ifdef _AVTONASTR
-      AN_Kreg () ; // Вычисление коэффициентов РТ с помощью АН .
-  #endif
     //---------------
     //01.03.2017 - Коэффициенты РТ берутся из двух мест :
- #ifndef _ATK_SET
-      if ( _r.Cfg._.RT_Anastr == 1 )
-      {
-            // Коэффициенты , полученные с помощью АН , рассчитываемые , но не доступные к изменению с пульта :
-            _r_KRTPRI = an_KRTPRI;
-            _r_KRTNI  = an_KRTNI ;
-            _r_KRTP   = an_KRTP ;
-            // ---
-  #ifdef  _SIFU2_ // Для 12ти пульсной системы с РТ2 или отдельной работы вторым мостом :
-            _or_KRTPRI_2_ = an_KRTPRI_2_;
-            _or_KRTNI_2_  = an_KRTNI_2_ ;
-            _or_KRTP_2_   = an_KRTP_2_ ;
-  #endif
-      }
-      else
-      {
-            // Коэффициенты из уставок , доступные к изменению с пульта .
-            _r_KRTPRI = _r.KRTPRI;
-            _r_KRTNI  = _r.KRTNI ;
-            _r_KRTP   = _r.KRTP ;
-            // ---
-  #ifdef  _SIFU2_ // Для 12ти пульсной системы с РТ2 или отдельной работы вторым мостом :
-            _or_KRTPRI_2_ = _or.KRTPRI_2_;
-            _or_KRTNI_2_  = _or.KRTNI_2_ ;
-            _or_KRTP_2_   = _or.KRTP_2_ ;
-  #endif
-      }
- #else
+ #ifdef _ATK_SET
       // Коэффициенты из уставок , доступные к изменению с пульта .
       if ( KTE2_Prinud_com == 0 )
       {
-            _r_KRTPRI = _r.KRTPRI;
             _r_KRTNI  = _r.KRTNI ;
             _r_KRTP   = _r.KRTP ;
       }
       else
       {
-            _r_KRTPRI = _or.KRTPRI;
             _r_KRTNI  = _or.KRTNI ;
             _r_KRTP   = _or.KRTP ;
       }
  #endif
     //---------------
-#endif
 
-#ifdef  _SIFU2_  // Для номинала в абсолютных единицах для ШС1 и ШС2 в 12-пульсной схеме :
-      Id_divBy2_abs = (sw)_sr.NOM.Id.fe/2 ;
-      //-----------------------------------
-
-       // Для одновременного изменения коэффициентов РТ :
-       if ( ust_rINN0 != _r.INN0 ) // момент изменения уставки :
-       {
-            ust_rINN0  = _r.INN0 ;
-            if ( _r.Cfg2._.RT1_RT2sovm == 1 ) _or.INN0_2_ = _r.INN0 ; // Изменение уставки РТ2 синхронно с РТ1 .
-       }
-       //---
-       if ( ust_rKRTP != _r.KRTP ) // момент изменения уставки :
-       {
-            ust_rKRTP  = _r.KRTP ;
-            if ( _r.Cfg2._.RT1_RT2sovm == 1 ) _or.KRTP_2_ = _r.KRTP ; // Изменение уставки РТ2 синхронно с РТ1 .
-       }
-       //---
-       if ( ust_rKRTPRI != _r.KRTPRI ) // момент изменения уставки :
-       {
-            ust_rKRTPRI  = _r.KRTPRI ;
-            if ( _r.Cfg2._.RT1_RT2sovm == 1 ) _or.KRTPRI_2_ = _r.KRTPRI ; // Изменение уставки РТ2 синхронно с РТ1 .
-       }
-       //---
-       if ( ust_rKRTNI != _r.KRTNI ) // момент изменения уставки :
-       {
-            ust_rKRTNI  = _r.KRTNI ;
-            if ( _r.Cfg2._.RT1_RT2sovm == 1 ) _or.KRTNI_2_ = _r.KRTNI ; // Изменение уставки РТ2 синхронно с РТ1 .
-       }
-
-#endif
 
   return ;
 }

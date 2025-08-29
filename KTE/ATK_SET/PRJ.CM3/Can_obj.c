@@ -427,7 +427,6 @@ word can_ConfigReg ( word code )
           OuIchRS = 0 ; // сбрасываем интегратор вышестоящего регулятора.
     #ifndef _KTE_GD
           OIRT  = _r.RevU0  ;  /* интегратор регулятора тока */
-          OIRT1 = _r.RevU0  ;  /* интегратор регулятора тока */
     #else
           OIRT  = 0 ;  /* интегратор регулятора тока */
           Integr_rn = 0 ;
@@ -459,7 +458,6 @@ word can_ConfigReg ( word code )
           OuIchRS = 0 ; // сбрасываем интегратор вышестоящего регулятора.
     #ifndef _KTE_GD
           OIRT  = _r.RevU0  ;  /* интегратор регулятора тока */
-          OIRT1 = _r.RevU0  ;  /* интегратор регулятора тока */
     #else
           OIRT  = 0 ;  /* интегратор регулятора тока */
     #endif

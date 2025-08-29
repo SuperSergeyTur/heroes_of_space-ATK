@@ -281,7 +281,9 @@ _x_far const byte  TABLINN [ ] =
              };
 #endif
 
-struct ZI   zi_rs ;
+//NEW_ZI struct ZI   zi_rs ;
+CNotLinearFourTempZI zi_rs;// = CNotLinearFourTempZI::CNotLinearFourTempZI();  //NEW_ZI
+CNotLinearJoystick notlinear_joystick;
 struct ZIRT zi_rt ;
  #ifdef  _SIFU2_
 struct ZIRT zi_rt2 ;
@@ -515,7 +517,9 @@ extern  word     Udv ;
 
 extern _x_far const byte  TABLINN [] ;
 
-extern  struct ZI   zi_rs ;
+//NEW_ZI extern  struct ZI   zi_rs ;
+extern  CNotLinearFourTempZI zi_rs;  //NEW_ZI
+extern  CNotLinearJoystick notlinear_joystick;  //NEW_ZI
 extern  struct ZIRT zi_rt ;
  #ifdef  _SIFU2_
 extern  struct ZIRT zi_rt2 ;

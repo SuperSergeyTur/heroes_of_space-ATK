@@ -520,6 +520,8 @@ union flagO {
     {"TEK_Grad ", (w*)&TEK_Grad    ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld, "h "},\
     {"TEK_Grads", (w*)&TEK_Grads   ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld, "h "},\
     {"N_inv    ", (w*)&N_inv       ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld, "h "},\
+    {"Ndpr     ", (w*)&Ndpr         ,_sl_form(2,0,2,3,1), _Skor_nom(1),(w*)&_ind100_sld, "%"},\
+    {"Ndpf     ", (w*)&Ndpf         ,_sl_form(2,0,2,3,1), _Skor_nom(1),(w*)&_ind100_sld, "%"},\
     {"T_Per    ", &T_per           ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
     {"NS2_rot  ", &NS2_rot         ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
     {"Tpp_3syn ", &Tpp_3syn        ,_sl_form(4,1,1,0,0), 1       ,(w*)&_ind1_sld,"h " },\
@@ -531,7 +533,8 @@ union flagO {
     {"dT_f0    ", &dT_f0          ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },\
     {"Tpp_dp   ", &Tpp_f           ,_sl_form(0,0,2,3,3), 1       ,(w*)&_ind1_sld,"ms" },\
     {"dL_rot   ", &dLrot           ,_sl_form(0,0,2,3,3), _Grad(1),(w*)&_ind1_sld,"Ãðä" },\
-    {"deltTDP  ", &deltTDP_old     , _sl_form(2,1,2,3,1),1      ,(w*)&_ind1_sld, "ms" },
+    {"deltTDP  ", &deltTDP_old     , _sl_form(2,1,2,3,1),_MkSec(1000),(w*)&_ind1_sld, "ms" },\
+    {"dT_DP    ", &deltTimDP      , _sl_form(2,1,2,4,0),_MkSec(1),(w*)&_ind1_sld, "mks" },
 
 
 
@@ -780,7 +783,7 @@ word  Izm_T_full , T_izm ;
 word Time_ErrSifu;
 word Time_TestFaz;
 word TEK_Grads;
-Reg_Str RT_Str;
+//Reg_Str RT_Str;
 word Time_Min_RT, trg_MinRT;
 lword* Timer3;
 lword DP_TZ;
@@ -829,7 +832,7 @@ word deltTDP_old, EncoderDP ,EncoderDPf ,EncoderDPr;
 
 word  deltDPr ;//, dDp ;
 byte  excess_delt ;
-word  Lsety , Lrot_old, Ndpr , Lsety_old, Time_DLRot; 
+word  Lsety , Lrot_old, Ndpr , Ndpf ,Lsety_old, Time_DLRot; 
 float dLrot, dLdT, delta_L ;
 float Ndpr_fil;
 float Velos_f;

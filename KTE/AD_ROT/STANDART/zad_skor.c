@@ -363,35 +363,8 @@ word Shtat_ConfigReg ( word code )
                  if ( bo_Vkl_KZ == 1 || flgO._.Prinud_com == 1 ) S.Alfa = _or.S_Alfa_Prinud_com ;  // Угол для принудительной коммутации .
                  else
                  {
-    #ifndef _FP_N_to_L
-                  if ( KTE2_OuRS == 0 ) S.Alfa = _or.S_Alfa_Dvig ; // Угол для разгона .
-                  else                  S.Alfa = _or.S_Alfa_Gen ;  // Угол для торможения .
-    #else
-                  if (!_or.CfgO._.N_to_L)
-                  {
-                    if ( KTE2_OuRS == 0 ) S.Alfa = _or.S_Alfa_Dvig ; // Угол для разгона .
-                    else                  S.Alfa = _or.S_Alfa_Gen ;  // Угол для торможения .
-                  }
-                  else
-                  {
-                    if (_or.CfgO._.RT)
-                    {
-                      if (Prg._.RegTok)
-                      {
-                        UniReg ( &RT_Str );
-                        S.Alfa = Linear (RT_Str.out);    
-                      }
-                    }
-                    else
-                    {
-                      // Вызов ФП для Угла Управления в зависимости от Скорости :
-                      if ( KTE2_OuRS == 0 ) fp_L = &_or.razgFP_N_to_L [ 0 ] ; // Табличка для разгона .
-                      else                  fp_L = &_or.tormFP_N_to_L [ 0 ] ; // Табличка для торможения .
-                      FP_L ( ) ;
-                      S.Alfa = L_after_FP ;    // Угол из табличек .
-                    }
-                  }
-#endif
+                   can_ConfigReg ( _CAN_Alfa_Zad );
+
                  }
                }
                else S.Alfa = _or.S_Alfa_F2_Isp ; // Угол для исп.режимов АР1 - "СИФУ-рез" или "Циклы РТ" .

@@ -797,7 +797,7 @@ void  Mashtab_Dat ( void )
       Mashtab.Ug = (slw)(sw)_mc.Mashtab_Ug * (slw)(sw)_sr.Dat.Ug  /  (sw)_sr.NOM.Ug.fe ;
       Mashtab.Ug_max = (slw)(sw)_AD_MAX * (slw)(sw)Mashtab.Ug / (sw)256 ;
 #endif
-
+      Mashtab.N_nom_Barabana =  _sr.NOM.N.fe / 10. / 60. * _or.DiameterBarabana *3.14;// / _Meter_Nom; // 10 - 1 оберт = 10 дискрет; 60 - для переводу з об/хв у об/сек
     //---------------------------------------------------------------------------------------
 
 #ifdef _KTE

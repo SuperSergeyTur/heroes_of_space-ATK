@@ -187,8 +187,7 @@ void    main (void)
     #ifdef _Vozb_KTE
       Vozb_Start () ;
     #endif
-      Revers_epa_init () ;
-
+     
 p(10) ;
 
 #ifdef _WatchDog  // 26.03.2015 - Нельзя перенесить в SYSTEM.C , т.к. он успевает сработать за время вывода стартовых сообщений (даты и названии программы) .

@@ -148,7 +148,7 @@
   #ifdef _INTERPRETER
 #include <interpreter.h>
   #endif
-#include <unireg.h>
+//#include <unireg.h>
 #include "obj_mux.h"
 #include "obj.h"
 

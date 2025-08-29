@@ -337,44 +337,6 @@ beg_imp:
             // Запрет из реверса или запрет при работе только РТ2 .
      if ( S.flg._.ZapretImp == 0 && S.Disable == 0 )
       {
-       if ( _r.Cfg._.DZV == 1 )
-        {
-          if ( S.flg._.Revers == 1 ) // если в ведущем СИФУ сняты подтверждающие,
-          {   // то в ведомом снимаем ИУ совсем, как только появился один из ДЗВ.
-#ifdef _F16e
-            Port_input ( 3 ) ;
-            if ( bi_DZVA == 1 || bi_DZVK == 1 ) S.flg._.SnImpVM = 1 ;
-#else
-            if ( DZVA_Ok() || DZVK_Ok() ) S.flg._.SnImpVM = 1 ;
-#endif
-          }
-          else  S.flg._.SnImpVM = 0 ;
-          //---
-          if ( S.flg._.SnImpVM == 0 )
-          {
-            S.flg._.ImpSet1 = 1 ; // для запрета контроля ДЗВ в реверсе.
-
-            //mFzapoln_trg() ;
-            if ( Otkl_Imp == 0 )
-            {
-                if      ( S.NumMost == 1 ) {
-                                              mFzapoln1_stop() ;// снимаем оба частотных заполнения.
-                                              mFzapoln1_start() ;
-                                            }
-                else if ( S.NumMost == 2 ) {
-                                              mFzapoln2_stop() ;// снимаем оба частотных заполнения.
-                                              mFzapoln2_start() ;
-                                            }
-            }
-            else goto xxx ; // При срабатывании геркона Otkl_Imp без выдержек и S.NIP не пишется.
-            mPort_Imp(S.NIP) ;
-            S.flg._.BegImp = 1 ; //12.10.2016 - Перенесено в передний фронт ИУ , где ему и место ...
-          }
-        }
-        else
-        {
-          //mFzapoln_trg() ;
-         //S.flg._.SnImpVM = 0 ;
             if ( Otkl_Imp == 0 )
             {
                 if      ( S.NumMost == 1 ) {
@@ -393,7 +355,6 @@ beg_imp:
             else goto xxx ; // При срабатывании геркона Otkl_Imp без выдержек и S.NIP не пишется.
             mPort_Imp(S.NIP) ;
             S.flg._.BegImp = 1 ; //12.10.2016 - Перенесено в передний фронт ИУ , где ему и место ...
-        }
       }
       else
       {
@@ -508,9 +469,6 @@ yyy:
 #endif
         S.flg._.ImpSet1 = 0 ; // для разрешения контроля ДЗВ в реверсе.
               // если импульс не был сформирован, то даем накопиться ДЗВ.
-#ifndef _F16e
-        if ( S.flg._.SnImpVM == 0 ) Clr_DZV() ; // очистка ДЗВ по заднему фронту ИУ.
-#endif
       }
 #ifdef  _IU_60_Qubler // убираем перекрытие ИУ, но продолж.основной ИУ до 60грд.
       else mPort_Imp( FOR1[S.N] ) ;  // импульсы без подтверждающих
@@ -553,60 +511,8 @@ yyy:
     }
 #endif
 
-#ifdef _ATK_SET
-      // Измерения для определения гранично-непрерывного тока :
-      while ( Id_full == _AD_BUSY );
-      mIzmData_Conversion ( Id_full , Id_IU ,  Id_mg_ach   ) ;
-      Id_IU = (slw)(sw)Id_IU * (slw)(sw)Mashtab.Id / 256 ;
-      if ( (sw)Id_IU < 0 ) Id_IU = ~Id_IU + 1 ;
-      //---
-      // Запоминаем предыдущий режим и определяем текущий ( прерывистый или непрерывный ) :
-      flgO._.Id_neprer1 = flgO._.Id_neprer ;
-      if ( Id_IU < _or.Id_IU )
-      {
-         i_prer ++ ;
-         i_nepr = 0 ;
-         if ( i_prer >= _or.i_count )
-         {
-              i_prer = _or.i_count ;
-              flgO._.Id_neprer = 0 ;
-         }
-      }
-      else
-      {
-         i_nepr ++ ;
-         i_prer = 0 ;
-         if ( i_nepr >= _or.i_count )
-         {
-              i_nepr = _or.i_count ;
-             flgO._.Id_neprer = 1 ;
-         }
-      }
-#endif
-
-  #ifdef  _SIFU_1Faza
-         //Для однофазной схемы ДатЭДС вызывается после 1 и 4 тиристоров
-      Ud_off += s_ax ;   // nakaplivaem
-             // для рабочего ИУ и пропущенного ИУ: для линейности,
-             // т.к. между ИУ Ud затягивается в "-", а сами пики большие.
-      if ((S.N != 1 )&&(S.N != 4) ) goto out1 ;
-      s_ax = (sw)Ud_off/3, Ud_off = 0 ; // берем среднее Ud
-  #endif
 
       UdSr = s_ax ;
-
-  #ifdef  _RS_10ms_
-    if ( PDF[0].flg._.new_izm_pdf == 1 )   //вызывается раз в 10ms
-  #endif
-     {      /* Выбор типа датчика ЭДС. */
-       /*if ( _r.Sk_str._.DatEDS  == 0 )*/  DatEDS_Ud () ; // 120-150mcs 21.01.04 09:21
-       //else                               DatEds () ;    // 100-170mcs
-
-       Izm_Skor_EDS () ; // Вычисление рассчетной скорости по ЭДС ( и Потоку ) .
-     }
-  #ifdef  _SIFU_1Faza
-   out1:;
-  #endif
 
   #ifdef  _RS_10ms_
     if ( PDF[0].flg._.new_izm_pdf == 1 )   //вызывается раз в 10ms
@@ -625,7 +531,7 @@ yyy:
             if ( bi_Revers_Polja == 1 )  Skor = ~Skor + 1 ;
           #endif
         }
-/*       else if ( _r.Sk_str._.PDF == 1 ) // 60mcs
+/*       else if (_r.Sk_str._.PDF == 1) // 60mcs
         {
           Skor = PDF[0].out_m ;
           #ifdef bi_Revers_Polja
@@ -713,14 +619,14 @@ yyy:
              obj_ConfigReg ( _Obj_N_Zad ) ;  // Объектное задание перебивает CAN-задание
            }
          //-----
- //         PDF[0].flg._.new_izm_pdf = 0 ; // сброс флага , взведется через 10мс в PDF.C
+//          PDF[0].flg._.new_izm_pdf = 0 ; // сброс флага , взведется через 10мс в PDF.C
           if ( Prg._.RegSk  == 1 )  RegSk () ;  // 150-210mcs
        }
 
        //while ( Id_full == _AD_BUSY ); // 10.11.2008 15:14 - DAN перенесено в функцию IdConv ()
                                         // для того , чтобы удобно было делать объектное
        IdConv () ;                      // преобразование тока .
-
+      
        Control_Id_Max ()  ;
 #ifdef  _KTE
      // 12.08.2010 15:32 Временно , пока Макс не доведёт эту программу до ума :
@@ -758,6 +664,8 @@ yyy:
 
       #ifndef _KTE_GD
           RegTok () ;  // 110mcs
+          
+          Reg_Dispetcher(RT_Regim);
 
             //--- переносить эту припарку в РТ нельзя, т.к. он вызывается
             //           в реверсе без этой припарки.
@@ -795,7 +703,7 @@ yyy:
           RNg() ;
       #endif
           //-----
-          Linear () ; // 30mcs
+          S.Alfa = Linear (Lz_Inv) ; // 30mcs
         }
       }
 
@@ -963,8 +871,6 @@ sifu:
     if ( S.flg._.Revers  == 1 ) S.Most_Tir |= 0x40 ; // 6й - SPI .
     if ( S.flg._.SnImpVM == 1 ) S.Most_Tir |= 0x80 ; // 7й - снятие импульсов .
 
-      //-------  Опрос необходимости реверса и его Инициализация. ----
-    Revers_start () ;
 
     /* Зарядка ЕПА на угол измерения тока */
 
@@ -1056,7 +962,7 @@ void  Control_otkr_tir ( word num )
     if ( S.Alfa <= S.Alfa_Old )         // при невозрастающем угле
       {
 #ifdef  _KTE
-       if ( IDV_sr > INN )              // в режиме непрерывных токов
+       if ( IDV_sr > _r.INN0 ) //INN ) KVV             // в режиме непрерывных токов
 #endif
          {
           ax =  Id_AN_imp ;

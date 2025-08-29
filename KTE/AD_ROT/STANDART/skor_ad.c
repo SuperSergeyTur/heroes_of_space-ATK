@@ -53,7 +53,8 @@ void  SkorAD_epa_init ( void )
   
   nFrot = 0 ;
   Frot = 0  ;
-  
+  Frot_u = 0;
+  Frot_dp = 0;
   errPhi_e = 0 ; // инициализаци€ ловушки дл€ ошибки рассчета пилы ѕси .
   
   return ;
@@ -297,6 +298,7 @@ void SkorAD( void )
     {
       flgO._.VShunt2 = 1 ;
     }
+    Frot = Frot_u;
   }
   else
   {
@@ -319,6 +321,7 @@ void SkorAD( void )
      {
        Lrot -= _Grad(360);
      }
+     Frot = Frot_dp;
 
    
   }

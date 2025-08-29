@@ -1,4 +1,6 @@
 
+extern lword AddZSkorProizv(word code, sword zadSkor, lword toValue);
+
 
 //      ПРОГРАММА ОТРАБОТКИ АВАРИЙНОГО ОТКЛЮЧЕНИЯ .
 //----------------------------------------------------------------
@@ -119,30 +121,21 @@ void  Init_Regs ( void )
       RP_in_sqr = 0 ;
 #endif
 
-      Set_ZI ( &zi_rs , 0 ) ;
+      zi_rs.set_zi( 0 ); //NEW_ZI Set_ZI ( &zi_rs , 0 ) ;
       Z_Skor = 0, ZISkor = 0, OuIchRS = 0, OuRegS_dop_kod = 0 ;
       Delta_Sk = 0 , OuIchRS_k = 0 ;
       S.Alfa = _r.S_Alfa_Start ;
-      fr2 = 0xffff;
 
-      Set_ZIRT ( &zi_rt , 0 ) ;
       OIRT_drob = 0 ;
 #ifndef _KTE_GD
-      ZIDN  = ZIDN1 = 0 ;  /* выход ЗИ-РТ. */
+      ZIDN  = 0 ;  /* выход ЗИ-РТ. */
    #ifdef _ATK_SET
       OuRegS_ogr = 0 ; // Ограниченное задание на ток от Ведущего к Ведомому .
       //---
       OIRT  = _r.S_Alfa_Start ; // В Сетевом Инверторе начальный угол - Альфа Максимум .
-      OIRT1 = _r.S_Alfa_Start ;
    #else
       OIRT  = _r.RevU0  ;  /* интегратор регулятора тока */
       OIRT1 = _r.RevU0  ;  /* интегратор регулятора тока */
-   #endif
-   #ifdef _SIFU2_
-      OIRT_drob_2_ = 0 ;
-      ZIDN_2_  = ZIDN1_2_ = 0 ;  /* выход ЗИ-РТ. */
-      OIRT_2_  = _r.RevU0  ;  /* интегратор регулятора тока */
-      OIRT1_2_ = _r.RevU0  ;  /* интегратор регулятора тока */
    #endif
 #else
       ORT = 0, OIRT  = 0 ;  /* интегратор регулятора тока */
@@ -159,6 +152,10 @@ void  Init_Regs ( void )
       // "Контроль Пробоя Тиристоров" , после этого повторно производится тестирование тиристоров ,
       // если оно включено ...
       flg_RaTe._.tyr_tst_av = 0 ;
+
+      OIRT_for_revers = 0;
+      OIRT_for_revers_vypryamitel = 0;
+      AddZSkorProizv(0, 0, 0);
 
     return ;
   }
@@ -2850,6 +2847,46 @@ void Otkl_Q1_ATK ( void ) // Отключаем автомат Q1 при пропадании силы от Согласу
 #ifdef _ATK_SET // В АР1 Сетевом Инверторе , для вычисления частоты ротора :
       //----------------------------------------------- Скрипт Грыгорыча ------------------------------------------------------
 
+        if ( Prg._.Gotovn == 0 ) // В Работе : 
+        {
+         //----------------------------
+          // Для определения Скольжения берем скорость по ПДФ в об/мин .
+          // Скорость по ПДФ может стать отрицательной ( например , при противоходе ) ,
+          // поэтому берем её по модулю :
+          //skor_pdf = PDF[0].out_ob ;
+          //if ( (sw)skor_pdf < 0 )  skor_pdf = ~skor_pdf + 1 ;
+
+          word skor = Skor ;
+          if ( (sw)skor < 0 )  skor = ~skor + 1 ;
+
+          // Коли ПДФ відсутній то підміняємо швидкість у обертах на хвилину по ПДФ на розрахункову по уставках
+          word skor_pdf = (w)((float)(w)skor / (float)(w)_Skor_Nom * (float)_or.N_nom * 10);
+
+          //skor = Skor ;  KVV - переніс уверх бо для РМС воно обходилося у зборці готовності
+          //if ( (sw)skor < 0 )  skor = ~skor + 1 ;
+          N_ob_min = (float)(w)skor / (float)(w)_Skor_Nom * (float)N_ob_minSynhr ;
+          //21.12.2020 - N_ob_minSynhr используем вместо _sr.NOM.N.fe , т.к. ПДФ стоит на понижающем валу редуктора ,
+          //             т.е. уставка _sr.NOM.N.fe занята под номинальную скорость редуктора .
+          //------------------------------
+          // Скольжение в относительных единицах :
+          //
+          //               nсинхр - n
+          //   Sрот, % =  ------------ * 1600 дискрет ;
+          //                 nсинхр
+          //
+        //Srot = (sw)( (float)(N_ob_minSynhr - N_ob_min              ) * (float)(w)_Ud_Nom / (float)N_ob_minSynhr ) ;
+          Srot = (sw)( (float)(N_ob_minSynhr - (float)(w)skor_pdf/10 ) * (float)(w)_Ud_Nom / (float)N_ob_minSynhr ) ;
+
+          //---
+          // Если двигатель по каким-то причинам раскрутился выше синхронной скорости ,
+          // обнуляем скольжение , т.к. оно не может быть отрицательным :
+          if ( (sw)Srot < 0 ) Srot = 0 ;
+        }
+        else // В Сборке Готовности :
+        {
+          Srot = _Ud_Nom ; // Скольжение , двигатель стоит .
+        }  
+
       //------------------------------------------- Число пар полюсов -----------------------------------------
       // Число пар полюсов находим как целочисленное частное Максимальной Синхронной скорости ( 3000 об/ мин )
       // для двигателя с 1 парой полюсов к Номинальной скорости двигателя .                  // Например :
@@ -2912,9 +2949,16 @@ void Otkl_Q1_ATK ( void ) // Отключаем автомат Q1 при пропадании силы от Согласу
       if ( S.flg._.Invertor == 1 ) CosLrot = cosf( (float)(2 *_PI * (float)(w)_Grad( 120 ) ) / (float)(w)_Grad( 360 ) ) ; // эл.грд. -> Рад
       else                         CosLrot = cosf( (float)(2 *_PI * (float)(w)_Grad(   6 ) ) / (float)(w)_Grad( 360 ) ) ;
 
-      Beta = acosf( (float)(w)_or.Urot_nom * (float)(w)Srot * CosLrot / (float)(w)_Ud_Nom / (float)(w)_or.Uset_nom ) ;
+      float acosArg = (float)(w)_or.Urot_nom * (float)(w)Srot * CosLrot / (float)(w)_Ud_Nom / (float)(w)_or.Uset_nom ;
+        if      ( acosArg >  1.0 ) acosArg = 1.0 ;
+        else if ( acosArg < -1.0 ) acosArg = -1.0 ;
+      Beta = acosf( acosArg ) ;
 
-      OIRT_for_revers = (sw)(float)( (_PI - Beta) * (float)(w)_Grad( 360 ) / (2 *_PI) ) ; // Рад -> эл.грд.
+      oirt_for_revers = (sw)(float)( (_PI - Beta) * (float)(w)_Grad( 360 ) / (2 *_PI) ) ; // Рад -> эл.грд.
+
+           // schob zmenshity Id na 15+-% (do nulya) bo pislya reversa Id vystrybue do 15-20%
+      if ( S.flg._.Invertor == 1 )  OIRT_for_revers = oirt_for_revers + _or.OIRTvyprReversAdd ;   // _Grad(  5 );  
+      else                          OIRT_for_revers = oirt_for_revers + _or.OIRTinvReversAdd ;    // _Grad( 20 );
 
       //---------------------------------------- Момент двигателя -------------------------------------------------------------
 

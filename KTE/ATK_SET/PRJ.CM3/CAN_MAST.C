@@ -217,7 +217,7 @@ reinit:
               Tst_Read_Dev[4] = master_read("\x5\xff",&abDev1 , mark++ );
               Tst_Read_Dev[5] = master_read("\x6\xff",&abDev1 , mark++ );
               Tst_Write_Dev[0]  = master_write(  "\x8\x9\xff" , &abDev1 , mark++ ) ; 
-              Tst_Write_Dev[1]  = master_write(  "\xa\b\xff"  , &abDev1 , mark++ ) ;  
+              Tst_Write_Dev[1]  = master_write(  "\xa\xb\xff"  , &abDev1 , mark++ ) ;  
 
         // опрос этой пачки завершен - взводим триггер.
         if ( Tst_Write_Dev[1] != _NoErr_TimeOut && Tst_Write_Dev[1] != _NoErr_Continue )

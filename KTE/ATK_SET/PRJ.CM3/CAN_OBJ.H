@@ -106,7 +106,7 @@ word  can_ConfigReg ( word code ) ;
 #define  bo_atkRabota      canr.StatReg4._.n8
 #define  bo_atkShunt_End   canr.StatReg4._.n9
 #define  bo_atkAvar_Yach   canr.StatReg4._.n10 //bo_atkSQ2 //bo_atkOtkl_Q1
-#define  bo_atkZatormogen  canr.StatReg4._.n11 //Задание скорости равно нулю ( для режима Останов - Снятие ИУ )
+#define  bo_atkZatormogen  canr.StatReg4._.n11 // ne vikorystovuyetsya  //Задание скорости равно нулю ( для режима Останов - Снятие ИУ )
 
 #define  bo_atkSQ1         canr.StatReg4._.n12 //bo_atkSn_Imp
 #define  bo_atkPusk        canr.StatReg4._.n13
@@ -128,7 +128,7 @@ word  can_ConfigReg ( word code ) ;
 #define  ATK2_Rabota       canr.StatReg3._.n8
 #define  ATK2_Shunt_End    canr.StatReg3._.n9
 #define  ATK2_Avar_Yach    canr.StatReg3._.n10 //ATK2_SQ2 //ATK2_Otkl_Q1
-#define  ATK2_Zatormogen   canr.StatReg3._.n11 //Задание скорости равно нулю ( для режима Останов - Снятие ИУ )
+#define  ATK2_Zatormogen   canr.StatReg3._.n11 // ne vikorystovuyetsya  //Задание скорости равно нулю ( для режима Останов - Снятие ИУ )
 
 #define  ATK2_SQ1          canr.StatReg3._.n12 //ATK2_Sn_Imp
 #define  ATK2_Pusk         canr.StatReg3._.n13
@@ -201,8 +201,8 @@ word  can_ConfigReg ( word code ) ;
 
 #define    KTE2_Rabota         canr.StatReg2._.n8    // sts_KTE2._.Rabota    // КТЭ2 в "Работе"
 #define    KTE2_Shunt_Rot      canr.StatReg2._.n9
-//#define  KTE2_MT             canr.StatReg2._.n10   // не используем в алгоритмах инвертора .
-//#define  KTE2_Num_Most       canr.StatReg2._.n11   // не используем в алгоритмах инвертора .
+#define    bi_canLrv_6g        canr.StatReg2._.n10   // bo_canMT // KVV dlya tormogenia Int-RT v AP1 poka ugol ne ustanovilsya
+#define    bi_canLrv_120g      canr.StatReg2._.n11   // bo_canNum_M
 
 #define    KTE2_Sn_Imp         canr.StatReg2._.n12   // sts_KTE2._.SniatImp  // в КТЭ2 сняты "ИУ"
 //#define  KTE2_StateQK        canr.StatReg2._.n13   // не используем в алгоритмах инвертора .

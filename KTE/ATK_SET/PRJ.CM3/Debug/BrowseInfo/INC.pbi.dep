@@ -65,8 +65,6 @@ C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\Debug\BrowseInfo\INC.pbi: \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\selsin.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\reg_eds.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\zad_skor.h \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\revers.h \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\CM\dzv_drv.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\cikl.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\sifu.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\CM\gercon.h \
@@ -110,7 +108,11 @@ C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\Debug\BrowseInfo\INC.pbi: \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\CM\cse.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\avar.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\s400.h \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\rt.h \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\NotLinearFourTempZI.cpp \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\NotLinearInternalZI.cpp \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\NotLinearIntegrator.cpp \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\NotLinearJoystick.cpp \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\rt.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\sled.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\link.h \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\var_mtab.h \
@@ -201,15 +203,13 @@ C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\Debug\BrowseInfo\INC.pbi: \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\izm.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\insulat.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\rt.c \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\revers.c \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\CM\dzv_drv.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\cikl.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\_main1.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\sld_stop.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\journal.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\teplo_e.c \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\depn.c \
-  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\regsc.c \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\regsc.c \
+  C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\regsc_proizv.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\STANDART\zad_skor.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\STANDART\selsin.c \
   C:\project_Ger_ATK.cm3\KTE\ATK_SET\PRJ.CM3\..\..\..\STANDART\CM\test_i2c.c \

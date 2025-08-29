@@ -105,13 +105,12 @@ C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\Debug\BrowseInfo\INC.pbi: \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\CM\LPC_types.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\sld_stop.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\STANDART\ust.h \
-  C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\unireg.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\STANDART\obj_mux.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\obj.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\CM\cse.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\STANDART\avar.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\s400.h \
-  C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\STANDART\rt.h \
+  C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\STANDART\rt.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\sled.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\link.h \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\var_mtab.h \
@@ -211,7 +210,6 @@ C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\Debug\BrowseInfo\INC.pbi: \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\sld_stop.c \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\journal.c \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\teplo_e.c \
-  C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\UNIREG.c \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\STANDART\zad_skor.c \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\CM\test_i2c.c \
   C:\project_Ger_ATK.cm3\KTE\AD_ROT\ATK_ROT\PRJ.CM3\..\..\..\..\STANDART\can_slv.c \

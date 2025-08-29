@@ -61,8 +61,8 @@ static w dve_zony_copy=0;
                    {        // для внешней системы регулирования -
                            // признак того, что КТЭ готов к принятию задания.
                      bo_canGotov = 1 ;
-                     RT_Str.integr = _Grad(150);
-                     RT_Str.integr_drob = 0;
+                     //RT_Str.integr = _Grad(150);
+                     //RT_Str.integr_drob = 0;
 
                          // Проверяем отсутствие CAN-команды 'Останов'.
                      if ( can_ConfigReg ( _CAN_Ostanov ) == 0

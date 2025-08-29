@@ -685,7 +685,7 @@ word ZI_Init_Skor ( word num )
       if ( count_puls >= 5 ) // ПЕРЕПОЛНЕНИЯ НЕ БУДЕТ ДО 2х НОМИНАЛОВ СКОРОСТИ !
         {
         //resulSk = (sw)skor_sum / (sw)(w)count_puls ;
-          Set_ZI ( &zi_rs , (sw)skor_sum / (sw)(w)count_puls ) ;
+          zi_rs.set_zi((sw)skor_sum / (sw)(w)count_puls); // NEW_ZI
           //Z_Skor = zi_rs.in ; //30.11.2011 15:31 не нужно . Задание также инициализируем , чтобы оно не испортило ЗИ в РС .
           //ZISkor = zi_rs.in ; //30.11.2011 15:31 не нужно .
           ax = 0 ;

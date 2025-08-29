@@ -438,7 +438,7 @@ word  trig_first_raschet ;
 word  Lrot ;
 word  SkorRot ;
 float  nFrot;
-float Frot;
+float Frot, Frot_dp,Frot_u ;
 word  errPhi_e ;
 word  TimeAD_Skor , time_izm , time_math , time_zar ;
 word  Pary_AD , Mnom ;

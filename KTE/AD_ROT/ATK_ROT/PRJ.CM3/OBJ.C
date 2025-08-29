@@ -55,20 +55,20 @@ word  ObjPrg ( word num )
       case _Obj_c_Init :
         TimeFrot = Timer1_fSec;
         SimCounter = 0;
-        RT_Str.zad_max = &_r.OuRSMaxMost1;
-        RT_Str.zad_min = &_r.OuRSMaxMost2;
-        RT_Str.kp =  &_r.KRTP;   
-        RT_Str.ki =  &_r.KRTNI;   
-        RT_Str.zad = &canr.Id_zad;   
-        RT_Str.oc  = &IDV;    
-        RT_Str.cfg._.enable = 0;                                   
-        RT_Str.cfg._.positiv_oc = 1;
-        RT_Str.cfg._.pos_out = 1;
-        RT_Str.cfg._.positiv_in = 1;    
+        //RT_Str.zad_max = &_r.OuRSMaxMost1;
+        //RT_Str.zad_min = &_r.OuRSMaxMost2;
+        //RT_Str.kp =  &_r.KRTP;   
+        //RT_Str.ki =  &_r.KRTNI;   
+        //RT_Str.zad = &canr.Id_zad;   
+        //RT_Str.oc  = &IDV;    
+        //RT_Str.cfg._.enable = 0;                                   
+        //RT_Str.cfg._.positiv_oc = 1;
+        //RT_Str.cfg._.pos_out = 1;
+        //RT_Str.cfg._.positiv_in = 1;    
         
-        RT_Str.zi.temp_p_razg = &_r.Temp_RT_P ;
-        RT_Str.zi.temp_p_torm = &_r.Temp_RT_M ;
-        RT_Str.zi.time = timer1 ;
+        //RT_Str.zi.temp_p_razg = &_r.Temp_RT_P ;
+        //RT_Str.zi.temp_p_torm = &_r.Temp_RT_M ;
+        //RT_Str.zi.time = timer1 ;
         trig_Privyazk_TZ = 0 ;
         trig_Priv_TZ = 0;
         Accel = 0;
@@ -103,26 +103,18 @@ word  ObjPrg ( word num )
         //-------
          // Объектная программа перед всеми защитами , например , для зарядки измерений .
       case _Obj_c_Common_avar :
-/*        lax = *Timer3;
-       if ((lw)(DP_TZ - lax ) > _Secl(3))
-       {
-         ++Err_counter[1];
-         mOtkl_Imp ( _Sifu_Err_imp) ;
-         DP_TZ = lax+_MkSecl(2000);
-         _sifu_epa_time ( DP_TZ );
-         S.NumInt = 1 ;
-         Time_ErrSifu = timer1;
-         bo_Err_Sifu = 1;
-       }
-       
-       if (bo_Err_Sifu )
-       {
-         if((u)((w)(timer1- Time_ErrSifu)) > _MkSec(20000))
-         {
-           mVkl_Imp(_Sifu_Err_imp);
-           bo_Err_Sifu = 0;
-         }
-       }*/
+          //if (bi_SledStop2 == 1) Prg._.Sled = 0; // KVV 2025-05-06 ???????? ???? ????? ????????? ???????? ???? ?????? ?? ????? ?? ????
+                  
+          // KVV dlya tormogenia Int-RT v AP1 poka ugol ne ustanovilsya
+//          if ( S.Alfa_Old == _or.S_Alfa_Dvig )                                     bo_canLrv_6g_120g = _canLrv_6g;  
+//          else if ( S.Alfa_Old == _or.S_Alfa_Gen )                                 bo_canLrv_6g_120g = _canLrv_120g;
+//          else if ( S.Alfa_Old > _or.S_Alfa_Dvig && S.Alfa_Old < _or.S_Alfa_Gen )  bo_canLrv_6g_120g = _canLrv_6g_120g;
+//          else                                                                     bo_canLrv_6g_120g = _canLrv_No_6g_120g;  // Alfa_Max - Avar
+          if ( S.Alfa_Old == _or.S_Alfa_Dvig )                                     bo_canLrv_6g = 1,  bo_canLrv_120g = 0;  
+          else if ( S.Alfa_Old == _or.S_Alfa_Gen )                                 bo_canLrv_6g = 0,  bo_canLrv_120g = 1;  
+          else if ( S.Alfa_Old > _or.S_Alfa_Dvig && S.Alfa_Old < _or.S_Alfa_Gen )  bo_canLrv_6g = 0,  bo_canLrv_120g = 0;  // perehodnoy process reversa - STOP RT_Int in AP1
+          else                                                                     bo_canLrv_6g = 1,  bo_canLrv_120g = 1;   // Alfa_Max - Avar
+
         if ( canr.Data._.Connect == 0 )
         {
           mSet_ServiceMsg2( _Srv2_NoLinkCAN ) ;
@@ -518,7 +510,8 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
         lax = (lw)lax / (lw)(w)_sr.NOM.N.fe ;
 */
         
-        if (_or.Tfil != 0)
+        Ndpf = (w)fax;
+        if (_or.Tfil >= 0.0005)
         {
           //Период измерений в секундах
           fbx =  (float)deltTDP_old/_Secl(60);
@@ -584,7 +577,7 @@ void DPLrotNrot ( void )  // функция вычисления эл. угла поворота ротора, период
             //----------  Фильтрация: вычисление отклонения текущего измеренного задания
 
             //fax = (float)Frot/360 ;
-        Frot = fax;
+        Frot_dp = fax;
             if ( _or.K_f_syn3f != 0 )   // включаем фильтр только при наличии уставки    // DAN: так в Каборге...
               {                                                                          // DAN: так в Каборге...
                 //lax = ((lw)Frotf << 16) + (lw)Frotdrob ;

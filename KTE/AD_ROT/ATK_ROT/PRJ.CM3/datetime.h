@@ -2,6 +2,6 @@
 #ifndef _datetime_
 #define _datetime_
 
-#define __DATETIME__ "22 ρεπονÿ 2025\r\n - 11:54 -"
+#define __DATETIME__ "29 ρεπονÿ 2025\r\n - 9:42 -"
 
 #endif

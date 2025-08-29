@@ -91,7 +91,7 @@
 #include <selsin.h>
 #include <reg_eds.h>
 #include <zad_skor.h>
-#include <revers.h>
+//#include <revers.h>
 #include <cikl.h>
 #include <sifu.h>
 //---
@@ -153,6 +153,8 @@
 
 #include <avar.h>
 #include <s400.h>
+#include "NotLinearFourTempZI.cpp"
+#include "NotLinearJoystick.cpp"
 #include <rt.h>
 #include <sled.h>
 #include <link.h>

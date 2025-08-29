@@ -131,9 +131,9 @@ void  Init_Regs ( void )
 #endif
       Delta_Sk = 0 , OuIchRS_k = 0 ;
       S.Alfa = _r.S_Alfa_Start ;
-      RT_Str.integr = _Grad(_r.S_Alfa_Start);
-      RT_Str.integr_drob = 0;
-      RT_Str.cfg._.enable = 1; 
+//      RT_Str.integr = _Grad(_r.S_Alfa_Start);
+//      RT_Str.integr_drob = 0;
+//      RT_Str.cfg._.enable = 1; 
       //Alfa_kor = 0 ;
       //Alfa_kor_Old = 0 ;
 
@@ -2785,9 +2785,9 @@ word MechTorm_upr ( word num )
     //DAN - я так понимаю , что Макс судит о нахождении в Сборке Готовности по отключенному питанию ИУ ...
   //if ( bi_KF1 == 0 || bi_KF2 == 0 )  bo_canAvar = 1 ;  //  в сборке готовности тоже выдавать в АР1
 
-
-    if ( S.NumMost == 1 )           bo_canNum_M = 1 ;      // Скорее всего , перенести в АР1 , где РС .
-    else                            bo_canNum_M = 0 ;
+    // KVV- Ne ispolsuetsya, nugen bit
+    //if ( S.NumMost == 1 )           bo_canNum_M = 1 ;      // Скорее всего , перенести в АР1 , где РС .
+    //else                            bo_canNum_M = 0 ;
 
     if (  Otkl_Imp == _Ostanov_imp )   bo_canSn_Imp = 1 ;  // Скорее всего , перенести в АР1 , где РС .
     else                               bo_canSn_Imp = 0 ;

@@ -160,7 +160,7 @@
 //#include "Data_i2c.c"
 //#include "depn.c"
 //#include "regsc.c"
-#include "UNIREG.c"
+//#include "UNIREG.c"
 
 //#include "alarm.c"
 //#include "teplo.c"

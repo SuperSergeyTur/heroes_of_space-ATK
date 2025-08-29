@@ -1,4 +1,7 @@
 
+extern lword AddZSkorProizv( word code, sword zadSkor, lword toValue );
+
+
 //     ОБЪЕКТНЫЕ ПРОГРАММЫ.
 //
 //--------------------------------------------------------
@@ -38,6 +41,26 @@ word read_rezerv ( void )
 //--------------------------------------------------------
 
 
+// KVV 2025-05-02  Уніфікував бо в різних місцях воно робиться по різному
+void initRegs()
+{
+    zi_rs.set_zi(0); // NEW_ZI
+    OuIchRS = 0;
+    ZISkor = 0;
+    Delta_Sk = 0, OuIchRS_k = 0;
+    OuRegS_dop_kod = 0;
+    OuRegS = 0;
+    OIRT_drob = 0;                // DAN - 16.06.2016 15:24
+    Prz._.int_p = 0, Prz._.int_m = 0;
+    ZIDN = 0;  /* выход ЗИ-РТ. */
+    OIRT = _r.RTMAX;  /* интегратор регулятора тока */
+    S.Alfa = _r.S_Alfa_Max;
+    oirt_for_revers = 0;
+    OIRT_for_revers = 0;
+    OIRT_for_revers_vypryamitel = 0;
+    AddZSkorProizv(0, 0, 0);
+}
+
 //     ОБЪЕКТНАЯ ПРОГРАММА.
 
 word  ObjPrg ( word num )
@@ -52,6 +75,12 @@ word  ObjPrg ( word num )
       if (  Isp.all != 0 ) return 1 ;
      }
    //----
+    
+    // KVV - Переніс знизу щоб був один розрахунок для усіх гілок
+    skor = Skor ;
+    if ( (sw)skor < 0 )  skor = ~skor + 1 ;
+
+          
     switch ( num )
     {    // Стартовая объектная программа для задания начальных условий.
       case _Obj_c_Init :
@@ -84,6 +113,7 @@ word  ObjPrg ( word num )
         Av_Dat = 0;
         Avv_Dat = 0;
         bo_EndIzm = 0;
+        RT_Regim = 0;
 
 
         CLR_CS_Temp();                        // Сброс адресса (4х ножек).
@@ -120,7 +150,7 @@ word  ObjPrg ( word num )
         break;
         //-------
          // Объектная программа перед всеми защитами , например , для зарядки измерений .
-      case _Obj_c_Common_avar :
+      case _Obj_c_Common_avar :       
 
         // Общие Аварии выполняются даже в наладочных режимах и при отключенном объектном управлении :
 
@@ -1235,36 +1265,9 @@ word  ObjPrg ( word num )
             }
           }
 */
-          //----------------------------
-          // Для определения Скольжения берем скорость по ПДФ в об/мин .
-          // Скорость по ПДФ может стать отрицательной ( например , при противоходе ) ,
-          // поэтому берем её по модулю :
-          //skor_pdf = PDF[0].out_ob ;
-          //if ( (sw)skor_pdf < 0 )  skor_pdf = ~skor_pdf + 1 ;
-
-          skor = Skor ;
-          //if ( (sw)skor < 0 )  skor = ~skor + 1 ;
-          //N_ob_min = (float)(w)skor / (float)(w)_Skor_Nom * (float)N_ob_minSynhr ;
-          //21.12.2020 - N_ob_minSynhr используем вместо _sr.NOM.N.fe , т.к. ПДФ стоит на понижающем валу редуктора ,
-          //             т.е. уставка _sr.NOM.N.fe занята под номинальную скорость редуктора .
-          //------------------------------
-          // Скольжение в относительных единицах :
-          //
-          //               nсинхр - n
-          //   Sрот, % =  ------------ * 1600 дискрет ;
-          //                 nсинхр
-          //
-        //Srot = (sw)( (float)(N_ob_minSynhr - N_ob_min              ) * (float)(w)_Ud_Nom / (float)N_ob_minSynhr ) ;
-        //Srot = (sw)( (float)(N_ob_minSynhr - (float)(w)skor_pdf/10 ) * (float)(w)_Ud_Nom / (float)N_ob_minSynhr ) ;
-
-          //---
-          // Если двигатель по каким-то причинам раскрутился выше синхронной скорости ,
-          // обнуляем скольжение , т.к. оно не может быть отрицательным :
-          if ( (sw)Srot < 0 ) Srot = 0 ;
         }
         else // В Сборке Готовности :
         {
-          Srot = _Ud_Nom ; // Скольжение , двигатель стоит .
           if ((u)((w)(Timer1_Ovr - Time_tst_PIU)) > _or.Time_ComtrolPIU)
           {
             bo_SN_On = 1;
@@ -1465,13 +1468,14 @@ word  ObjPrg ( word num )
                (sw)Z_Skor <= (sw)_or.Z_SkorNull && (sw)Z_Skor >= (sw)( ~_or.Z_SkorNull + 1 ) &&
                ( S.Alfa_Old >= (_r.S_Alfa_Max - _Grad( 3.0 ))) )
           {
-             bo_canZatormogen = 1 ; // Альфа-ротора в Альфа-макс .
-             bo_atkZatormogen = 1 ;
+             // KVV bo viklikae bezperervny Udary - ciklichny skudu strumu do nulya na galmah ta maliy shvydkosti 
+              // bo_canZatormogen = 1 ; // Альфа-ротора в Альфа-макс .
+               bo_atkZatormogen = 1 ; // ne vikorystovuyetsya 
           }
           else
           {
              bo_canZatormogen = 0 ; // Альфа-ротора отпускаем .
-             bo_atkZatormogen = 0 ;
+             bo_atkZatormogen = 0 ; // ne vikorystovuyetsya 
           }
         }
 
@@ -1573,18 +1577,7 @@ word  ObjPrg ( word num )
         mOtkl_Imp( _Start_imp ) ;  // снимаем ИУ
         Prg.all &=  ~(_RegTok | _RegSk ) ; // выключаем все Регуляторы .
 
-        Set_ZI ( &zi_rs , 0 ) ;
-        OuIchRS = 0 ;
-        ZISkor = 0 ;
-        Delta_Sk = 0 , OuIchRS_k = 0 ;
-        OuRegS_dop_kod = 0 ;
-        OuRegS         = 0 ;
-
-        OIRT_drob = 0 ;     // DAN - 16.06.2016 15:24
-        ZIDN = ZIDN1 = 0 ;  // выход ЗИ-РТ.
-        OIRT   = _r.RTMAX ;  // интегратор регулятора тока
-        OIRT1  = _r.RTMAX ;  // интегратор регулятора тока
-        S.Alfa = _r.S_Alfa_Max ;
+        initRegs();
 
         Control_Nzad () ;  // Для контроля Задания в Сборке Готовности .
 
@@ -1753,7 +1746,7 @@ word  ObjPrg ( word num )
 
         Z_Skor = 0 ; // 13.04.2017 7:00 - DAN . Снимаем задание , для того , чтобы ток упал и м.б снять ИУ .
 
-        Set_ZI ( &zi_rs , 0 ) ;        // DAN - перенесено снизу , для того, чтобы ток спал быстро .
+        zi_rs.set_zi(0); // NEW_ZISet_ZI ( &zi_rs , 0 ) ;        // DAN - перенесено снизу , для того, чтобы ток спал быстро .
         ZISkor = 0 ;
 
         flgO._.Shunt_Rot = 0 ; // на вскякий случай , если он сам не снялся .
@@ -1766,6 +1759,11 @@ word  ObjPrg ( word num )
            S.Alfa = _r.S_Alfa_Max ;
            Av._.Sdvig_imp = 1 ;   // Команда на задвигание УИ в АльфаМакс.
 
+           // KVV 01-05-2025 переніс знизу сюди бо агрегат часто стартував з необнуленим ЗІ РТ та давав Id_Max, Зрив Інвертору або просто вимкнення ВВ по МТЗ
+           // думаю оператор давав команди на пуск частіше ніж витримка _r.Time_do_OtklImp=2сек
+           Prg.all &=  ~(_RegTok | _RegSk ) ; // выключаем все Регуляторы .
+           initRegs(); // KVV 2025-05-02   
+
            // - отсчет времени до отключения импульсов.
            // 20.12.2020 - добавил возможность в режиме Выпрямителя снимать ИУ без выдержки .
            if (/*S.flg._.Invertor == 0 ||*/ (u)((w)(Timer1_Ovr - Time_do_OtklImpPusk)) >= _r.Time_do_OtklImp )
@@ -1774,25 +1772,7 @@ word  ObjPrg ( word num )
            //if ( IDV < _Id_nom ( 0.04 ) )
                {
                     mOtkl_Imp( _Start_imp ) ;  // снимаем ИУ
-                    Prg.all &=  ~(_RegTok | _RegSk ) ; // выключаем все Регуляторы .
-
-                    Av._.Sdvig_imp = 0 ;   // Задвиг отработал , снимаем команду на задвигание УИ в АльфаМакс .
-
-                  //Set_ZI ( &zi_rs , 0 ) ;
-                    OuIchRS = 0 ;
-                  //ZISkor = 0 ;
-                    Delta_Sk = 0 , OuIchRS_k = 0 ;
-                    OuRegS_dop_kod = 0 ;
-                    OuRegS         = 0 ;
-
-                    OIRT_drob = 0 ;                // DAN - 16.06.2016 15:24
-
-                    Prz._.int_p = 0 , Prz._.int_m = 0 ;
-
-                    ZIDN = ZIDN1 = 0 ;  /* выход ЗИ-РТ. */
-                    OIRT   = _r.RTMAX ;  /* интегратор регулятора тока */
-                    OIRT1  = _r.RTMAX ;  /* интегратор регулятора тока */
-                    S.Alfa = _r.S_Alfa_Max ;
+                    Av._.Sdvig_imp = 0;   // Задвиг отработал , снимаем команду на задвигание УИ в АльфаМакс .
                }
            }
         }
@@ -2622,4 +2602,218 @@ void controlFan(word num)
   }
   //  else mSet_AvarMsg2( _Av2_Power_Vent_Shs1 );  //Вентилятор выключен
 }
+
+
+
+
 //---------------------End Fan------------------------------------------------
+
+//------------------------------------------------------------
+void Reg_Dispetcher(word Label)
+{
+  switch (Label)
+  {
+  case eRT_Reg_None: // Сборка готовности
+    Lz_Inv = _r.S_Alfa_Max;
+    Lz_Vipr = _r.S_Alfa_Max;
+    ATK_flg._.Reg_RTInv = 0;    
+    ATK_flg._.Reg_RTVip = 0;
+    Time_OIRT_min = Timer1_fSec;
+    break;
+  case eRT_Reg_StartRTv: //Пуск, начало, РТ - выпрямитель, инвертор - _r.S_Alfa_Max
+    //Если мы только вошли в этот режим - пересчет интегратора РТ
+    Lz_Inv = _r.S_Alfa_Max;
+    if(!ATK_flg._.Reg_RTVip)
+    {
+      OIRT = Lz_Vipr; 
+      ATK_flg._.Reg_RTVip = 1;
+      ATK_flg._.Reg_RTInv = 0;    
+    }
+    else
+    {
+      //Угол будем изменять только на следующий такт чтобы успел отработать регулятор
+       Lz_Vipr = ORT;
+    }
+    break;
+  case eRT_Reg_UpRTi: // Режим разгона: РТ - инвертор, выпрямитель - _r.Vip_Alfa_Min
+    //Если мы только вошли в этот режим - пересчет интегратора РТ
+    Lz_Vipr =  _r.Vip_Alfa_Min;
+    if(!ATK_flg._.Reg_RTInv)
+    {
+      OIRT = Lz_Inv; 
+      ATK_flg._.Reg_RTInv = 1;
+      ATK_flg._.Reg_RTVip = 0;    
+    }
+    else
+    {
+      //Угол будем изменять только на следующий такт чтобы успел отработать регулятор
+       Lz_Inv = ORT;
+    }
+    break;
+  case eRT_Reg_DowRTi: //Режим торможения: РТ-инвертор, выпрямитель - _r.Vip_Alfa_Max
+    //Если мы только вошли в этот режим - пересчет интегратора РТ
+    Lz_Vipr =  _r.Vip_Alfa_Max;
+    if(!ATK_flg._.Reg_RTInv)
+    {
+      OIRT = Lz_Inv; 
+      ATK_flg._.Reg_RTInv = 1;
+      ATK_flg._.Reg_RTVip = 0;    
+    }
+    else
+    {
+      //Угол будем изменять только на следующий такт чтобы успел отработать регулятор
+       Lz_Inv = ORT;
+    }
+    break;
+  case eRT_Reg_DowNoRT: //Режим торможения на выбеге выпрямитель и инвертор в максимальных углах. РТ не работает.
+        Lz_Inv = _r.S_Alfa_Max;
+        Lz_Vipr = _r.S_Alfa_Max;
+        ATK_flg._.Reg_RTInv = 0;    
+        ATK_flg._.Reg_RTVip = 0;
+        OIRT =  _r.S_Alfa_Max;
+        break;
+        
+  case eRT_Reg_DowRTv: //Режим торможения инвертор - _r.S_Alfa_Min, РТ - выпрямитель
+    //Если мы только вошли в этот режим - пересчет интегратора РТ
+    Lz_Inv = _r.S_Alfa_Min;
+    if(!ATK_flg._.Reg_RTVip)
+    {
+      OIRT = Lz_Vipr; 
+      ATK_flg._.Reg_RTVip = 1;
+      ATK_flg._.Reg_RTInv = 0;    
+    }
+    else
+    {
+      //Угол будем изменять только на следующий такт чтобы успел отработать регулятор
+       Lz_Vipr = ORT;
+    }
+    break;
+  }
+  
+  
+}
+
+void Get_Regim( ERT_Reg * Regim)
+{
+  word ax;
+  if (Prg._.Gotovn)
+  {
+    *Regim = eRT_Reg_None;
+  }
+  else
+  {
+  if ((sw)Skor < 0)
+  {
+    ax = ~Skor+1;
+  }
+  else
+  {
+    ax = Skor;
+  }
+    switch(*Regim)
+    {
+    case eRT_Reg_None: //Перешли из сборки готовности в режим пуска, включаем режим разгона
+      *Regim = eRT_Reg_StartRTv;
+      break;
+      //Режим пуска, разгон выпрямителем
+    case eRT_Reg_StartRTv:
+      //Регулятор не вытягивает заданный ток
+      if ( ORT <= _or.Alfa_min_razgon)        
+      {
+        if((u)((w)(Timer1_fSec - Time_OIRT_min)) > _or.Time_OIRT_min )
+        {
+          //Разгоняемся за счет инвертора
+          *Regim = eRT_Reg_UpRTi;
+        }
+      }
+      else
+      {
+        Time_OIRT_min = Timer1_fSec;
+      }
+      break;
+      //Режим разгона инвертором
+    case eRT_Reg_UpRTi:
+      //Надо тормозить
+      if (bo_canOuRS)
+      {
+        //Если скорость большая, останавливаемся на выбеге
+        if (ax >= _or.Velos_edge)
+        {
+          *Regim = eRT_Reg_DowNoRT;
+        }
+        else
+        {
+          *Regim =  eRT_Reg_DowRTi;
+        }
+      }
+      break;
+      //Режим остановки на выбеге
+    case eRT_Reg_DowNoRT:
+      //Если все еще тормозим
+      if (bo_canOuRS)
+      {
+        //Скорость упала ниже порога, включаем торможение инвертором
+        if (ax < _or.Velos_edge)
+        {
+          *Regim =  eRT_Reg_DowRTi;
+           Time_OIRT_min = Timer1_fSec;
+        }
+      }
+      else
+      {
+        //Разгоняемся инвертором
+        *Regim =  eRT_Reg_UpRTi;
+      }
+      break;
+      //Торможение инвертором
+    case eRT_Reg_DowRTi:
+      //Торможение закончилось, наинаем разгон
+      if (!bo_canOuRS)
+      {
+        //Если скорость еще большая, то разгоняем инвертором
+        if (ax > _or.Velos_edge_break)
+        {
+          *Regim =  eRT_Reg_UpRTi;
+        }
+        else
+        {
+          //Скорость упала наже скорости включения выпрямителя 
+          //- разгоняем выпрямителем
+          *Regim =  eRT_Reg_StartRTv;
+           Time_OIRT_min = Timer1_fSec;
+        }
+        
+      }
+      else
+      {
+        
+        if ( ORT <= _or.Alfa_min_torm)        
+        {
+          //В режиме торможения, если инвертором не сможем затормозить
+          if((u)((w)(Timer1_fSec - Time_OIRT_min)) > _or.Time_OIRT_min )
+          {
+            //Торомозим выпрямителем
+            *Regim = eRT_Reg_DowRTv;
+          }
+        }
+        else
+        {
+          Time_OIRT_min = Timer1_fSec;
+        }              
+        
+      }
+      break;
+      //Торможение выпрямителем
+    case eRT_Reg_DowRTv:
+      // Вышли из режима торможения
+      if (!bo_canOuRS)
+      {
+        //Разгоняем выпрямителем
+        *Regim =  eRT_Reg_StartRTv;
+        Time_OIRT_min = Timer1_fSec;        
+      }
+      break;      
+      
+    }
+  }
+}

@@ -34,8 +34,8 @@ word  can_ConfigReg ( word code ) ;
 
 #define  bo_canRabota     canr.StatReg._.n8
 #define  bo_canShunt_Rot  canr.StatReg._.n9
-#define  bo_canMT         canr.StatReg._.n10
-#define  bo_canNum_M      canr.StatReg._.n11
+#define  bo_canLrv_6g     canr.StatReg._.n10    // bo_canMT // KVV dlya tormogenia Int-RT v AP1 poka ugol ne ustanovilsya
+#define  bo_canLrv_120g   canr.StatReg._.n11    // bo_canNum_M
 
 #define  bo_canSn_Imp     canr.StatReg._.n12
 #define  bo_canStateQK    canr.StatReg._.n13

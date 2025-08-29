@@ -201,7 +201,8 @@ _x_far const struct namevar  var_tab1[] =
 #else //_CANOPEN
 // Группа 1  - ТЕКУЩИЕ ПАРАМЕТРЫ ПРИВОДА - 14 - контрольная строка
   { "cStsRV",  &canr.StatReg2.all,  2, _SHORT_type,  0,         _READ_WRITE_access }, //статус "чужого" КТЭ : АР1-АР2
-  { "E",       &EDS_dop_kod,        2, _SHORT_type,  _Ud_Nom,   _READ_access       },
+//  { "E",       &EDS_dop_kod,        2, _SHORT_type,  _Ud_Nom,   _READ_access       },
+  { "E",       &Srot,               2, _SHORT_type,  _Ud_Nom,   _READ_access       },
   { "Ud",      &UdSr,               2, _SHORT_type,  _Ud_Nom,   _READ_access       },
   { "T-fSec",  &Timer1_fSec,        2, _SHORT_type,  0,         _READ_access       },
   { "cSts2",   &canr.StatReg3.all,  2, _SHORT_type,  0,         _READ_WRITE_access }, //статус "чужого" КТЭ : ШУ1-ШУ2

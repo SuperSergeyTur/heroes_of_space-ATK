@@ -327,18 +327,11 @@ _x_far const struct STB       stb_avar[ ] =
 
 _x_far const struct STB       stb_reg[ ] =
   {
-#ifdef  _REG_POL
-    { "Порог-dS-РП   ", &_r.DeltaDeadZone     , 0               ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 0.5 )   , 0xff, "грд", _form(1,3,2,2) },
-    { "Kп-dS-РП      ", &_r.Kp_dP             , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  64            , 0xff, "од" , _form(1,3,2,2) },
-    { "Kп-РП         ", &_r.Kp_RP             , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  16            , 0xff, "од" , _form(1,3,2,2) },
-    { "Tи-РП         ", &_r.Ki_RP             , 0               , 999              , 1            ,(w*)&_ind_Nom,  2             , 0xff, "мceк",_form(1,3,0,2) },
-#endif
     { "N#-макс       ", &_r.Z_SkMax_P         ,_Skor_nom( -2.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(0,2,2,2) },
   //{ "N#-мин        ", &_r.Z_SkMax_M         ,_Skor_nom( -2.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(0,2,2,2) },
     { "N#-нулеве     ", &_or.Z_SkorNull       ,_Skor_nom( +0.0 ),_Skor_nom( +1.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1<<_Skor_Shift , 0xff, "%"  , _form(1,3,2,2) },
     { "N-зупинка     ", &_r.Ostanov_skor      ,_Skor_nom( +0.0 ),_Skor_nom( +1.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1<<_Skor_Shift , 0xff, "%"  , _form(1,3,2,2) },
   //{ "T-зупинка     ", &_r.Ostanov_time      ,_Sec( 0.1 )      ,_Sec( 9.0 )       ,_Sec(1.0)     ,(w*)&_ind_Nom, 1              , 0xff, "сек", _form(1,1,2,2) },
-#ifndef  _ZI_30min
   #ifdef _ZI_4TEMPA
     { "ТемпЗІ-РШВп'+'", &_r.T_ZISkorP_Razg    ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"  , _form(1,3,2,2) },
     { "ТемпЗІ-РШВп'-'", &_r.T_ZISkorP_Torm    ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"  , _form(1,3,2,2) },
@@ -360,28 +353,19 @@ _x_far const struct STB       stb_reg[ ] =
     { "ТемпЗІ-РШ'фрс'", &_r.T_ZISkorP_Fors    ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,3,2,2) },
    #endif
   #endif
-#else
-    { "ТемпЗІ-РШ'+'  ", &_r.T_ZISkorP_Razg    , 0               , 300              , 10           ,(w*)&_ind_Nom,  1             , 0xff, "хвл", _form(1,2,1,2) },
-    { "ТемпЗІ-РШ'-'  ", &_r.T_ZISkorP_Torm    , 0               , 300              , 10           ,(w*)&_ind_Nom,  1             , 0xff, "хвл", _form(1,2,1,2) },
- #ifdef bi_Fors_Temp
-    { "ТемпЗІ-РШ'фрс'", &_r.T_ZISkorP_Fors    , 0               , 300              , 10           ,(w*)&_ind_Nom,  1             , 0xff, "хвл", _form(1,2,1,2) },
- #endif
-#endif
     { "ТeмпЗІ-РШ's'  ", &_r.T_ZISkor_Parab,       _Sec( 0.0 ),       _Sec( 20.0 ),     _Sec( 1.0 ),(w*)&_ind_Nom, _Sec( 0.1 )    , 0xff, "сек", _form(1,3,2,2) },
-    { "ТeмпЗІ-РШ-dN  ", &_r.T_ZISkor_Parab_delta, _Skor_nom( 0.0 ),  _Skor_nom( 1.0 ), _Skor_Nom  ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,3,2,2) },
-#ifdef  TGx_ach
+ #ifdef  TGx_ach
     { "ТГx8-поріг    ", &_r.TGx8_porog        ,_Skor_nom( +0.0 ),_Skor_nom( +2.5 ) ,_Skor_nom(0.01),(w*)&_ind_Nom, 4             , 0xff, "%"  , _form(1,3,2,2) },
 #endif
     { "Поріг-ФШ      ", &_r.porog_fil         ,_Skor_nom( +0.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,3,2,2) },
     { "K-ФШ          ", &_r.K_fil_sk          , 2               , 1000             , 1            ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,3,0,2) },
-//  { "Порог-ФЭДС    ", &_r.Porog_FE          , 0               , 1600             , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,2) },
-//  { "K-ФЭДС        ", &_r.K_FE              , 2               , 1000             , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,2) },
 #ifdef bi_RS_P
     { "Kп-РШ (ПІ-рег)", &_r.KRSP              , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "од" , _form(1,3,2,2) },
 #else
     { "Kп-РШ         ", &_r.KRSP              , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "од" , _form(1,3,2,2) },
 #endif
     { "Tі-РШ         ", &_r.KRSI              , 0               , 2000             , 1            ,(w*)&_ind_Nom,  2             , 0xff, "мceк",_form(1,4,0,2) },
+    { "Kп-РШ-Похідна.", &_or.KRSPZSkorProizv  , 0               , 0x1400           , 0x0100       ,(w*)&_ind_Nom,  128           , 0xff, "ед"  ,_form(1,3,3,2) },
 #ifdef bi_RS_P
     { "Kп-РШ (П-рег) ", &_r.KRSP_for_P        , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "од" , _form(1,3,2,2) },
     { "Темп П/ПІ адап", &_r.Adapt_temp        ,_Id_nom( 0.0 )   ,_Id_nom( 20.0 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.05 ), 0xff, "ном", _form(1,2,2,2) },
@@ -392,77 +376,14 @@ _x_far const struct STB       stb_reg[ ] =
     { "Tі-РШ-Ревізія ", &_or.KRSI             , 0               , 2000             , 1            ,(w*)&_ind_Nom,  2             , 0xff, "мceк",_form(1,4,0,2) },
     { "Kпіп-РШ-Ревіз ", &_or.KRSPIP           , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "од" , _form(1,3,2,2) },
 #endif
-#ifdef _RDN
-    { "Поріг-РДН     ", &_r.RDN_Dead_Zone     ,_Id_nom( 0.0 )   ,_Id_nom( 2.50 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "K-РДН         ", &_r.RDN_Kp            , 0               , (sw)0xA000u      , 0x0100*(_Skor_Nom/_Id_Nom) ,(w*)&_ind_Nom,40, 0xff, "од" , _form(1,2,2,2) },
-    { "dN#-РДН-макс  ", &_r.RDN_Max           ,_Skor_nom( +0.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "Tфільтр-РДН   ", &_r.RDN_Tfiltr        , 0               , 999              , 1            ,(w*)&_ind_Nom, 1              , 0xff, "мceк",_form(1,3,0,2) },
-#endif
-#ifdef _RRS
-    { "T-мех         ", &_r.T_meh             ,_Id_nom( 0.0 )   , _Id_nom( 30.0 )  ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "Т-ф-стат.струм", &_r.T_flt_Stat        ,_fSec( 0.0)      , _fSec( 10 )      ,_fSec(1)      ,(w*)&_ind_Nom, _fSec(0.01)    , 0xff, "сек", _form(1,2,2,2) },
-    { "Кртн.стат.стр ", &_r.puls_Istat        , 0               , 100              , 1            ,(w*)&_ind_Nom, 1              , 0xff, "од" , _form(1,3,0,1) },
-    { "N#-захопл.1   ", &_r.Sk_zahv1          ,_Skor_nom( +0.0 ), _Skor_nom( +2.0 ),_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "N#-захопл.2   ", &_r.Sk_zahv2          ,_Skor_nom( +0.0 ), _Skor_nom( +2.0 ),_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "Iстат-захопл. ", &_r.Porog_Istat       ,_Id_nom( 0.0 )   , _Id_nom( 3.0 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "T-захопл.     ", &_r.T_zahv            ,_fSec( 0.0 )     , _fSec(2.0 )      ,_fSec(1.0)    ,(w*)&_ind_Nom,  _fSec(0.01)   , 0xff, "сек", _form(1,2,2,2) },
-    { "T-лижі        ", &_r.T_liga            ,_fSec( 0.0 )     , _fSec(2.0 )      ,_fSec(1.0)    ,(w*)&_ind_Nom,  _fSec(0.01)   , 0xff, "сек", _form(1,2,2,2) },
-    { "K-лижі        ", &_r.K_liga            , 0               , 1*256            , 256          ,(w*)&_ind_Nom,  3             , 0xff, "од" , _form(1,3,2,2) },
-#endif
-#ifdef _BUKSOVKA
-    { "Букс-Id-визн. ", &_r.Id_RDN_off        ,_Id_nom( 0.0 )   ,_Id_nom( 2.50 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "Букс-Id-відп. ", &_r.Id_RDN_on         ,_Id_nom( 0.0 )   ,_Id_nom( 2.50 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "Букс-N-визн.  ", &_r.N_RDN_off         ,_Skor_nom( +0.0 ), _Skor_nom( +2.0 ),_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "Букс-N-відп.  ", &_r.N_RDN_on          ,_Skor_nom( +0.0 ), _Skor_nom( +2.0 ),_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "T-визн.букс.  ", &_r.Time_Buksov       ,_fSec( 0.0 )     ,_fSec( 12.0 )     ,_fSec(1.0)    ,(w*)&_ind_Nom, _fSec(0.01)    , 0xff, "сек", _form(1,3,2,2) },
-    { "Лічильн.букс. ", &_r.count_Buk_f       , 0               , 15               , 1            ,(w*)&_ind_Nom, 1              , 0xff, "од" , _form(1,3,0,1) },
-#endif
-#ifdef _RVId
-    { "Поріг-РВ      ", &_r.RVId_Dead_Zone    ,_Id_nom( 0.0 )   ,_Id_nom( 2.50 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "Kп-PВ         ", &_r.RVId_Kp           , 0               , 0x13FE           , 0x0100*(_Iv_Nom/_Id_Nom)   ,(w*)&_ind_Nom, 5, 0xff, "од" , _form(1,2,2,2) },
-    { "РВId-макс     ", &_r.RVId_Max          ,_Iv_nom( +0.0 )  ,_Iv_nom( +2.0 )   ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom(0.01)  , 0xff, "ном", _form(1,2,2,2) },
-#endif
   //{ "Id#-макс      ", &_r.IZMAX             ,_Id_nom( 0.0 )   ,_Id_nom( 3.5 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", 2 },
     { "Id#-макс1P    ", &_r.OuRSMaxMost1      ,_Id_nom( 0.0 )   ,_Id_nom( 3.5 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(0,2,2,2) },
     { "Id#-макс1M    ", &_r.OuRSMaxMost2      ,_Id_nom(-3.5 )   ,_Id_nom( 0.0 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(0,2,2,2) },
-  //{ "Id#-макс2P    ", &_r.OuRSMax2Most1     ,_Id_nom( 0.0 )   ,_Id_nom( 3.5 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(0,2,2,2) },
-  //{ "Id#-макс2M    ", &_r.OuRSMax2Most2     ,_Id_nom(-3.5 )   ,_Id_nom( 0.0 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(0,2,2,2) },
-  //{ "Id-гр-непp    ", &_r.INN0              ,_Id_nom( 0.0 )   ,_Id_nom( 2.0 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "Id-ІУ-гр-бесп ", &_or.Id_IU            ,_Id_nom( 0.0 )   ,_Id_nom( 0.2 )    ,_Id_nom(0.01) ,(w*)&_ind_Nom,  2             , 0xff, "%"  , _form(1,2,2,2) },
-    { "Лічильн.Id-гр.", &_or.i_count          , 1               , 12               , 1            ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,2,0,2) },
-#ifdef  _SIFU2_
-    { "Id-гр-безп-дв ", &_or.INN0_dvig        ,_Id_nom( 0.0 )   ,_Id_nom( 2.0 )    ,_Id_Nom       ,(w*)&_ind_Nom,  1*_K_diskr    , 0xff, "ном", _form(1,2,3,2) },
-    { "Коэфф-INN     ", &_or.KINN             , 0x0050          , 0x0125           , 0x0100       ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,2,3,2) },
-#endif
-    { "ТемпЗІ-РС'+'  ", &_r.Temp_RT_P         ,_Id_nom200( 0.0 ),_Id_nom200( 320.0), _Id_Nom200   ,(w*)&_ind_Nom,_Id_nom200(0.20), 0xff, "ном " , _form(1,4,1,2) },
-    { "ТемпЗІ-РС'-'  ", &_r.Temp_RT_M         ,_Id_nom200( 0.0 ),_Id_nom200( 320.0), _Id_Nom200   ,(w*)&_ind_Nom,_Id_nom200(0.20), 0xff, "ном " , _form(1,4,1,2) },
-    { "ТемпЗІ-РС'+'пр", &_or.Temp_RT_P        ,_Id_nom200( 0.0 ),_Id_nom200( 320.0), _Id_Nom200   ,(w*)&_ind_Nom,_Id_nom200(0.20), 0xff, "ном " , _form(1,4,1,2) },
-    { "ТемпЗІ-РС'-'пр", &_or.Temp_RT_M        ,_Id_nom200( 0.0 ),_Id_nom200( 320.0), _Id_Nom200   ,(w*)&_ind_Nom,_Id_nom200(0.20), 0xff, "ном " , _form(1,4,1,2) },
-  //{ "'Kп-РТ        ", &_r_KRTP              , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  0             , 0xff, "ед" , _form(1,3,2,2) },
-  //{ "'Kп-РТ-AH     ", &an_KRTP              , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  0             , 0xff, "ед" , _form(1,3,2,2) },
+    { "Id-гр-бесп    ", &_r.INN0              ,_Id_nom( 0.0 )   ,_Id_nom( 2.0 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
     { "Kп-РС         ", &_r.KRTP              , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  4             , 0xff, "од" , _form(1,3,2,2) },
-  //{ "'Ти-РТпреp    ", &_r_KRTPRI            , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-  //{ "'Ти-РТпреp-AH ", &an_KRTPRI            , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "Ті-РСпер      ", &_r.KRTPRI            , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  1             , 0xff, "мceк",_form(1,3,2,2) },
-  //{ "'Ти-РТнепp    ", &_r_KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-  //{ "'Ти-РТнепp-AH ", &an_KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "Ті-РСбеспер   ", &_r.KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  16            , 0xff, "мceк",_form(1,3,2,2) },
-    { "Kі-РС-пер     ", &_or.KRTP             , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  4             , 0xff, "од" , _form(1,3,2,2) },
-    { "Ті-РСпер-пр   ", &_or.KRTPRI           , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  1             , 0xff, "мceк",_form(1,3,2,2) },
-    { "Ті-РСбеспе-пр ", &_or.KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  16            , 0xff, "мceк",_form(1,3,2,2) },
-    { "K-РС-дін      ", &_r.KRTDI             , 0               , 999              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,3,0,2) },
-#ifdef  _SIFU2_
-    { "Id-гр-безп-РС2", &_or.INN0_2_          ,_Id_nom( 0.0 )   ,_Id_nom( 2.0 )    ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "'Kп-РС2       ", &_or_KRTP_2_          , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  0             , 0xff, "од" , _form(1,3,2,2) },
-    { "'Kп-РС2-AH    ", &an_KRTP_2_           , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  0             , 0xff, "од" , _form(1,3,2,2) },
-    { "Kп-РС2-уст    ", &_or.KRTP_2_          , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  4             , 0xff, "од" , _form(1,3,2,2) },
-    { "'Ті-РС2пер    ", &_or_KRTPRI_2_        , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "'Ті-РС2пер-AH ", &an_KRTPRI_2_         , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "Ті-РС2пеp-уст ", &_or.KRTPRI_2_        , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  1             , 0xff, "мceк",_form(1,3,2,2) },
-    { "'Ті-РС2безп   ", &_or_KRTNI_2_         , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "'Ті-РС2безп-AH", &an_KRTNI_2_          , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  0             , 0xff, "мceк",_form(1,3,2,2) },
-    { "Ті-РС2безп-уст", &_or.KRTNI_2_         , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  16            , 0xff, "мceк",_form(1,3,2,2) },
-#endif
+    { "Ті-РС         ", &_r.KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  16            , 0xff, "мceк",_form(1,3,2,2) },
+    { "Kі-РС-пр      ", &_or.KRTP             , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  4             , 0xff, "од" , _form(1,3,2,2) },
+    { "Ті-РС-пр      ", &_or.KRTNI             , 0               , (sw)0xFFFFu      , 64           ,(w*)&_ind_Nom,  16            , 0xff, "мceк",_form(1,3,2,2) },
     { "РС-вих-макс   ", &_r.RTMAX             ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,3,0,2) },
     { "РС-вих-мін    ", &_r.RTMIN             ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,3,0,2) },
     { "L#-макс       ", &_r.S_Alfa_Max        ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,3,0,2) },
@@ -471,57 +392,11 @@ _x_far const struct STB       stb_reg[ ] =
     { "ТемпЗІ-L#     ", &_r.S_DeltaAlfa_Max   ,_Grad( 0.0 )     ,_Grad(  25.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,3,0,2) },
     { "L-вимірюв.Id  ", &_r.S_Alfa_IzmId      ,_Grad( 11.5 )    ,_Grad(  20.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 0.1 )   , 0xff, "грд", _form(1,3,2,2) },
     { "L-вимірюв.Ud  ", &_r.S_Alfa_IzmDoImp   ,_Grad( 1.0 )     ,_Grad(  3.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 0.1 )   , 0xff, "грд", _form(1,3,2,2) },
-#ifndef  _SIFU2_
     { "'Фазув.інвер:N", &_r.S_FazirovVS       , 1               , 6                , 1            ,(w*)&_ind_Nom,  0             , 0xff," ТПK", _form(1,2,0,1) },
     { "'Фазув.інвер:F", &_r.S_FazirovUgol     ,_Grad( 0.0 )     ,_Grad( 60.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom,  0             , 0xff," грд", _form(1,3,0,2) },
-#else
-    { "'Фазув.пров:N ", &_r.S_FazirovVS       , 1               , 6                , 1            ,(w*)&_ind_Nom,  0             , 0xff," ТПK", _form(1,2,0,1) },
-    { "'Фазув.пров:F ", &_r.S_FazirovUgol     ,_Grad( 0.0 )     ,_Grad( 60.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom,  0             , 0xff," грд", _form(1,3,0,2) },
-    { "'Фазув.веден:N", &_r.S2.FazirovVS      , 1               , 6                , 1            ,(w*)&_ind_Nom,  0             , 0xff," ТПK", _form(1,2,0,1) },
-    { "Kп-РЗС-веден. ", &_r.S2.Kp_rvt         , 0               , 3000             , 64           ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,3,2,2) },
-    { "Kи-РЗС-веден. ", &_r.S2.Ki_rvt         , 0               , 3000             , 64           ,(w*)&_ind_Nom,  1             , 0xff, "од" , _form(1,3,2,2) },
-    { "РВС-вих-макс  ", &_r.S2.RVTmax         , 0               , 5*64             , 64           ,(w*)&_ind_Nom,  16            , 0xff, "грд", _form(1,2,2,2) },
-    { "РВС-вих-Id-гр ", &_or.RVT_INN0         ,_Grad( -5.0 )    ,_Grad( 5.0 )      ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 0.05 )  , 0xff, "грд", _form(0,1,3,2) },
-#endif
     { "U0-реверс     ", &_r.RevU0             ,_Grad( 000.0 )   ,_Grad( 180.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,4,0,2) },
-    { "Id-реверс     ", &_r.RIDRR             ,_Id_nom( 0.0 )   ,_Id_nom( 0.50 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(1,2,2,2) },
-    { "dt-реверс     ", &_r.dt_revers         , 0               ,_pSec( 10.0 )     ,_pSec(1.0)    ,(w*)&_ind_1000, 1             , 0xff, "мceк",_form(1,3,1,2) },
-  /*{ "K-Kомп-Ud     ", &_r.K_Kompen_Ud       , 0               , 100              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,2) },
-    { "K-ЭДС-Р       ", &_r.KEDS_R            , 0               , 255              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,1) },
-    { "K-ЭДС-П       ", &_r.KEDS_P            , 0               , 255              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,1) },
-    { "K-ЭДС-Т       ", &_r.KEDS_T            , 0               , 255              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,3,0,1) },
-    { "E#рсч-2й-зоны ", &_r.Z_EDS             ,_EDS_nom( +0.0 ) ,_EDS_nom( +2.5 )  ,_EDS_Nom      ,(w*)&_ind_Nom, _EDS_nom( 0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "Nрсч-2й-зоны  ", &_r.Skor2Z            ,_Skor_nom( +0.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "E#-2й-зоны    ", &_r.Z_II_EDS          ,_EDS_nom( +0.0 ) ,_EDS_nom( +2.5 )  ,_EDS_Nom      ,(w*)&_ind_Nom, _EDS_nom( 0.01), 0xff, "ном", _form(1,2,2,2) },
-    { "'N-2й-зоны    ", &Skor_II_Z            ,_Skor_nom( +0.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom,  0             , 0xff, "ном", _form(1,2,2,2) },
-    { "Kп-РегЭДС     ", &_r.Kp_REDS           , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  3             , 0xff, "ед" , _form(1,4,2,2) },
-    { "Tи-РегЭДС     ", &_r.Ki_REDS           , 0               , 999              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "мceк",_form(1,3,0,2) },
-    { "Kп-РегЭДС-2з. ", &_r.DT_ZISk           , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  3             , 0xff, "ед" , _form(1,4,2,2) },
-    { "Tи-РегЭДС-2з. ", &_r.Ki_REDS_II_Z      , 0               , 999              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "мceк",_form(1,3,0,2) },
-    { "Kп-РC-2з.     ", &_r.KRSP_II_Z         , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "ед" , _form(1,3,2,2) },
-    { "Tи-РC-2з.     ", &_r.KRSI_II_Z         , 0               , 999              , 1            ,(w*)&_ind_Nom,  2             , 0xff, "мceк",_form(1,3,0,2) },
-  //{ "Kпип-РC-2з.   ", &_r.KRSPIP_II_Z       , 0               , 127*256          , 256          ,(w*)&_ind_Nom,  32            , 0xff, "ед" , _form(1,3,2,2) },
-    { "If#-макс      ", &_r.Iv_zad_Max        ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(1,3,2,2) },
-    { "If#-мин/эконом", &_r.Iv_zad_Min        ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(1,3,2,2) },
-    { "If#-1-зонных  ", &_r.Iv_zad            ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(1,3,2,2) },
-    { "If#-гашение   ", &_r.Iv_gashen         ,_Iv_nom( -0.1 )  ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(0,3,2,2) },
-    { "T-эконом.поля ", &_r.T_econom          ,_Sec( 0.0 )      ,_Sec( 600.0 )     ,_Sec(1.0)     ,(w*)&_ind_Nom, _Sec(0.5)      , 0xff, "сек", _form(1,3,2,2) },
-    { "T-гашен.поля  ", &_r.T_gashenie        ,_Sec( 0.0 )      ,_Sec( 600.0 )     ,_Sec(1.0)     ,(w*)&_ind_Nom, _Sec(0.5)      , 0xff, "сек", _form(1,3,2,2) },
-#ifdef _Rev_Pola
-    { "If-минРевПоля ", &_r.Iv_porg_Min       ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.0 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(1,3,2,2) },
-#endif
-#ifdef _Vozb_KTE
-    { "If-удерж.     ", &_r.Iv_null           ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(1,3,2,2) },
-    { "Kп-РТВ        ", &_r.V_Kp_rt           , 0               , 999              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,4,0,2) },
-    { "Kи-РTВ        ", &_r.V_Ki_rt           , 0               , 999              , 1            ,(w*)&_ind_Nom,  1             , 0xff, "ед" , _form(1,4,0,2) },
-    { "'Фазир.возб.:N", &_r.V_FazirovVS       , 1               , 6                , 1            ,(w*)&_ind_Nom,  0             , 0xff," ТЕK", _form(1,2,0,1) },
-    { "'Фазир.возб.:F", &_r.V_FazirovUgol     ,_Grad( 0.0 )     ,_Grad( 60.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom,  0             , 0xff," грд", _form(1,3,0,2) },
-    { "T-отк.имп.воз.", &_r.V_Time_do_OtklImp ,_Sec( 0.1 )      ,_Sec( 6.0 )       ,_Sec(1.0)     ,(w*)&_ind_Nom, _Sec(0.1)      , 0xff, "сек", _form(1,2,2,1) },
-    { "Lf#-мин       ", &_r.V_Alfa_Min        ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad( 1.0)   ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,4,0,2) },
-    { "Lf#-макс      ", &_r.V_Alfa_Max        ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad( 1.0)   ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,4,0,2) },
-    { "Lf#-текущее   ", &V.Alfa               ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,4,2,2) },
-#endif
-    { "If#-текущее   ", &V.Iv_zad             ,_Iv_nom( 0.0 )   ,_Iv_nom( 1.3 )    ,_Iv_Nom       ,(w*)&_ind_Nom, _Iv_nom( 0.01 ), 0xff, "ном", _form(0,3,2,2) },*/
+    { "OIRTinvRevAdd ", &_or.OIRTinvReversAdd , 0               ,_Grad( 30.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд", _form(1,3,0,2) },
+    { "OIRTvyprRevAdd", &_or.OIRTvyprReversAdd, 0               ,_Grad( 30.0 )     ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд", _form(1,3,0,2) },
     { "N#-поточне    ", &Z_Skor               ,_Skor_nom( -2.0 ),_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(0,2,2,2) },
     { "Id#-поточне   ", &OuRegS_dop_kod       ,_Id_nom( -3.0 )  ,_Id_nom( +3.0 )   ,_Id_Nom       ,(w*)&_ind_Nom, _Id_nom( 0.01 ), 0xff, "ном", _form(0,2,2,2) },
     { "L#-поточне    ", &S.Alfa               ,_Grad( 0.0 )     ,_Grad( 179.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad( 1.0 )   , 0xff, "грд", _form(1,4,2,2) }
@@ -555,11 +430,6 @@ _x_far const struct STB       stb_masht[ ] =
     { "Ud-ном-ДН     ", &_sr.Dat.Ud           , 0               , 0x7fff           , 1            ,(w*)&_ind_Nom, 1              , 0xff, " B" , _form(1,5,0,2) },
     { "'Ud-макс-ДН   ", &Mashtab.Ud_max       , 0               , _Ud_nom( 7.0 )   , _Ud_Nom      ,(w*)&_ind_Nom, 0              , 0xff, "ном", _form(1,2,2,2) },
     { "'Ud-масштаб   ", &Mashtab.Ud           , (sw)0xF700      , 0x0A00           , 0x0100       ,(w*)&_ind_Nom, 0              , 0xff, "од" , _form(1,3,2,2) },
-  //{ "If-масштаб    ", &_r.Mashtab_Iv        , 0               , 0x0EFF           , 0x0100       ,(w*)&_ind_Nom, 3              , 0xff, "ед" , 2 },
-//  { "If-ном-Двиг.  ", &_sr.NOM.Iv.fe        , 0               , 0x7fff           , 10           ,(w*)&_ind_Nom, 1              , 0xff, " A" , _form(1,5,1,2) },
-//  { "If-ном-ДТ     ", &_sr.Dat.Iv           , 0               , 0x7fff           , 10           ,(w*)&_ind_Nom, 1              , 0xff, " A" , _form(1,5,1,2) },
-//  { "'If-макс-ДТ   ", &Mashtab.Iv_max       , 0               , _Iv_nom( 7.0 )   , _Iv_Nom      ,(w*)&_ind_Nom, 0              , 0xff, "ном", _form(1,2,2,2) },
-//  { "'If-масштаб   ", &Mashtab.Iv           , 0               , 0x0A00           , 0x0100       ,(w*)&_ind_Nom, 0              , 0xff, "ед" , _form(1,3,2,2) },
 //  { "ТГ-масштаб    ", &_r.Mashtab_OS_TG     , 0               , 0x1400           , 0x0100       ,(w*)&_ind_Nom, 1              , 0xff, "ед" , _form(1,3,3,2) },
     { "Uмер-ном      ", &_or.Uset_nom         , 0               , (sw)0xffff-100   , 1            ,(w*)&_ind_Nom, 1              , 0xff, " B" , _form(1,5,0,2) },
     { "Uрот-ном      ", &_or.Urot_nom         , 0               , (sw)0xffff-100   , 1            ,(w*)&_ind_Nom, 1              , 0xff, " B" , _form(1,5,0,2) },
@@ -598,6 +468,8 @@ _x_far const struct STB       stb_masht[ ] =
     { "N-ном-Двиг.   ", &_or.N_nom            , 0               , (sw)0xffff-100   , 1            ,(w*)&_ind_Nom, 1              , 0xff, " Об/хвл", _form(1,5,0,2) },
     { "'N-сінхр-Двиг.", &N_ob_minSynhr        , 0               , 3000             , 1            ,(w*)&_ind_Nom, 0              , 0xff, " Об/хвл", _form(1,5,0,3) },
     { "N-ном-Редукт. ", &_sr.NOM.N.fe         , 0               , (sw)0xffff-100   , 10           ,(w*)&_ind_Nom, 1              , 0xff, " Об/хвл", _form(1,5,1,2) },
+    { "Діам.Барабану ", &_or.DiameterBarabana , 0               , _Meter_nom( 20 ) , _Meter_Nom   ,(w*)&_ind_Nom, _Meter_nom(0.05), 0xff, "м",  _form(1,2,2,2) },
+    { "'N-ном-Бараб. ", &Mashtab.N_nom_Barabana,0               , _Meter_nom( 20 ) , _Meter_Nom   ,(w*)&_ind_Nom, 0              , 0xff, "м/с", _form(1,2,2,2) },
     { "'Z-пари полюс.", &Pary_AD              , 1               , 16               , 1            ,(w*)&_ind_Nom, 0              , 0xff, " пар", _form(1,2,0,2) },
 #ifdef _Sels_shift0
     { "Сельс0g-K-філ.", &_or.Sels_shift0      , 0               , 7                , 1            ,(w*)&_ind_Nom, 1              , 0xff, "од" , _form(1,3,0,1) },
@@ -919,6 +791,7 @@ const word _MaxNumUstav = sizeof(Ustav)/sizeof(const struct UstUzm) ;
 
 _x_far const struct Ind  ind_reg[] =
   {
+         { "N#мсшт, N     ", { &ZSkA           , &Skor          },{_Skor_Nom*_Meter_Nom,_Skor_Nom* _Meter_Nom},{ "м,","м"},{(w*)&Mashtab.N_nom_Barabana,(w*)&Mashtab.N_nom_Barabana},{_form(0,1,2,2),_form(0,1,2,2)} },
 #ifndef  _SIFU2_
          { "L    , Idсі   ", { &S.Alfa_Old     , &Id_dop_kod    },{_Grad( 1 )     ,_Id_Nom         },{ "гp, ","%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,1,2)} },
          { "L    , Ud     ", { &S.Alfa_Old     , &UdSr          },{_Grad( 1 )     ,_Ud_Nom         },{ "гp, ","%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,1,2)} },
@@ -951,16 +824,18 @@ _x_far const struct Ind  ind_reg[] =
          { "S#   , RPout  ", { &ZUgol          , &OuRP          },{_Grad( 1 )     ,_Skor_nom(1)    },{ "г, " ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,1,2)} },
 #endif
 #ifdef  Nzad_4_20_ach
-         { "N# (4-20),N#нп", { &Nzad_4_20      , &Nzad          },{_1mA_Nom       ,_Skor_nom(1)    }, {"мА," ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(0,2,1,2),_form(0,3,0,2)} },
+         { "N#_4-20 (мА,%)", { &Nzad_4_20      , &Nzad          },{_1mA_Nom       ,_Skor_nom(1)    }, {"мА"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
 #endif
-         { "N#   , N#R    ", { &Z_Skor         , &ZISkor        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,1,2)} },
-         { "N#R  , N      ", { &ZISkor         , &Skor          },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,1,2)} },
-       //{ "N    , E      ", { &Skor           , &EDS_dop_kod   },{_Skor_nom(1)   ,_EDS_nom(1)     },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,1,2)} },
-         { "Nw   , Nпдф   ", { &N_rot          , &SkorPDF       },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,1,2)} },
-       //{ "N    , Nx     ", { &Skor           , &Skor_r        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,0,2)} },
-         { "Nnf  , Nf     ", { &Skor_ind       , &Skor_f        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,0,2)} },
+         //{ "N#смещ, N#мсшт", { &Z_Skor_ind     , &ZSkA          },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+         { "N#мсшт(%, м/с)", { &ZSkA           , &ZSkA          },{_Skor_nom(1)   ,_Skor_Nom*_Meter_Nom},{ "%,","м" },{(w*)&_ind_100,(w*)&Mashtab.N_nom_Barabana},{_form(0,2,1,2),_form(0,1,2,2)} },
+         { "N#   , N#R    ", { &Z_Skor         , &ZISkor        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+         { "N#R  , N      ", { &ZISkor         , &Skor          },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+       //{ "N    , E      ", { &Skor           , &EDS_dop_kod   },{_Skor_nom(1)   ,_EDS_nom(1)     },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+         { "Nw   , Nпдф   ", { &N_rot          , &SkorPDF       },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+       //{ "N    , Nx     ", { &Skor           , &Skor_r        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
+         { "Nnf  , Nf     ", { &Skor_ind       , &Skor_f        },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,2,1,2),_form(0,2,1,2)} },
 #ifdef   TGx_ach
-         { "Nx1  , Nx8    ", { &TGx1           , &TGx8          },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  , "%"}, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,2,2),_form(0,2,2,2)} },
+         { "Nx1  , Nx8    ", { &TGx1           , &TGx8          },{_Skor_nom(1)   ,_Skor_nom(1)    },{ "%,"  ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,2,2),_form(0,2,2,2)} },
 #endif
          { "Sрот , N      ", { &Srot           , &Skor          },{_Ud_Nom        ,_Skor_nom(1)    },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,1,2)} },
        //{ "dN   , РСпип-p", { &Delta_Sk       , &OuIchRS_k     },{_Skor_nom(1)   ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,0,2)} },
@@ -1002,21 +877,10 @@ _x_far const struct Ind  ind_reg[] =
          { "Lf   , If     ", { &V.Alfa_Old     , &V.Iv          },{_Grad( 1 )     ,_Iv_Nom         },{ "гp, ","%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,0,2)} },
          { "РСВі-р,If     ", { &V.Integr_rt    , &V.Iv          },{_Grad( 1 )     ,_Iv_Nom         },{ "гp, ","%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,0,2)} },
 #endif
-       //{ "Id  ,Id-перегp", { &Id_dop_kod     , &Id_teplo_max  },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(1,3,0,2)} },
          { "Idрв,Id-перев ", { &Irot           , &Id_teplo_max  },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(1,3,0,2)} },
          { "Id-інт,Id-пер.", { &Id_TeploIntegr , &Id_teplo_max  },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,3,2,2),_form(1,3,0,2)} },
-       //{ "KompUd,Ud-komp", { &Kompen_Ud      , &UdSr_Komp     },{ 1             ,_Ud_Nom         },{ "d,"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,0,2),_form(0,3,1,2)} },
-#ifndef _SIFU2_
          { "|Id#R|, |Id|  ", { &ZIDN           , &IDV           },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,4,0,2),_form(1,3,0,2)} },
-         { "РСі-p, Id-p   ", { &OIRT           , &IDN           },{_Grad( 1 )     ,_Id_Nom         },{ "г,"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,1,2),_form(1,3,1,2)} },
-#else
-         { "INN  , INN-дв ", { &INN            , &INN_dvig      },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,3,1,2),_form(1,3,1,2)} },
-         { "RVTout, dL2   ", { &S2.Out_rvt     , &S2.Alfa_RVT   },{_Grad(1)       ,_Grad(1)        },{ "г,"  ,"г" }, {(w*)&_ind_Nom,(w*)&_ind_Nom},{_form(0,2,1,2),_form(0,2,1,2)} },
-         { "|Id1#R|,|Id1| ", { &ZIDN           , &IDV           },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,4,0,2),_form(1,3,0,2)} },
-         { "|Id2#R|,|Id2| ", { &ZIDN_2_        , &IDV2          },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(1,4,0,2),_form(1,3,0,2)} },
-         { "РС1і-p,Id1-p  ", { &OIRT           , &IDN           },{_Grad( 1 )     ,_Id_Nom         },{ "г,"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,1,2),_form(1,3,1,2)} },
-         { "РС2і-p,Id2-p  ", { &OIRT_2_        , &IDN_2_        },{_Grad( 1 )     ,_Id_Nom         },{ "г,"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,1,2),_form(1,3,1,2)} },
-#endif
+         { "РСі-p , |Id|  ", { &OIRT           , &IDV           },{_Grad( 1 )     ,_Id_Nom         },{ "г,"  ,"%" }, {(w*)&_ind_Nom,(w*)&_ind_100},{_form(1,3,1,2),_form(1,3,1,2)} },
 #ifdef Itt_ach
          { "Idtt , Id     ", { &Idtt           , &Id_dop_kod    },{_Id_Nom        ,_Id_Nom         },{ "%, " ,"%" }, {(w*)&_ind_100,(w*)&_ind_100},{_form(0,3,0,2),_form(0,3,0,2)} },
 #endif

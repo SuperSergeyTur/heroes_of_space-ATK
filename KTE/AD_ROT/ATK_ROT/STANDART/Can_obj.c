@@ -367,8 +367,9 @@ word can_ConfigReg ( word code )
           else                   bo_canStateQK = 1 ;
           //---
 #ifdef bo_MT
-          if ( bo_MT == 0 )      bo_canMT = 0 ;
-          else                   bo_canMT = 1 ;
+         // KVV- Ne ispolsuetsya 
+         // if ( bo_MT == 0 )      bo_canMT = 0 ;
+         // else                   bo_canMT = 1 ;
 #endif
 #ifndef _ATK_ROT
           //---
@@ -413,42 +414,8 @@ word can_ConfigReg ( word code )
          //-------------
             //  «адание на угол управлени€.
     case _CAN_Alfa_Zad :
-         if ( bi_canL_zad == 1 )
-         {
           dx = 1 ;  // ответ дл€ внешнего выключени€ –“.
           S.Alfa = canr.L_zad ;
-          OuIchRS = 0 ; // сбрасываем интегратор вышесто€щего регул€тора.
-    #ifndef _KTE_GD
-          OIRT  = _r.RevU0  ;  /* интегратор регул€тора тока */
-          OIRT1 = _r.RevU0  ;  /* интегратор регул€тора тока */
-        #ifdef _SIFU2_
-           OIRT_2_  = _r.RevU0  ;  /* интегратор регул€тора тока */
-           OIRT1_2_ = _r.RevU0  ;  /* интегратор регул€тора тока */
-        #endif
-    #else
-          OIRT  = 0 ;  /* интегратор регул€тора тока */
-          Integr_rn = 0 ;
-          Integr_rn_drob = 0 ;
-    #endif
-          // ѕроверка необходимости реверса в реверсе не нужна , иначе угол после реверса
-          if ( stop_pointR1 == 1 ) break; // забросит в Lmax , откуда он будет долго выползать ,
-          // вместо того , чтобы после смены моста сразу выйти с нужным углом .
-
-              // ѕроверка необходимости реверса.
-          if ((( S.NumMost == 1 ) && ( bi_canMost  == 1 ))
-                                  ||
-              (( S.NumMost == 2 ) && ( bi_canMost  == 0 )))
-              {
-                 S.Alfa = _r.S_Alfa_Max ;
-                 S.flg._.Revers = 1 ;
-              }
-          else
-              {
-                  // признак реверса был, но сн€лс€.
-                S.flg._.Revers = 0 ;
-                S.flg._.ZapretImp = 0 ;
-              }
-          }
        break;
          //-------------
             //  «адание на напр€жение генератора.

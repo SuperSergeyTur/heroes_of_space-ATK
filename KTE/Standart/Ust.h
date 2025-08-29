@@ -631,8 +631,12 @@
       word   Stoyanka_Time_Predupr ;
 
       word   T_ZISkor_Parab_delta ;
+      
+      word Vip_Alfa_Max;
+      
+      word Vip_Alfa_Min;
 
-      word   Rezerved[ 12 ] ;
+      word   Rezerved[ 10 ] ;
 
 //#ifdef _Sld_cond
       word FiltrTime_Start;
@@ -914,6 +918,7 @@ struct MASHTAB {
                  word  Ig,  Ig_max ;
                  word  Ug,  Ug_max ;
 #endif
+                 word  N_nom_Barabana;
                } ;
 
 /*------------------------------------------------*/

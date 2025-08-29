@@ -134,7 +134,7 @@
 #include "izm.c"
 #include "insulat.c"
 #include "rt.c"
-#include "revers.c"
+//#include "revers.c"
 #include "cikl.c"
 
 #include "_main1.c"
@@ -156,7 +156,7 @@
 //#include "teplo_r.c"
 //#include "#ust_rez.c"
 //#include "Data_i2c.c"
-#include "depn.c"
+//#include "depn.c"
 #include "regsc.c"
 //#include "reg_eds.c"
 

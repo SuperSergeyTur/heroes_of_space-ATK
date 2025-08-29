@@ -1,6 +1,9 @@
 #ifndef _obj_h
 #define _obj_h
 
+#define   _Meter_Nom         ( 20u )  // для барабана діаметром 3.15м
+#define   _Meter_nom( nom )     ((w)(int)( (const d)(nom) * (const d)_Meter_Nom ))
+
 //Переменые для определения размера областей уставок
 #define  _kol_obl    ( 1 ) // Количество областей уставок
 extern   word  read_rezerv( void ) ;
@@ -163,6 +166,17 @@ const word Addr_izmChanell[] =
   _Ch_Addr_BK5_S2,
   _Ch_Addr_BK6_S2
  };
+
+typedef enum
+{
+  eRT_Reg_None,
+  eRT_Reg_StartRTv,
+  eRT_Reg_UpRTi,
+  eRT_Reg_DowRTi,
+  eRT_Reg_DowNoRT,
+  eRT_Reg_DowRTv
+} ERT_Reg;
+
 #ifdef  _OBJ_INCLUDE
          byte   Num_obl ;
          //Из-за того, что при записи (или перезагрузке)
@@ -184,11 +198,14 @@ void        Control_Nzad (void);
 void        bo_ATK (void) ;
 void        controlFan     ( word ) ; // управление приводом охлаждения (вентиляторов)
 void        T_Izm_Dat      ( void ) ; // считывание данных с платы датчиков температуры
+void        Reg_Dispetcher(word Label);
+void        Get_Regim( ERT_Reg * Regim);
 
 //--------
 
  #define T1_MR0_Int()
- #define T1_MR1_Int() Revers_Interrupt ()
+ //#define T1_MR1_Int()   Revers_Interrupt () скидання запиту переривання
+ #define T1_MR1_Int()   Sifu_int_drv(_revers_epa_con) 
  #define T1_MR2_Int()
 #ifdef  _Vozb_KTE
  #define T1_MR3_Int() //Vozb_Interrupt ()
@@ -643,7 +660,7 @@ void        T_Izm_Dat      ( void ) ; // считывание данных с платы датчиков темп
       word ATK1          : 1 ;
       word ATK2          : 1 ;
       word ATKR          : 1 ;
-      word rezerv3       : 1 ;
+      word VklOIRT_for_revers : 1 ;
 
       word rezerv4       : 1 ;
       word rezerv5       : 1 ;
@@ -665,7 +682,7 @@ void        T_Izm_Dat      ( void ) ; // считывание данных с платы датчиков темп
 #define   _cfgO_ATK1           ((w) 0x0001 )
 #define   _cfgO_ATK2           ((w) 0x0002 )
 #define   _cfgO_ATKR           ((w) 0x0004 )
-//#define _cfgO_rezerv         ((w) 0x0008 )
+#define   _cfgO_VklOIRT_for_revers ((w) 0x0008 )
 
 //#define _cfgO_rezerv         ((w) 0x0010 )
 //#define _cfgO_rezerv         ((w) 0x0020 )
@@ -687,8 +704,8 @@ union ATKflag {
   struct  {
       word trig_Pusk   : 1 ;
       word trig_Reg    : 1 ;
-      word rezerv2     : 1 ;
-      word rezerv3     : 1 ;
+      word Reg_RTInv   : 1 ;
+      word Reg_RTVip   : 1 ;
 
       word rezerv4     : 1 ;
       word rezerv5     : 1 ;
@@ -908,7 +925,17 @@ union flagO {
     
     word   Time_ComtrolPIU;
 
-    word   rezerv[  94 ] ;
+    word   DiameterBarabana;
+    word   OIRTinvReversAdd;
+    word   OIRTvyprReversAdd;
+    word   KRSPZSkorProizv;
+    word   Time_OIRT_min; 
+    word   Alfa_min_razgon; 
+    word   Alfa_min_torm;    
+    word   Velos_edge;
+    word   Velos_edge_break;
+
+    word   rezerv[  85 ] ;
 
 #ifdef _INTERPRETER
     struct SetpointData MemData;
@@ -993,14 +1020,21 @@ const word AvTemp[] =
   //{ "T-задерж-N#Нз ", &_or.T_ZadZ_Nz            , 0               ,_Sec( 9.0 )       ,_Sec(1.0)      ,(w*)&_ind_Nom, 1             , 0xff, "сек", _form(1,1,2,2) },\
 
     #define _A7_Obj_Ust \
-    { "N#-місцеве    ", &_or.Z_Sk_mestnoe         ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },\
-    { "Пер.тест живл.", &_or.Time_ComtrolPIU      ,_Sec( 60.0 )     ,_Sec( 3600.0 ) ,_Sec(60)     ,(w*)&_ind_Nom, _Sec(1), 0xff, "хвл", _form(1,2,2,2) },\
-    { "T-затрим-Пуск ", &_or.T_zaderg_pusk        , 3               ,_Sec( 30.0 )      ,_Sec(1.0)     ,(w*)&_ind_Nom,  1             , 0xff, "сек", _form(1,2,2,2) },\
-    { "N=490         ", &_or.N_490                ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },\
-    { "N-мал.швид.   ", &_or.ReleMalSkor          ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"  , _form(1,3,2,2) },\
-    { "Гіст.-мал.швид", &_or.GistReleMalSkor      ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"  , _form(1,3,2,2) },\
-    { "N#-відк-КЗ-рот", &_or.Skor_Otkl_KZ         ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) },\
-    { "N#-макс без КЗ", &_or.Z_SkMax_bezKZ        ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном", _form(1,2,2,2) }
+    { "N#-місцеве    ", &_or.Z_Sk_mestnoe         ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) },\
+    { "Пер.тест живл.", &_or.Time_ComtrolPIU      ,_Sec( 60.0 )     ,_Sec( 3600.0 )    ,_Sec(60)      ,(w*)&_ind_Nom, _Sec(1)        , 0xff, "хвл" , _form(1,2,2,2) },\
+    { "T-затрим-Пуск ", &_or.T_zaderg_pusk        , 3               ,_Sec( 30.0 )      ,_Sec(1.0)     ,(w*)&_ind_Nom,  1             , 0xff, "сек" , _form(1,2,2,2) },\
+    { "N=490         ", &_or.N_490                ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) },\
+    { "N-мал.швид.   ", &_or.ReleMalSkor          ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"   , _form(1,3,2,2) },\
+    { "Гіст.-мал.швид", &_or.GistReleMalSkor      ,_Skor_nom( +0.0 ),_Skor_nom( +10.0 ),_Skor_nom(0.01),(w*)&_ind_Nom, 1             , 0xff, "%"   , _form(1,3,2,2) },\
+    { "N#-відк-КЗ-рот", &_or.Skor_Otkl_KZ         ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) },\
+    { "N#-макс без КЗ", &_or.Z_SkMax_bezKZ        ,_Skor_nom( 0.0 ) ,_Skor_nom( +2.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) },\
+    { "Затр.пер. РС  ", &_or.Time_OIRT_min        ,0.0              ,_fSec(0.2)        ,_fSec(0.001)  ,(w*)&_ind_Nom, _fSec(0.001)   , 0xff, "мсек", _form(1,3,0,2) },\
+    { "L-поріг розгін", &_or.Alfa_min_razgon      ,_Grad(0.0 )      ,_Grad( 120.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд" , _form(1,3,0,2) },\
+    { "L-поріг гальм.", &_or.Alfa_min_torm        ,_Grad(0.0 )      ,_Grad( 120.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд" , _form(1,3,0,2) },\
+    { "L# випр.розгін", &_r.Vip_Alfa_Min          ,_Grad(0.0 )      ,_Grad( 120.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд" , _form(1,3,0,2) },\
+    { "L# випр.гальм.", &_r.Vip_Alfa_Max          ,_Grad(0.0 )      ,_Grad( 120.0 )    ,_Grad(1.0)    ,(w*)&_ind_Nom, _Grad(1.0)     , 0xff, "грд" , _form(1,3,0,2) },\
+    { "N мин вибіг   ", &_or.Velos_edge           ,_Skor_nom( 0.0 ) ,_Skor_nom( +1.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) },\
+    { "N мін гальм в.", &_or.Velos_edge_break     ,_Skor_nom( 0.0 ) ,_Skor_nom( +1.0 ) ,_Skor_Nom     ,(w*)&_ind_Nom, _Skor_nom(0.01), 0xff, "ном" , _form(1,2,2,2) }
 
 //--------------------------------------------------------
 
@@ -1247,7 +1281,17 @@ _x_far const  struct  oBlok_Ustavok  _oc   =
  
  /*   word   Time_ComtrolPIU;      */  _Sec(1800), //30 мин
 
- /*   word  rezerv[  95 ] ;        */ { 0 },
+ /*   word   DiameterBarabana ;    */ _Meter_nom(3.15),
+ /*   word   OIRTinvReversAdd ;    */ _Grad(20),
+ /*   word   OIRTvyprReversAdd ;   */ _Grad(5),
+ /*   word   KRSPZSkorProizv ;     */ (w)(0.0 * 256.),
+  /*  word   Time_OIRT_min;        */  _fSec(0.1),
+  /*  word   Alfa_min_razgon;      */  _Grad(8),
+  /*  word   Alfa_min_torm         */  _Grad(8),  
+  /*  word   Velos_edge            */  _Skor_nom(0.8),
+  /* word    Velos_edge_break;     */  _Skor_nom(0.65),
+  
+ /*   word  rezerv[  90 ] ;        */ { 0 },
 
 #ifdef _INTERPRETER
  /*   struct SetpointData MemData; */ { 0 },
@@ -1329,6 +1373,9 @@ word Av_Dat, Avv_Dat, Bit_PrAvar;
 word FanSpeedMax;
 word Time_RMS_On, Time_RMS_Off;
 word Nrot_CAN;
+word RT_Regim;
+word Lz_Inv,Lz_Vipr;
+word Time_OIRT_min; 
 Av_DT Av_DT_Str, Pr_DT_Str;
 word t_fan;           // максимальная температура за измерение
 word Id_fan ;          // задание на вентилятор
@@ -1367,7 +1414,7 @@ word  Id_deystv ;
 word  Time_Reg ;
 word  OuRegS_ogr ;
 
-word  OIRT_for_revers ;
+word  oirt_for_revers, OIRT_for_revers, OIRT_for_revers_vypryamitel;
 float Beta , CosLrot , CosLrot_istin ;
 
 float OmegaNom , OmegaNullSynhr , N_ob_minSynhr , N_ob_min ;
@@ -1412,7 +1459,7 @@ extern word  Id_deystv ;
 extern word  Time_Reg ;
 extern word  OuRegS_ogr ;
 
-extern word  OIRT_for_revers ;
+extern word  oirt_for_revers, OIRT_for_revers, OIRT_for_revers_vypryamitel;
 extern float Beta , CosLrot , CosLrot_istin ;
 
 extern float OmegaNom , OmegaNullSynhr , N_ob_minSynhr , N_ob_min ;

@@ -628,6 +628,10 @@ _x_far const  struct  Blok_Ustavok   _c  =
 
    /* word   T_ZISkor_Parab_delta ;     */  _Skor_nom( 0.05 ),
 
+   /* word Vip_Alfa_Max;                */  _Grad(150),
+      
+   /* word Vip_Alfa_Min;                */  _Grad(10),
+
    /* word   Rezerved[ 12 ] ;           */  { 0 },
 
 //#ifdef _Sld_cond

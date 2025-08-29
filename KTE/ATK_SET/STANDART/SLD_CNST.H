@@ -16,13 +16,13 @@ const struct SLED   c_sled =
     /*  dt_scan ;         */  _MkSec(3333), //нужно задавать не в дискр.,а уже в мкс.
     /*  dt_stop ;         */  6,
     /*  kratn ;           */  1,
-    /*  t_start;          */  _Sec( 60 * 5 ),
+    /*  t_start;          */  _Sec( 15 * 60 ),
     /*  n_kanal ;         */  24,//_SledTabSizeMax ,
     /*  page_size ;       */  16,
   {
  //----  Рабочий список переменных заносимых в след.
                      //  _sl_form(type,off_sign,print_type,celoe,drob)
-    {"Time-sec " },
+    {"IntRS    " },
     {"Ud       " },
     {"N#       " },
     {"N#R      " },
@@ -39,13 +39,13 @@ const struct SLED   c_sled =
     {"StsAP2   " },
     {"S_flg    " }, //{"StsShU2  " },
     {"ownStsAP1" },
-    {"Tsyn2    " }, //{"ownStsShU" },
+    {"Srot     " }, //{"ownStsShU" },
     {"Pi0f     " },
     {"Po0      " },
     {"Syn2_EPA " },
     {"Syn2_NS2 " },
-    {"IntRT-rev" },
-    {"M        " }
+    {"IntRTrev " },
+    {"AsPi0f   " }
   },
   0
 };
@@ -96,6 +96,8 @@ const struct Sled_var  FullSledTab[] =
     {"TGx8     ", &TGx8        ,_sl_form(2,0,2,3,2),_Skor_Nom,(w*)&_ind100_sld,"% " },
 #endif
     {"IntRS    ", &OuIchRS     ,_sl_form(2,0,2,3,1),_Id_Nom  ,(w*)&_ind100_sld,"% " },
+    {"ZSkProizv", &ZSkorProizv , _sl_form(2,0,2,3,1), _Skor_Nom  ,(w*)&_ind100_sld, "% " },
+    {"ZSkProizK", &ZSkorProizvKp,_sl_form(2,0,2,3,1), _Id_Nom    ,(w*)&_ind100_sld, "% " },
     {"Prz_flg  ", &Prz.all     ,_sl_form(1,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
 #ifdef bi_RS_P
     {"KpRS     ", &_r_KRSP ,_sl_form(2,0,2,3,1), 256        ,(w*)&_ind1_sld  ,"од" },
@@ -105,31 +107,16 @@ const struct Sled_var  FullSledTab[] =
     {"Kp-REDS  ", &Kp_REDS_ind ,_sl_form(2,0,2,3,1), 256    ,(w*)&_ind1_sld  ,"од" },
     {"Ti-REDS  ", &Ki_REDS_ind ,_sl_form(2,0,2,3,1), 1      ,(w*)&_ind1_sld  ,"ms "},
     {"Id#      ", &OuRegS_dop_kod,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-#ifndef _SIFU2_
     {"Id#R     ", &ZIDN        ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
     {"Idsi     ", &Id_dop_kod  ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
     {"IntRT    ", &OIRT        ,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
-    {"IntRT-rev", &OIRT_for_revers,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
-    {"IDN      ", &IDN         ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"INN      ", &INN         ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
+    {"CosLrot"  , &CosLrot     ,_sl_form(0,0,2,3,1), 1       ,(w*)&_ind1_sld ,"од" },        
+    {"Beta"     , &Beta        ,_sl_form(0,0,2,3,1), 1       ,(w*)&_ind1_sld ,"рад" },    
+    {"IntRTrev0", &oirt_for_revers,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },    
+    {"IntRTrev ", &OIRT_for_revers,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
+    {"IntRTrevV", &OIRT_for_revers_vypryamitel,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },    
+//    {"IDN      ", &IDN         ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
     {"Id-IU    ", &Id_IU       ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"Kp-RT    ", &_r_KRTP     ,_sl_form(2,0,2,3,1), 256     ,(w*)&_ind1_sld  ,"од" },
-    {"Ti-prerRT", &_r_KRTPRI   ,_sl_form(2,0,2,3,1), 64      ,(w*)&_ind1_sld  ,"ms "},
-    {"Ti-neprRT", &_r_KRTNI    ,_sl_form(2,0,2,3,1), 64      ,(w*)&_ind1_sld  ,"ms "},
-#else
-    {"Id#R_RT1 ", &ZIDN        ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"Id#R_RT2 ", &ZIDN_2_     ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"Id1      ", &Id_dop_kod  ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"Id2      ", &Id2_dop_kod ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"IntRT1   ", &OIRT        ,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
-    {"IntRT2   ", &OIRT_2_     ,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
-    {"IDN_RT1  ", &IDN         ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"IDN_RT2  ", &IDN_2_      ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"INN-dv   ", &INN_dvig    ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"INN_RT1  ", &INN         ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"INN_RT2  ", &INN_2_      ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-    {"Idsum    ", &Id_sum      ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },
-#endif
     {"RTout    ", &ORT         ,_sl_form(2,1,2,3,1),_Grad(1.0),(w*)&_ind1_sld ,"g " },
     {"RegFlg   ", &RegFlg.all  ,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld  ,"h " },
     {"flgDopIzm", &flg_RaTe.all,_sl_form(2,1,1,0,0), 1       ,(w*)&_ind1_sld  ,"h " },
@@ -416,11 +403,8 @@ const struct Sled_var  FullSledTab[] =
     {"Prg_all  ", &Prg.all         ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
     {"Otkl_Imp ", &Otkl_Imp        ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
     {"S_DZV    ", &S.DZV           ,_sl_form(1,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
-    {"dt_revers", &dt_revers       ,_sl_form(2,1,2,2,3), _pSec(1.0),(w*)&_ind1_sld,"s " },
-    {"dn_revers", &dn_revers       ,_sl_form(1,1,2,1,0), 1         ,(w*)&_ind1_sld," "  },
     {"Av_all   ", &Av.all          ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
     {"Av2_all  ", &Av2.all         ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
-    {"Rev_label", &Revers_Label    ,_sl_form(1,1,2,1,0), 1         ,(w*)&_ind1_sld," "  },
 #ifdef   _Union_FR
     {"Syn_apEPA", (w*)&IPCP0       ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h " },
 #else
@@ -460,7 +444,7 @@ const struct Sled_var  FullSledTab[] =
   //{"zi_in2   ", &zi_rs.in_2      ,_sl_form(2,0,2,3,1), _Skor_Nom ,(w*)&_ind100_sld,"% " },
     {"zi_out   ", &zi_rs.out       ,_sl_form(2,0,2,3,1), _Skor_Nom ,(w*)&_ind100_sld,"% " },
   //{"zi_out2  ", &zi_rs.out_2     ,_sl_form(2,0,2,3,1), _Skor_Nom ,(w*)&_ind100_sld,"% " },
-    {"zi_outlin", &zi_rs.out_lin   ,_sl_form(2,0,2,3,1), _Skor_Nom ,(w*)&_ind100_sld,"% " },
+//NEW_ZI  {"zi_outlin", &zi_rs.out_lin   ,_sl_form(2,0,2,3,1), _Skor_Nom ,(w*)&_ind100_sld,"% " },
     {"z_res_out", (w*)&zad_res.out ,_sl_form(2,1,1,0,0), 1         ,(w*)&_ind1_sld,"h "   },
     {"I1pr-tir ", &Iproboy1    ,_sl_form(2,0,2,3,1), _Id_Nom ,(w*)&_ind100_sld,"% " },  // для помощи в определении пробитого тиристора
     {"i-tyr    ", &i           ,_sl_form(1,1,2,3,0), 1         ,(w*)&_ind1_sld," "  },

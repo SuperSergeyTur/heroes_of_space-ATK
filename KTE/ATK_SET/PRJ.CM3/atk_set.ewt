@@ -2849,6 +2849,6 @@
         <name>$PROJ_DIR$\INC.c</name>
     </file>
     <file>
-        <name>$PROJ_DIR$\..\..\..\STANDART\CM\startup_LPC177x_8x.s</name>
+        <name>$PROJ_DIR$\..\..\..\STANDART\CM\startup_LPC407x_8x_177x_8x.s</name>
     </file>
 </project>
